@@ -346,29 +346,31 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href="/2019/07/31/win2008Server搭建IIS及配置/">
+        <a class="abstract-title" href="/2019/08/06/Traceme动态分析与静态分析/">
             
-                <span>win2008Server搭建IIS及配置</span>
+                <span>Traceme动态分析与静态分析</span>
         </a>
         <div class="abstract-content">
-            IIS安装在服务器管理器中添加角色，然后添加web服务器，安装。安装完毕后，访问127.0.0.1可以看到IIS的界面
-IIS基本配置点开IIS服务器，点击网站，删除默认的站点，新建一个站点。
-在设置站点下放置一个html文件
-在浏览器中访问站点，可以正常访问
-开启目录浏览在网页的功能视图中找到目录浏览双击，打开目录浏览
-在网站根目录中放置一个图片，打开浏览器可以对其下载
+            对Traceme.exe进行分析，我用两种方法分析，动态分析和静态分析
+静态分析首先进入winmain入口函数，然后进入DialogFunc函数，这个函数应该就是这个程序的主体了。
 
+将两个strcpy的内容转成字符串，可以得出要输入的字符要大于长度4。
+
+现在要找出程序对于输入的用户名和序列号是如何处理的，1v5 = GetDlgItemTextA(hWnd, 110, &amp;String, 81);
+找到了这句话，看到GetDlgItemTextA这个函数就知道他是在获得对话框的内容向数组里存东西，所以可以判断这两个函数是在存储用户名和序列号
+
+进入sub_401340这个函数就...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/07/31</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/08/06</span>
             </div>
             <!-- tags  -->
             
             <div class="abstract-tags">
     
-        <a class="post-tag" href="javascript:void(0);" data-tags="IIS">IIS</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags="IDA,OllyDB">IDA,OllyDB</a>
     
 </div>
             

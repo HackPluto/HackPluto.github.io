@@ -346,29 +346,30 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href="/2019/07/31/win2008Server搭建IIS及配置/">
+        <a class="abstract-title" href="/2019/08/03/格式化字符串漏洞/">
             
-                <span>win2008Server搭建IIS及配置</span>
+                <span>格式化字符串漏洞</span>
         </a>
         <div class="abstract-content">
-            IIS安装在服务器管理器中添加角色，然后添加web服务器，安装。安装完毕后，访问127.0.0.1可以看到IIS的界面
-IIS基本配置点开IIS服务器，点击网站，删除默认的站点，新建一个站点。
-在设置站点下放置一个html文件
-在浏览器中访问站点，可以正常访问
-开启目录浏览在网页的功能视图中找到目录浏览双击，打开目录浏览
-在网站根目录中放置一个图片，打开浏览器可以对其下载
+            格式化字符串
+printf函数的第一个参数就是格式化字符串，它主要是依靠一个用来告诉程序如何进行格式化输出的说明符。在C程序中我们有许多用来格式化字符串的说明符，在这些说明符后面我们可以填充我们的内容。说明符的前缀总是“%”字符，另外说明符存在许多不同的数据类型，最常见的包括：
 
+
+%d - 十进制 - 输出十进制整数%s - 字符串 - 从内存中读取字符串%x - 十六进制 - 输出十六进制数%c - 字符 - 输出字符%p - 指针 - 指针地址%n - 到目前为止所写的字符数
+
+漏洞原理
+产生这个漏洞的原因只有一个，那就是程序员偷懒。比如我想让用户输入一个名字，然后再把这个名字原样...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/07/31</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/08/03</span>
             </div>
             <!-- tags  -->
             
             <div class="abstract-tags">
     
-        <a class="post-tag" href="javascript:void(0);" data-tags="IIS">IIS</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags="pwn,格式化字符串">pwn,格式化字符串</a>
     
 </div>
             
