@@ -346,23 +346,27 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href="/2019/05/22/素数个数求解与素数的判定/">
+        <a class="abstract-title" href="/2019/08/11/Linux动态链接库之GOT-PLT/">
             
-                <span>素数个数求解与素数的判定</span>
+                <span>Linux动态链接库之GOT,PLT</span>
         </a>
         <div class="abstract-content">
-            1.素数质数（Prime number），又称素数，指在大于1的自然数中，除了1和该数自身外，无法被其他自然数整除的数（也可定义为只有1与该数本身两个正因数的数）。对于写代码的人来说，素数比想像中的更重要，Google一下BigPrime或者big_prime你总会发现大堆大堆用到了素数常量的程序代码。平时没事时可以记一些素数下来以 备急用。我会选一些好记的素数，比如4567, 124567, 3214567, 23456789, 55566677, 1234567894987654321, 11111111111111111111111 (23个1)。   　　素数有很多神奇的性质。我...
+            
+今天做到了一个pwn的题目涉及到了GOT,PLT，是关于GOT表泄漏地址的一个题，所以在这里总结下Linux动态链接库的知识。
+
+静态链接与动态链接
+任何操作系统对于二进制文件的链接方式有两种，静态链接与动态链接。静态链接的二进制文件就包含在程序自身的代码里，并且不依赖外部的库。动态链接的二进制文件通常很多函数是不包含的，需要系统提供依赖，比如程序中使用了printf函数，而这个函数是C库函数，自己写的程序中是没有的，那么printf就需要动态链接库来提供，在Linux上就是libc.so.6这个文件。在二进制文件（比如object file）中会有一段叫relocations的部分，...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/05/22</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/08/11</span>
             </div>
             <!-- tags  -->
             
             <div class="abstract-tags">
     
-        <a class="post-tag" href="javascript:void(0);" data-tags="概率法求素数,算法">概率法求素数,算法</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags="Linux,GOT,PLT">Linux,GOT,PLT</a>
     
 </div>
             
