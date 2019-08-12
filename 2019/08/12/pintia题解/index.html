@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>HackPluto&#39;s Blog</title>
+    <title>pintia题解 · HackPluto&#39;s Blog</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -203,12 +203,23 @@
 </head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/">HackPluto&#39;s Blog</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">pintia题解</a>
+            </div>
+    </div>
     
     <a class="home-link" href="/">HackPluto's Blog</a>
 </header>
@@ -220,24 +231,74 @@
 
 
 
+
+height:50vh;
 ">
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/2.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+            pintia题解
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class="post-intro-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="ACM,pintia">ACM,pintia</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">802</span>阅读时长: <span class="post-count reading-time">4 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2019/08/12</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -338,46 +399,59 @@
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/08/03/格式化字符串漏洞/">
-            
-                <span>格式化字符串漏洞</span>
-        </a>
-        <div class="abstract-content">
-            格式化字符串
-printf函数的第一个参数就是格式化字符串，它主要是依靠一个用来告诉程序如何进行格式化输出的说明符。在C程序中我们有许多用来格式化字符串的说明符，在这些说明符后面我们可以填充我们的内容。说明符的前缀总是“%”字符，另外说明符存在许多不同的数据类型，最常见的包括：
+            <main class="main post-page">
+    <article class="article-entry">
+        <p><strong>7-51</strong></p>
+<blockquote>
+<p>题目的算法不是很难，就是定义两个指针分别指向1，2链表，然后迭代比较直到一个遇到了NULL为止。主要是自己很久都没有用链表，把这个数据结构有点忘了，说一个自己做的时候遇到的坑。定一个一个头节点指针后，因为定义的是指针类型，所以要使用被调函数执行插入操作的话，传入的应该是一个二级指针，如果不使用被调函数就一级指针就好了，这也很好理解，毕竟C按值传递的形参的值改变了并不会影响实参，寄存器只能直接寻址。这里我也考虑过使用C++的引用但是也遇到了同样的问题。</p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">node</span>&#123;</span></span><br><span class="line">    <span class="keyword">int</span> a;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">node</span>* <span class="title">next</span>;</span></span><br><span class="line">&#125;Linklist;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(Linklist* m,Linklist* New,<span class="keyword">int</span> num)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    New-&gt;a=num;</span><br><span class="line">    New-&gt;next=<span class="literal">NULL</span>;</span><br><span class="line">    m-&gt;next=New;</span><br><span class="line">    m=m-&gt;next;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> num;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;num);</span><br><span class="line">    Linklist* one=(Linklist*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Linklist));</span><br><span class="line">    Linklist* two=(Linklist*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Linklist));</span><br><span class="line">    Linklist* three=(Linklist*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Linklist));</span><br><span class="line">    Linklist *m,*n,*q;</span><br><span class="line">    m=one;</span><br><span class="line">    <span class="keyword">while</span> (num!=<span class="number">-1</span>) &#123;</span><br><span class="line">        Linklist* New=(Linklist*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Linklist));</span><br><span class="line">        New-&gt;a=num;</span><br><span class="line">        New-&gt;next=<span class="literal">NULL</span>;</span><br><span class="line">        m-&gt;next=New;</span><br><span class="line">        m=m-&gt;next;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;num);</span><br><span class="line">    &#125;</span><br><span class="line">    m=two;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;num);</span><br><span class="line">    <span class="keyword">while</span> (num!=<span class="number">-1</span>) &#123;</span><br><span class="line">        Linklist* New=(Linklist*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Linklist));</span><br><span class="line">        New-&gt;a=num;</span><br><span class="line">        New-&gt;next=<span class="literal">NULL</span>;</span><br><span class="line">        m-&gt;next=New;</span><br><span class="line">        m=m-&gt;next;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;num);</span><br><span class="line">    &#125;</span><br><span class="line">    m=one-&gt;next;n=two-&gt;next;q=three;</span><br><span class="line">    <span class="keyword">while</span> (m!=<span class="literal">NULL</span>&amp;&amp;n!=<span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (m-&gt;a&gt;n-&gt;a) &#123;</span><br><span class="line">            Linklist* New=(Linklist*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Linklist));</span><br><span class="line">            New-&gt;a=n-&gt;a;</span><br><span class="line">            New-&gt;next=<span class="literal">NULL</span>;</span><br><span class="line">            q-&gt;next=New;</span><br><span class="line">            q=q-&gt;next;</span><br><span class="line">            n=n-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            Linklist* New=(Linklist*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Linklist));</span><br><span class="line">            New-&gt;a=m-&gt;a;</span><br><span class="line">            New-&gt;next=<span class="literal">NULL</span>;</span><br><span class="line">            q-&gt;next=New;</span><br><span class="line">            q=q-&gt;next;</span><br><span class="line">            m=m-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (m==<span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="keyword">while</span> (n!=<span class="literal">NULL</span>) &#123;</span><br><span class="line">            Linklist* New=(Linklist*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Linklist));</span><br><span class="line">            New-&gt;a=n-&gt;a;</span><br><span class="line">            New-&gt;next=<span class="literal">NULL</span>;</span><br><span class="line">            q-&gt;next=New;</span><br><span class="line">            q=q-&gt;next;</span><br><span class="line">            n=n-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (m!=<span class="literal">NULL</span>) &#123;</span><br><span class="line">            Linklist* New=(Linklist*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Linklist));</span><br><span class="line">            New-&gt;a=m-&gt;a;</span><br><span class="line">            New-&gt;next=<span class="literal">NULL</span>;</span><br><span class="line">            q-&gt;next=New;</span><br><span class="line">            q=q-&gt;next;</span><br><span class="line">            m=m-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    q=three-&gt;next;</span><br><span class="line">    <span class="keyword">if</span> (q==<span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"NULL\n"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (q-&gt;next!=<span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%d "</span>,q-&gt;a);</span><br><span class="line">        q=q-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,q-&gt;a);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>7-18</strong></p>
+<blockquote>
+<p>题目很简单，直接使用C++中的STL库，定义两个队列，存入数据，按照2:1的比例pop即可。</p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="built_in">queue</span>&lt;<span class="keyword">int</span>&gt; q1, q2;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;n);</span><br><span class="line">    <span class="keyword">int</span> x;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;x);</span><br><span class="line">        <span class="keyword">if</span>(x % <span class="number">2</span>) q1.push(x);</span><br><span class="line">        <span class="keyword">else</span> q2.push(x);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> f = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(!q1.empty() &amp;&amp; !q2.empty()) &#123;</span><br><span class="line">        <span class="keyword">if</span>(!q1.empty()) &#123; <span class="keyword">if</span>(f!=<span class="number">0</span>) <span class="built_in">printf</span>(<span class="string">" "</span>); <span class="keyword">if</span>(f==<span class="number">0</span>) f=<span class="number">1</span>; <span class="built_in">cout</span> &lt;&lt; q1.front(); q1.pop(); &#125;</span><br><span class="line">        <span class="keyword">if</span>(!q1.empty()) &#123; <span class="keyword">if</span>(f!=<span class="number">0</span>) <span class="built_in">printf</span>(<span class="string">" "</span>); <span class="keyword">if</span>(f==<span class="number">0</span>) f=<span class="number">1</span>;<span class="built_in">cout</span> &lt;&lt; q1.front(); q1.pop(); &#125;</span><br><span class="line">        <span class="keyword">if</span>(!q2.empty()) &#123; <span class="keyword">if</span>(f!=<span class="number">0</span>) <span class="built_in">printf</span>(<span class="string">" "</span>); <span class="keyword">if</span>(f==<span class="number">0</span>) f=<span class="number">1</span>;<span class="built_in">cout</span> &lt;&lt; q2.front(); q2.pop(); &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span>(!q1.empty()) &#123; <span class="keyword">if</span>(f!=<span class="number">0</span>) <span class="built_in">printf</span>(<span class="string">" "</span>); <span class="keyword">if</span>(f==<span class="number">0</span>) f=<span class="number">1</span>;<span class="built_in">cout</span> &lt;&lt; q1.front(); q1.pop(); &#125;</span><br><span class="line">    <span class="keyword">while</span>(!q2.empty()) &#123; <span class="keyword">if</span>(f!=<span class="number">0</span>) <span class="built_in">printf</span>(<span class="string">" "</span>); <span class="keyword">if</span>(f==<span class="number">0</span>) f=<span class="number">1</span>;<span class="built_in">cout</span> &lt;&lt; q2.front(); q2.pop(); &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    add();</span><br><span class="line">    func1();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>7-13</strong><br>水题<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> age[<span class="number">51</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> N;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;N);</span><br><span class="line">    <span class="keyword">while</span> (N--) &#123;</span><br><span class="line">        <span class="keyword">int</span> num;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;num);</span><br><span class="line">        age[num]++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;=<span class="number">50</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span>(age[i]==<span class="number">0</span>)</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%d:"</span>,i);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,age[i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 
-
-%d - 十进制 - 输出十进制整数%s - 字符串 - 从内存中读取字符串%x - 十六进制 - 输出十六进制数%c - 字符 - 输出字符%p - 指针 - 指针地址%n - 到目前为止所写的字符数
-
-漏洞原理
-产生这个漏洞的原因只有一个，那就是程序员偷懒。比如我想让用户输入一个名字，然后再把这个名字原样...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/08/03</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="pwn,格式化字符串">pwn,格式化字符串</a>
-    
-</div>
-            
-        </div>
     </article>
+    <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>原文作者：<a href="http://yoursite.com">HackPluto</a>
+            </p><p>原文链接：<a href="http://yoursite.com/2019/08/12/pintia题解/">http://yoursite.com/2019/08/12/pintia题解/</a>
+            </p><p>发表日期：<a href="http://yoursite.com/2019/08/12/pintia题解/">August 12th 2019, 9:47:23 am</a>
+            </p><p>更新日期：<a href="http://yoursite.com/2019/08/12/pintia题解/">August 12th 2019, 9:54:51 am</a>
+            </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
+        </div>
     
     <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/2019/08/11/Linux动态链接库之GOT-PLT/" title="Linux动态链接库之GOT,PLT">
+                    <div class="prevTitle">Linux动态链接库之GOT,PLT</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
+    
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -457,6 +531,24 @@ printf函数的第一个参数就是格式化字符串，它主要是依靠一�
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -1202,6 +1294,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
      
     </body>
 </html>

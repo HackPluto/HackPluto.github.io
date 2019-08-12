@@ -346,30 +346,27 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href="/2019/08/03/格式化字符串漏洞/">
+        <a class="abstract-title" href="/2019/08/12/pintia题解/">
             
-                <span>格式化字符串漏洞</span>
+                <span>pintia题解</span>
         </a>
         <div class="abstract-content">
-            格式化字符串
-printf函数的第一个参数就是格式化字符串，它主要是依靠一个用来告诉程序如何进行格式化输出的说明符。在C程序中我们有许多用来格式化字符串的说明符，在这些说明符后面我们可以填充我们的内容。说明符的前缀总是“%”字符，另外说明符存在许多不同的数据类型，最常见的包括：
+            7-51
 
+题目的算法不是很难，就是定义两个指针分别指向1，2链表，然后迭代比较直到一个遇到了NULL为止。主要是自己很久都没有用链表，把这个数据结构有点忘了，说一个自己做的时候遇到的坑。定一个一个头节点指针后，因为定义的是指针类型，所以要使用被调函数执行插入操作的话，传入的应该是一个二级指针，如果不使用被调函数就一级指针就好了，这也很好理解，毕竟C按值传递的形参的值改变了并不会影响实参，寄存器只能直接寻址。这里我也考虑过使用C++的引用但是也遇到了同样的问题。
 
-%d - 十进制 - 输出十进制整数%s - 字符串 - 从内存中读取字符串%x - 十六进制 - 输出十六进制数%c - 字符 - 输出字符%p - 指针 - 指针地址%n - 到目前为止所写的字符数
-
-漏洞原理
-产生这个漏洞的原因只有一个，那就是程序员偷懒。比如我想让用户输入一个名字，然后再把这个名字原样...
+12345678910111213141516171819202122232425262728293031323334353...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/08/03</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/08/12</span>
             </div>
             <!-- tags  -->
             
             <div class="abstract-tags">
     
-        <a class="post-tag" href="javascript:void(0);" data-tags="pwn,格式化字符串">pwn,格式化字符串</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags="ACM,pintia">ACM,pintia</a>
     
 </div>
             
