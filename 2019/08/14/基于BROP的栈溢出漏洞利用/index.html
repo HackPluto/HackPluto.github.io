@@ -272,7 +272,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">764</span>阅读时长: <span class="post-count reading-time">2 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">1.4k</span>阅读时长: <span class="post-count reading-time">5 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -416,7 +416,19 @@ height:50vh;
 <p>我们如果需要canary或者他以后的值，需要爆破计算。但是需要注意的是，攻击条件 2 表明了程序本身并不会因为 crash 有变化，所以每次的 canary 等值都是一样的。所以我们可以按照字节进行爆破。正如论文中所展示的，每个字节最多有 256 种可能，所以在 32 位的情况下，我们最多需要爆破 1024 次，64 位最多爆破 2048 次。<br><img src="https://ctf-wiki.github.io/ctf-wiki/pwn/linux/stackoverflow/figure/stack_reading.png" alt></p>
 <p><strong>Blind ROP</strong><br>如果要使用write函数，最简单的方法就是构造系统调用</p>
 <figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pop</span> <span class="built_in">rdi</span><span class="comment">; ret </span></span><br><span class="line"><span class="keyword">pop</span> <span class="built_in">rsi</span><span class="comment">; ret </span></span><br><span class="line"><span class="keyword">pop</span> <span class="built_in">rdx</span><span class="comment">; ret </span></span><br><span class="line"><span class="keyword">pop</span> <span class="built_in">rax</span><span class="comment">; ret # write syscall number</span></span><br><span class="line"><span class="keyword">syscall</span></span><br></pre></td></tr></table></figure>
-<p>但通常来说，这样的方法都是比较困难的，因为想要找到一个 syscall 的地址基本不可能。我们可以通过转换为找 write 的方式来获取。<br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt></p>
+<p>但通常来说，这样的方法都是比较困难的，因为想要找到一个 syscall 的地址基本不可能。我们可以通过转换为找 write 的方式来获取。</p>
+<p><strong>BROP gadgets</strong><br>在 libc_csu_init 的结尾一长串的 gadgets，我们可以通过偏移来获取 write 函数调用的前两个参数。</p>
+<p><img src="https://ctf-wiki.github.io/ctf-wiki/pwn/linux/stackoverflow/figure/brop_gadget.png" alt></p>
+<p><strong>find a call write</strong><br>通过PLT表来寻找write函数的地址</p>
+<p><strong>control rdx</strong><br>对于RDX寄存器，他在write函数中的作用就是输出长度的参数，只要不为0即可，通常RDX不是，不过为了更好的控制RDX，我们希望可以有类似<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pop rdx;</span><br><span class="line">ret;</span><br></pre></td></tr></table></figure></p>
+<p>但是事实上很少有这样的指令。但是strcmp函数会将RDX设置成要比较的字符串的长度。我们只需要找到strcmp即可。</p>
+<p>那么我们的任务就是<br>1.寻找gadgets<br>2.通过PLT查找write和strcmp的函数地址</p>
+<h2 id="寻找gadgets"><a href="#寻找gadgets" class="headerlink" title="寻找gadgets"></a>寻找gadgets</h2><p>首先，我们来想办法寻找 gadgets。此时，由于尚未知道程序具体长什么样，所以我们只能通过简单的控制程序的返回地址为自己设置的值，从而而来猜测相应的 gadgets。而当我们控制程序的返回地址时，一般有以下几种情况<br>1.程序直接崩溃<br>2.程序运行一段时间后崩溃<br>3.程序一直运行而并不崩溃<br>为了寻找合理的 gadgets，我们可以分为以下两步</p>
+<p><strong>寻找 stop gadgets</strong></p>
+<p>所谓stop gadget一般指的是这样一段代码：当程序的执行这段代码时，程序会进入无限循环，这样使得攻击者能够一直保持连接状态。其根本的目的在于告诉攻击者，所测试的返回地址是一个 gadgets。当我们猜到某个 gadgtes 后，如果我们仅仅是将其布置在栈上，由于执行完这个 gadget 之后，程序还会跳到栈上的下一个地址。如果该地址是非法地址，那么程序就会 crash。这样的话，在攻击者看来程序只是单纯的 crash 了。因为如果是无效的gadget会引起程序的崩溃同样会crash，因此，攻击者就会认为在这个过程中并没有执行到任何的useful gadget，从而放弃它。</p>
+<p><img src="https://ctf-wiki.github.io/ctf-wiki/pwn/linux/stackoverflow/figure/stop_gadget.png" alt></p>
+<p><strong>识别gadgets</strong><br>我们将栈上定义三种区域，<br>1.probe<br>—-&gt;探针，也就是我们想要探测的代码地址。一般来说，都是 64 位程序，可以直接从 0x400000 尝试，如果不成功，有可能程序开启了 PIE 保护，再不济，就可能是程序是 32 位了。。这里我还没有特别想明白，怎么可以快速确定远程的位数。<br>2.Stop<br>—-&gt;不会使得程序崩溃的 stop gadget 的地址。<br>3.Trap<br>—-&gt;可以导致程序崩溃的地址</p>
+<p><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt></p>
 
     </article>
     <!-- license  -->
@@ -425,7 +437,7 @@ height:50vh;
             <p>原文作者：<a href="http://yoursite.com">HackPluto</a>
             </p><p>原文链接：<a href="http://yoursite.com/2019/08/14/基于BROP的栈溢出漏洞利用/">http://yoursite.com/2019/08/14/基于BROP的栈溢出漏洞利用/</a>
             </p><p>发表日期：<a href="http://yoursite.com/2019/08/14/基于BROP的栈溢出漏洞利用/">August 14th 2019, 11:34:42 pm</a>
-            </p><p>更新日期：<a href="http://yoursite.com/2019/08/14/基于BROP的栈溢出漏洞利用/">August 15th 2019, 9:53:17 am</a>
+            </p><p>更新日期：<a href="http://yoursite.com/2019/08/14/基于BROP的栈溢出漏洞利用/">August 15th 2019, 11:31:00 am</a>
             </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -552,7 +564,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#BROP"><span class="toc-number">1.</span> <span class="toc-text">BROP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#攻击原理"><span class="toc-number">2.</span> <span class="toc-text">攻击原理</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#BROP"><span class="toc-number">1.</span> <span class="toc-text">BROP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#攻击原理"><span class="toc-number">2.</span> <span class="toc-text">攻击原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#寻找gadgets"><span class="toc-number">3.</span> <span class="toc-text">寻找gadgets</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -985,9 +997,48 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 32
+        Total : 33
         </div>
         <!-- search  -->
         
@@ -1058,6 +1109,11 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">07/31</span><a class="archive-post-title" href="/2019/07/31/使用winpacap制作嗅探器/">使用winpcap制作嗅探器</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">07/11</span><a class="archive-post-title" href="/2019/07/11/数据链路层知识总结/">数据链路层知识总结</a>
         </li>
     
@@ -1113,12 +1169,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2019/05/22/使用动态规划-DP-解决最大公共子串与最大公共子序列问题/">使用动态规划(DP)解决最大公共子串与最大公共子序列问题</a>
+            <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2019/05/22/素数个数求解与素数的判定/">素数个数求解与素数的判定</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2019/05/22/素数个数求解与素数的判定/">素数个数求解与素数的判定</a>
+            <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2019/05/22/使用动态规划-DP-解决最大公共子串与最大公共子序列问题/">使用动态规划(DP)解决最大公共子串与最大公共子序列问题</a>
         </li>
     
     
@@ -1148,12 +1204,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/sqli-labs/">sqli-labs 通关详解</a>
+            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/python下多核/">python下多核，单核CPU对于并行，并发执行效率的对比</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/python下多核/">python下多核，单核CPU对于并行，并发执行效率的对比</a>
+            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/sqli-labs/">sqli-labs 通关详解</a>
         </li>
     
     
@@ -1166,35 +1222,35 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="逆向,恶意代码"><span class="iconfont-archer">&#xe606;</span>逆向,恶意代码</span>
-    
         <span class="sidebar-tag-name" data-tags="逆向,CTF"><span class="iconfont-archer">&#xe606;</span>逆向,CTF</span>
     
         <span class="sidebar-tag-name" data-tags="ACM,数论"><span class="iconfont-archer">&#xe606;</span>ACM,数论</span>
     
         <span class="sidebar-tag-name" data-tags="ctf,web,编码"><span class="iconfont-archer">&#xe606;</span>ctf,web,编码</span>
     
+        <span class="sidebar-tag-name" data-tags="逆向,恶意代码"><span class="iconfont-archer">&#xe606;</span>逆向,恶意代码</span>
+    
         <span class="sidebar-tag-name" data-tags="Linux,LAMP"><span class="iconfont-archer">&#xe606;</span>Linux,LAMP</span>
     
         <span class="sidebar-tag-name" data-tags="防火墙,iptables"><span class="iconfont-archer">&#xe606;</span>防火墙,iptables</span>
     
-        <span class="sidebar-tag-name" data-tags="SSH,端口转发"><span class="iconfont-archer">&#xe606;</span>SSH,端口转发</span>
-    
         <span class="sidebar-tag-name" data-tags="IDA,OllyDB"><span class="iconfont-archer">&#xe606;</span>IDA,OllyDB</span>
     
-        <span class="sidebar-tag-name" data-tags="IIS"><span class="iconfont-archer">&#xe606;</span>IIS</span>
-    
         <span class="sidebar-tag-name" data-tags="windows,域控,内网渗透"><span class="iconfont-archer">&#xe606;</span>windows,域控,内网渗透</span>
+    
+        <span class="sidebar-tag-name" data-tags="IIS"><span class="iconfont-archer">&#xe606;</span>IIS</span>
     
         <span class="sidebar-tag-name" data-tags="信息收集,社会工程学"><span class="iconfont-archer">&#xe606;</span>信息收集,社会工程学</span>
     
         <span class="sidebar-tag-name" data-tags="动态规划(DP)"><span class="iconfont-archer">&#xe606;</span>动态规划(DP)</span>
     
-        <span class="sidebar-tag-name" data-tags="PWN,BROP,栈溢出"><span class="iconfont-archer">&#xe606;</span>PWN,BROP,栈溢出</span>
-    
         <span class="sidebar-tag-name" data-tags="域控制器"><span class="iconfont-archer">&#xe606;</span>域控制器</span>
     
+        <span class="sidebar-tag-name" data-tags="SSH,端口转发"><span class="iconfont-archer">&#xe606;</span>SSH,端口转发</span>
+    
         <span class="sidebar-tag-name" data-tags="应用层,计算机网络"><span class="iconfont-archer">&#xe606;</span>应用层,计算机网络</span>
+    
+        <span class="sidebar-tag-name" data-tags="PWN,BROP,栈溢出"><span class="iconfont-archer">&#xe606;</span>PWN,BROP,栈溢出</span>
     
         <span class="sidebar-tag-name" data-tags="XCTF,逆向"><span class="iconfont-archer">&#xe606;</span>XCTF,逆向</span>
     
@@ -1209,6 +1265,8 @@ top:50vh;
         <span class="sidebar-tag-name" data-tags="Linux,GOT,PLT"><span class="iconfont-archer">&#xe606;</span>Linux,GOT,PLT</span>
     
         <span class="sidebar-tag-name" data-tags="python,多线程"><span class="iconfont-archer">&#xe606;</span>python,多线程</span>
+    
+        <span class="sidebar-tag-name" data-tags="winpcap"><span class="iconfont-archer">&#xe606;</span>winpcap</span>
     
         <span class="sidebar-tag-name" data-tags="计算机网络,传输层"><span class="iconfont-archer">&#xe606;</span>计算机网络,传输层</span>
     
@@ -1271,9 +1329,9 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="社工"><span class="iconfont-archer">&#xe60a;</span>社工</span>
     
-        <span class="sidebar-category-name" data-categories="Pwn"><span class="iconfont-archer">&#xe60a;</span>Pwn</span>
-    
         <span class="sidebar-category-name" data-categories="计算机网络"><span class="iconfont-archer">&#xe60a;</span>计算机网络</span>
+    
+        <span class="sidebar-category-name" data-categories="Pwn"><span class="iconfont-archer">&#xe60a;</span>Pwn</span>
     
         <span class="sidebar-category-name" data-categories="BlackHatTools"><span class="iconfont-archer">&#xe60a;</span>BlackHatTools</span>
     
