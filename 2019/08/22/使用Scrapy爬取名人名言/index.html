@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>HackPluto&#39;s Blog</title>
+    <title>使用Scrapy爬取名人名言 · HackPluto&#39;s Blog</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -203,12 +203,23 @@
 </head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/">HackPluto&#39;s Blog</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">使用Scrapy爬取名人名言</a>
+            </div>
+    </div>
     
     <a class="home-link" href="/">HackPluto's Blog</a>
 </header>
@@ -220,24 +231,74 @@
 
 
 
+
+height:50vh;
 ">
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/2.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+            使用Scrapy爬取名人名言
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class="post-intro-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="Scrapy,python">Scrapy,python</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">766</span>阅读时长: <span class="post-count reading-time">3 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2019/08/22</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -338,130 +399,82 @@
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/04/23/自己动手写工具(1)--Netcat/">
-            
-                <span>自己动手写工具（1）--Netcat</span>
-        </a>
-        <div class="abstract-content">
-            一直以来都是在用别人写好的工具，为了锻炼自己的编程能力以及更加深刻的理解网络，所以我准备做一个长期的写工具计划。第一个工具呢就是仿照一个类似于netcat的网络连接工具Pdao，netcat被称为网络界的“瑞士军刀”，功能十分丰富，我的工具参考了NC的功能，主要有如下几种功能：1.服务端的监听2.上传文件3.反弹shell4.下载文件
-12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/23</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="工具,python,Netcat">工具,python,Netcat</a>
-    
-</div>
-            
-        </div>
+            <main class="main post-page">
+    <article class="article-entry">
+        <blockquote>
+<p>爬取的网页：<a href="http://quotes.toscrape.com" target="_blank" rel="noopener">http://quotes.toscrape.com</a><br>python版本：python3<br>使用的框架：Scrapy<br>OS：macOS</p>
+</blockquote>
+<h2 id="下载Scrapy"><a href="#下载Scrapy" class="headerlink" title="下载Scrapy"></a>下载Scrapy</h2><blockquote>
+<p>Scrapy是一个为了爬取网站数据，提取结构性数据而编写的应用框架。 可以应用在包括数据挖掘，信息处理或存储历史数据等一系列的程序中。本博客的主要参考来源是Scrapy的官方文档 <a href="https://docs.scrapy.org" target="_blank" rel="noopener">https://docs.scrapy.org</a></p>
+</blockquote>
+<blockquote>
+<p>首先第一步是下载Scrapy,我使用的是最快捷的方法，使用pip安装,官方文档也是建议使用pip</p>
+</blockquote>
+<p><img src="https://i.loli.net/2019/08/22/lmzwRQnprhL7EeW.jpg" alt></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install Scrapy</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2019/08/22/qTZcwXxNl9HaFW7.jpg" alt></p>
+<p>下载好后可以查看Scrapy的命令<br><img src="https://i.loli.net/2019/08/22/TCHbsU35jh27FcK.jpg" alt></p>
+<h2 id="创建一个Scrapy项目"><a href="#创建一个Scrapy项目" class="headerlink" title="创建一个Scrapy项目"></a>创建一个Scrapy项目</h2><blockquote>
+<p>就像平时写C/C++一样，第一步也是创建一个工程，这里scrapy已经集成好了命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrapy startproject tutorial</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>我们发现当前目录下多出了一个tutorial文件夹,文件结构如下</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">tutorial/</span><br><span class="line">    scrapy.cfg            # 配置文件</span><br><span class="line"></span><br><span class="line">    tutorial/             # 项目的主文件，代码和数据保存在这里</span><br><span class="line">        __init__.py</span><br><span class="line"></span><br><span class="line">        items.py          # 项目定义文件</span><br><span class="line"></span><br><span class="line">        middlewares.py    # 项目中间件文件</span><br><span class="line"></span><br><span class="line">        pipelines.py      # 项目管道文件</span><br><span class="line"></span><br><span class="line">        settings.py       # 项目配置文件</span><br><span class="line"></span><br><span class="line">        spiders/          # 爬虫的代码</span><br><span class="line">            __init__.py</span><br></pre></td></tr></table></figure>
+<h2 id="编写代码"><a href="#编写代码" class="headerlink" title="编写代码"></a>编写代码</h2><blockquote>
+<p>从上面的文件结构我们可以看出，编写的代码应该放在spiders文件夹下，所以进入spiders文件夹，新建一个python文件quotes_spider.py<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AuthorSpider</span><span class="params">(scrapy.Spider)</span>:</span></span><br><span class="line">    name = <span class="string">'author'</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">#爬取的URL</span></span><br><span class="line">    start_urls = [<span class="string">'http://quotes.toscrape.com/'</span>]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse</span><span class="params">(self, response)</span>:</span></span><br><span class="line">        <span class="keyword">for</span> href <span class="keyword">in</span> response.css(<span class="string">'.author + a::attr(href)'</span>):</span><br><span class="line">            <span class="keyword">yield</span> response.follow(href, self.parse_author)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> href <span class="keyword">in</span> response.css(<span class="string">'li.next a::attr(href)'</span>):</span><br><span class="line">            <span class="keyword">yield</span> response.follow(href, self.parse)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse_author</span><span class="params">(self, response)</span>:</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">extract_with_css</span><span class="params">(query)</span>:</span></span><br><span class="line">            <span class="keyword">return</span> response.css(query).get(default=<span class="string">''</span>).strip()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">yield</span> &#123;</span><br><span class="line">            <span class="string">'name'</span>: extract_with_css(<span class="string">'h3.author-title::text'</span>),</span><br><span class="line">            <span class="string">'birthdate'</span>: extract_with_css(<span class="string">'.author-born-date::text'</span>),</span><br><span class="line">            <span class="string">'birthplae'</span>: extract_with_css(<span class="string">'.author-born-location::text'</span>),</span><br><span class="line">            <span class="string">'bio'</span>: extract_with_css(<span class="string">'.author-description::text'</span>),</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>我们在先是使用了python中的继承，在scrapy.Spider 中设置子类AuthorSpider中定义了一些属性和方法：<br>name：识别爬虫。它在项目中必须是唯一的，也就是说，不能为不同的Spiders设置相同的名称。<br>这个爬虫将从主页面开始，它将跟随作者页面的所有链接，parse_author为每个页面调用回调，以及parse我们之前看到的与回调的分页链接。<br>这里我们将回调传递给response.follow位置参数以使代码更短; 它也适用于scrapy.Request。<br>该parse_author回调定义了一个辅助函数从CSS查询提取和清理数据，并产生了Python字典与作者的数据。<br>这个爬虫演示的另一个有趣的事情是，即使同一作者有很多引用，我们也不必担心多次访问同一个作者页面。默认情况下，Scrapy会筛选出已访问过的URL的重复请求，从而避免因编程错误而导致服务器过多的问题。这可以通过设置进行配置DUPEFILTER_CLASS。</p>
+</blockquote>
+<h2 id="存储已爬取的数据"><a href="#存储已爬取的数据" class="headerlink" title="存储已爬取的数据"></a>存储已爬取的数据</h2><blockquote>
+<p>存储已删除数据的最简单方法是使用Feed导出，使用以下命令：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrapy crawl author -o author.json</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在项目的根目录下就会多出一个json文件，查看文件内容，爬取成功。</p>
+</blockquote>
+<p><img src="https://i.loli.net/2019/08/22/mqNSPRKf8hG45yE.jpg" alt></p>
+
     </article>
+    <!-- license  -->
     
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/04/19/sqli-labs/">
-            
-                <span>sqli-labs 通关详解</span>
-        </a>
-        <div class="abstract-content">
-             CTF-web学习笔记之 sqli-labs第一关：第一关如图首先可以判断这里接受的是一个GET请求，先在1后面加一个’ 发现报错，说明这里没有过滤掉引号，所以这里是一个注入点SQL注入通常有两种类型，整形注入和字符型注入，那么判断这里是哪种注入就要分析这里的报错语句，报错信息中共有5个单引号，”实际上是两个单引号，最外面的两个是报错信息的提示引号，’1’两边的引号是后台代码的引号，多出来的就是我们加上的，因为这里给输入的1加上了引号所以后台接受的是字符型，那么我们在后续的注入中需要加 ‘ 来闭合后面的引号
-接下来需要判断表中有几列，通常使用order by加数字 1 2 3 4 5一...
+        <div class="license-wrapper">
+            <p>原文作者：<a href="http://yoursite.com">HackPluto</a>
+            </p><p>原文链接：<a href="http://yoursite.com/2019/08/22/使用Scrapy爬取名人名言/">http://yoursite.com/2019/08/22/使用Scrapy爬取名人名言/</a>
+            </p><p>发表日期：<a href="http://yoursite.com/2019/08/22/使用Scrapy爬取名人名言/">August 22nd 2019, 2:36:26 pm</a>
+            </p><p>更新日期：<a href="http://yoursite.com/2019/08/22/使用Scrapy爬取名人名言/">August 22nd 2019, 3:06:47 pm</a>
+            </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/19</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="ctf,web,sql注入">ctf,web,sql注入</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/04/19/python下多核/">
-            
-                <span>python下多核，单核CPU对于并行，并发执行效率的对比</span>
-        </a>
-        <div class="abstract-content">
-            这篇博客主要内容为python 中多线程以及多进程的效率对比，以及记录自己在做这个实验中遇到的一些问题以及心得
-背景引入：CPU制造商为了追求CPU效率放弃了在CPU频率上的追求（CPU频率即CPU单位时间内可以完成任务的多少），反而开始把方向转向了多核CPU上。那么如何在多核CPU上充分发挥出多核的优势就成了一个问题。
-首先是简单介绍下多线程与多进程：线程：是程序执行流的最小单元，是系统独立调度和分配CPU（独立运行）的基本单位。线程(有时被称为轻量级进程)跟进程有些相似，不同的是，所有的线程运行在同一个进程中， 共享相同的运行环境。它们可以想像成是在主进程或“主线程”中并行运行的“迷...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/19</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="python,多线程">python,多线程</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/04/16/hello-world/">
-            
-                <span>HackPluto&#39;s Blog</span>
-        </a>
-        <div class="abstract-content">
-            Welcome to HackPluto’s Blog! If you get any problems when reading my blogs, you can ask me on GitHub,or send email to me.
-博客介绍现在是2019年4月19日，今天终于有了自己的博客，其实自己写博客时间也不短，但都是在CSDN上或者逼乎专栏里发，现在终于有了自己的博客网站（第一次建站踩了无数的坑）。写博客的初衷呢，是分享和记录自己的知识，我的博客以后主题就是分享黑客技术知识，我主要想以以下几个方面展开：
-1.ACM以及算法2.CTF闯关3.渗透测试（web渗透为主4.无...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/16</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
     
     <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/2019/08/17/使用winpacap制作嗅探器/" title="使用winpacap制作嗅探器">
+                    <div class="prevTitle">使用winpacap制作嗅探器</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
-    <nav class="page-nav">
-        <a class="extend prev" rel="prev" href="/archives/2019/page/3/">&#60; PREV</a><a class="page-number" href="/archives/2019/">1</a><a class="page-number" href="/archives/2019/page/2/">2</a><a class="page-number" href="/archives/2019/page/3/">3</a><span class="page-number current">4</span>
-    </nav>
     
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -541,6 +554,24 @@
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#下载Scrapy"><span class="toc-number">1.</span> <span class="toc-text">下载Scrapy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建一个Scrapy项目"><span class="toc-number">2.</span> <span class="toc-text">创建一个Scrapy项目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编写代码"><span class="toc-number">3.</span> <span class="toc-text">编写代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#存储已爬取的数据"><span class="toc-number">4.</span> <span class="toc-text">存储已爬取的数据</span></a></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -1354,6 +1385,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
      
     </body>
 </html>
