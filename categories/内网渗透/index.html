@@ -351,8 +351,16 @@
                 <span>windows后渗透维权</span>
         </a>
         <div class="abstract-content">
-            
+            背景
+这篇博客主要介绍对于Windows机器渗透后维持权限的过程，这篇博客是建立在已经getshell的情况下，具体怎么getshell和渗透我在这里不介绍。在拿到域控之后我们有许多手段来维持自己的权限,然而我们不能保证一直对这个服务器保持着root权限，如果服务器管理员补了洞或者发现了入侵者，通常我们就失去了对服务器的控制，所以我主要介绍与建立隐藏账户有关的几种方法。建立影子账户是一种十分有效的方法，隐蔽性强。
 
+win7下通过修改注册表建立隐藏账户
+通常建立的账户可以在nei user命令下看到，所以第一步就是在账户名后面加$可以达到命令行下不显示的目的。
+
+
+
+
+但是这种方法不够隐...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -1264,37 +1272,37 @@ IIS基本配置点开IIS服务器，点击网站，删除默认的站点，新�
     
         <span class="sidebar-tag-name" data-tags="ACM,数论"><span class="iconfont-archer">&#xe606;</span>ACM,数论</span>
     
-        <span class="sidebar-tag-name" data-tags="Linux,LAMP"><span class="iconfont-archer">&#xe606;</span>Linux,LAMP</span>
-    
         <span class="sidebar-tag-name" data-tags="ctf,web,编码"><span class="iconfont-archer">&#xe606;</span>ctf,web,编码</span>
     
         <span class="sidebar-tag-name" data-tags="防火墙,iptables"><span class="iconfont-archer">&#xe606;</span>防火墙,iptables</span>
     
-        <span class="sidebar-tag-name" data-tags="IDA,OllyDB"><span class="iconfont-archer">&#xe606;</span>IDA,OllyDB</span>
+        <span class="sidebar-tag-name" data-tags="Linux,LAMP"><span class="iconfont-archer">&#xe606;</span>Linux,LAMP</span>
     
         <span class="sidebar-tag-name" data-tags="SSH,端口转发"><span class="iconfont-archer">&#xe606;</span>SSH,端口转发</span>
     
-        <span class="sidebar-tag-name" data-tags="windows,影子账户"><span class="iconfont-archer">&#xe606;</span>windows,影子账户</span>
+        <span class="sidebar-tag-name" data-tags="IDA,OllyDB"><span class="iconfont-archer">&#xe606;</span>IDA,OllyDB</span>
     
         <span class="sidebar-tag-name" data-tags="IIS"><span class="iconfont-archer">&#xe606;</span>IIS</span>
+    
+        <span class="sidebar-tag-name" data-tags="windows,域控,内网渗透"><span class="iconfont-archer">&#xe606;</span>windows,域控,内网渗透</span>
+    
+        <span class="sidebar-tag-name" data-tags="windows,影子账户"><span class="iconfont-archer">&#xe606;</span>windows,影子账户</span>
     
         <span class="sidebar-tag-name" data-tags="信息收集,社会工程学"><span class="iconfont-archer">&#xe606;</span>信息收集,社会工程学</span>
     
         <span class="sidebar-tag-name" data-tags="Scrapy,python"><span class="iconfont-archer">&#xe606;</span>Scrapy,python</span>
     
-        <span class="sidebar-tag-name" data-tags="windows,域控,内网渗透"><span class="iconfont-archer">&#xe606;</span>windows,域控,内网渗透</span>
-    
         <span class="sidebar-tag-name" data-tags="动态规划(DP)"><span class="iconfont-archer">&#xe606;</span>动态规划(DP)</span>
-    
-        <span class="sidebar-tag-name" data-tags="PWN,BROP,栈溢出"><span class="iconfont-archer">&#xe606;</span>PWN,BROP,栈溢出</span>
     
         <span class="sidebar-tag-name" data-tags="域控制器"><span class="iconfont-archer">&#xe606;</span>域控制器</span>
     
-        <span class="sidebar-tag-name" data-tags="XCTF,逆向"><span class="iconfont-archer">&#xe606;</span>XCTF,逆向</span>
+        <span class="sidebar-tag-name" data-tags="PWN,BROP,栈溢出"><span class="iconfont-archer">&#xe606;</span>PWN,BROP,栈溢出</span>
     
         <span class="sidebar-tag-name" data-tags="应用层,计算机网络"><span class="iconfont-archer">&#xe606;</span>应用层,计算机网络</span>
     
         <span class="sidebar-tag-name" data-tags="pwn,格式化字符串"><span class="iconfont-archer">&#xe606;</span>pwn,格式化字符串</span>
+    
+        <span class="sidebar-tag-name" data-tags="XCTF,逆向"><span class="iconfont-archer">&#xe606;</span>XCTF,逆向</span>
     
         <span class="sidebar-tag-name" data-tags="工具,python,Netcat"><span class="iconfont-archer">&#xe606;</span>工具,python,Netcat</span>
     
@@ -1357,9 +1365,9 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="ACM"><span class="iconfont-archer">&#xe60a;</span>ACM</span>
     
-        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
-    
         <span class="sidebar-category-name" data-categories="CTFweb"><span class="iconfont-archer">&#xe60a;</span>CTFweb</span>
+    
+        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
     
         <span class="sidebar-category-name" data-categories="内网渗透"><span class="iconfont-archer">&#xe60a;</span>内网渗透</span>
     

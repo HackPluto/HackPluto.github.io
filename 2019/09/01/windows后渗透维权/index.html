@@ -272,7 +272,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">0</span>阅读时长: <span class="post-count reading-time">1 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">812</span>阅读时长: <span class="post-count reading-time">2 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -401,7 +401,62 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <p><img src="https://i.loli.net/2019/09/01/jl7gz6DaEQYVH5h.jpg" alt><br><img src="https://i.loli.net/2019/09/01/PTKr1CsVbNZW8dU.jpg" alt><br><img src="https://i.loli.net/2019/09/01/xQo8rtaMUbOpnf4.jpg" alt><br><img src="https://i.loli.net/2019/09/01/Vm85XnMW7hPSisC.jpg" alt><br><img src="https://i.loli.net/2019/09/01/EGSe5kTbH1WX4hF.jpg" alt><br><img src="https://i.loli.net/2019/09/01/fHhxQK13OveYG8o.jpg" alt><br><img src="https://i.loli.net/2019/09/01/EmAOizIPVeBlsvR.jpg" alt><br><img src="https://i.loli.net/2019/09/01/lnJtgDqx5mGLHo7.jpg" alt><br><img src="https://i.loli.net/2019/09/01/J2ySIwBiHghpKPe.jpg" alt><br><img src="https://i.loli.net/2019/09/01/FHMDmjPo3pt4vBV.jpg" alt><br><img src="https://i.loli.net/2019/09/01/wHW8mrsJG3gkc56.jpg" alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt></p>
+        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><blockquote>
+<p>这篇博客主要介绍对于Windows机器渗透后维持权限的过程，这篇博客是建立在已经getshell的情况下，具体怎么getshell和渗透我在这里不介绍。在拿到域控之后我们有许多手段来维持自己的权限,然而我们不能保证一直对这个服务器保持着root权限，如果服务器管理员补了洞或者发现了入侵者，通常我们就失去了对服务器的控制，所以我主要介绍与建立隐藏账户有关的几种方法。建立影子账户是一种十分有效的方法，隐蔽性强。</p>
+</blockquote>
+<h2 id="win7下通过修改注册表建立隐藏账户"><a href="#win7下通过修改注册表建立隐藏账户" class="headerlink" title="win7下通过修改注册表建立隐藏账户"></a>win7下通过修改注册表建立隐藏账户</h2><blockquote>
+<p>通常建立的账户可以在nei user命令下看到，所以第一步就是在账户名后面加$可以达到命令行下不显示的目的。</p>
+</blockquote>
+<p><img src="https://i.loli.net/2019/09/01/wHW8mrsJG3gkc56.jpg" alt></p>
+<p><img src="https://i.loli.net/2019/09/01/FHMDmjPo3pt4vBV.jpg" alt></p>
+<blockquote>
+<p>但是这种方法不够隐蔽，在控制面板里同样可以看到这个账户</p>
+</blockquote>
+<p><img src="https://i.loli.net/2019/09/01/J2ySIwBiHghpKPe.jpg" alt></p>
+<blockquote>
+<p>这里就要引入修改注册表的方法，注册表是Windows中的一个重要的数据库，用于存储系统和应用程序的设置信息。早在Windows 3.0推出OLE技术的时候，注册表就已经出现。随后推出的Windows NT是第一个从系统级别广泛使用注册表的操作系统。但是，从Microsoft Windows 95操作系统开始，注册表才真正成为Windows用户经常接触的内容，并在其后的操作系统中继续沿用至今。</p>
+</blockquote>
+<blockquote>
+<p>这里我先将方法再介绍原理</p>
+</blockquote>
+<p><strong>1、对注册表赋予权限</strong></p>
+<blockquote>
+<p>默认注册表HKEY_LOCAL_MACHINE\SAM\SAM\只有system权限才能修改<br>现在需要为其添加管理员权限<br>右键-权限-选中Administrators，允许完全控制</p>
+</blockquote>
+<p><img src="https://raw.githubusercontent.com/3gstudent/BlogPic/master/2017-11-10/2-1.png" alt></p>
+<p><strong>2、导出注册表</strong></p>
+<blockquote>
+<p>在注册表HKEY_LOCAL_MACHINE\SAM\SAM\Domains\Account\Users\Names下找到新建的帐户test获取默认类型为0x3ea将注册表HKEY_LOCAL_MACHINE\SAM\SAM\Domains\Account\Users\Names\test$导出为1.reg<br>在注册表下能够找到对应类型名称的注册表项HKEY_LOCAL_MACHINE\SAM\SAM\Domains\Account\Users\000003EA</p>
+</blockquote>
+<p><img src="https://i.loli.net/2019/09/01/lnJtgDqx5mGLHo7.jpg" alt></p>
+<p><strong>3.修改注册表内容</strong></p>
+<blockquote>
+<p>默认情况下，管理员帐户Administrator对应的注册表键值为HKEY_LOCAL_MACHINE\SAM\SAM\Domains\Account\Users\000001F4<br>同样，右键将该键导出为3.reg<br>将注册表项HKEY_LOCAL_MACHINE\SAM\SAM\Domains\Account\Users\000003EA下键F的值替换为HKEY_LOCAL_MACHINE\SAM\SAM\Domains\Account\Users\000001F4下键F的值，即2.reg中键F的值替换成3.reg中键F的值,右键编辑即可修改数据。</p>
+</blockquote>
+<p><strong>4.命令行删除账户</strong></p>
+<blockquote>
+<p>net user test$ /del</p>
+</blockquote>
+<p><img src="https://i.loli.net/2019/09/01/fHhxQK13OveYG8o.jpg" alt></p>
+<blockquote>
+<p>现在我们就发现不管是在命令行下还是控制面板里都找不到这个隐藏账户了。</p>
+</blockquote>
+<p><img src="https://i.loli.net/2019/09/01/Vm85XnMW7hPSisC.jpg" alt><br><img src="https://i.loli.net/2019/09/01/EGSe5kTbH1WX4hF.jpg" alt></p>
+<blockquote>
+<p>同时在登陆界面也看不见这个账户了</p>
+</blockquote>
+<p><img src="https://i.loli.net/2019/09/01/xQo8rtaMUbOpnf4.jpg" alt></p>
+<p><strong>5.远程登陆</strong></p>
+<blockquote>
+<p>第一步要保证这台机器允许远程登陆，这里是win7系统，所以在控制面板，系统安全里找到远程登陆，点击允许所有用户远程登陆，这就相当于开启了3389端口</p>
+</blockquote>
+<blockquote>
+<p>接下来是查看IP地址<br><img src="https://i.loli.net/2019/09/01/jl7gz6DaEQYVH5h.jpg" alt></p>
+</blockquote>
+<blockquote>
+<p>我使用win10去连接win7，在win10中打开远程桌面，输入win7IP地址以及账户名，再输入密码就可以远程登陆。<br><img src="https://i.loli.net/2019/09/01/PTKr1CsVbNZW8dU.jpg" alt></p>
+</blockquote>
+<p><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt></p>
 
     </article>
     <!-- license  -->
@@ -410,7 +465,7 @@ height:50vh;
             <p>原文作者：<a href="http://yoursite.com">HackPluto</a>
             </p><p>原文链接：<a href="http://yoursite.com/2019/09/01/windows后渗透维权/">http://yoursite.com/2019/09/01/windows后渗透维权/</a>
             </p><p>发表日期：<a href="http://yoursite.com/2019/09/01/windows后渗透维权/">September 1st 2019, 12:21:00 am</a>
-            </p><p>更新日期：<a href="http://yoursite.com/2019/09/01/windows后渗透维权/">September 1st 2019, 12:37:49 am</a>
+            </p><p>更新日期：<a href="http://yoursite.com/2019/09/01/windows后渗透维权/">September 2nd 2019, 12:05:42 am</a>
             </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -537,7 +592,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#背景"><span class="toc-number">1.</span> <span class="toc-text">背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#win7下通过修改注册表建立隐藏账户"><span class="toc-number">2.</span> <span class="toc-text">win7下通过修改注册表建立隐藏账户</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -1215,37 +1270,37 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="ACM,数论"><span class="iconfont-archer">&#xe606;</span>ACM,数论</span>
     
-        <span class="sidebar-tag-name" data-tags="Linux,LAMP"><span class="iconfont-archer">&#xe606;</span>Linux,LAMP</span>
-    
         <span class="sidebar-tag-name" data-tags="ctf,web,编码"><span class="iconfont-archer">&#xe606;</span>ctf,web,编码</span>
     
         <span class="sidebar-tag-name" data-tags="防火墙,iptables"><span class="iconfont-archer">&#xe606;</span>防火墙,iptables</span>
     
-        <span class="sidebar-tag-name" data-tags="IDA,OllyDB"><span class="iconfont-archer">&#xe606;</span>IDA,OllyDB</span>
+        <span class="sidebar-tag-name" data-tags="Linux,LAMP"><span class="iconfont-archer">&#xe606;</span>Linux,LAMP</span>
     
         <span class="sidebar-tag-name" data-tags="SSH,端口转发"><span class="iconfont-archer">&#xe606;</span>SSH,端口转发</span>
     
-        <span class="sidebar-tag-name" data-tags="windows,影子账户"><span class="iconfont-archer">&#xe606;</span>windows,影子账户</span>
+        <span class="sidebar-tag-name" data-tags="IDA,OllyDB"><span class="iconfont-archer">&#xe606;</span>IDA,OllyDB</span>
     
         <span class="sidebar-tag-name" data-tags="IIS"><span class="iconfont-archer">&#xe606;</span>IIS</span>
+    
+        <span class="sidebar-tag-name" data-tags="windows,域控,内网渗透"><span class="iconfont-archer">&#xe606;</span>windows,域控,内网渗透</span>
+    
+        <span class="sidebar-tag-name" data-tags="windows,影子账户"><span class="iconfont-archer">&#xe606;</span>windows,影子账户</span>
     
         <span class="sidebar-tag-name" data-tags="信息收集,社会工程学"><span class="iconfont-archer">&#xe606;</span>信息收集,社会工程学</span>
     
         <span class="sidebar-tag-name" data-tags="Scrapy,python"><span class="iconfont-archer">&#xe606;</span>Scrapy,python</span>
     
-        <span class="sidebar-tag-name" data-tags="windows,域控,内网渗透"><span class="iconfont-archer">&#xe606;</span>windows,域控,内网渗透</span>
-    
         <span class="sidebar-tag-name" data-tags="动态规划(DP)"><span class="iconfont-archer">&#xe606;</span>动态规划(DP)</span>
-    
-        <span class="sidebar-tag-name" data-tags="PWN,BROP,栈溢出"><span class="iconfont-archer">&#xe606;</span>PWN,BROP,栈溢出</span>
     
         <span class="sidebar-tag-name" data-tags="域控制器"><span class="iconfont-archer">&#xe606;</span>域控制器</span>
     
-        <span class="sidebar-tag-name" data-tags="XCTF,逆向"><span class="iconfont-archer">&#xe606;</span>XCTF,逆向</span>
+        <span class="sidebar-tag-name" data-tags="PWN,BROP,栈溢出"><span class="iconfont-archer">&#xe606;</span>PWN,BROP,栈溢出</span>
     
         <span class="sidebar-tag-name" data-tags="应用层,计算机网络"><span class="iconfont-archer">&#xe606;</span>应用层,计算机网络</span>
     
         <span class="sidebar-tag-name" data-tags="pwn,格式化字符串"><span class="iconfont-archer">&#xe606;</span>pwn,格式化字符串</span>
+    
+        <span class="sidebar-tag-name" data-tags="XCTF,逆向"><span class="iconfont-archer">&#xe606;</span>XCTF,逆向</span>
     
         <span class="sidebar-tag-name" data-tags="工具,python,Netcat"><span class="iconfont-archer">&#xe606;</span>工具,python,Netcat</span>
     
@@ -1308,9 +1363,9 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="ACM"><span class="iconfont-archer">&#xe60a;</span>ACM</span>
     
-        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
-    
         <span class="sidebar-category-name" data-categories="CTFweb"><span class="iconfont-archer">&#xe60a;</span>CTFweb</span>
+    
+        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
     
         <span class="sidebar-category-name" data-categories="内网渗透"><span class="iconfont-archer">&#xe60a;</span>内网渗透</span>
     
