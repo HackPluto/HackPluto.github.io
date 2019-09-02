@@ -272,7 +272,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">812</span>阅读时长: <span class="post-count reading-time">2 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">4.2k</span>阅读时长: <span class="post-count reading-time">15 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -401,10 +401,10 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><blockquote>
+        <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><blockquote>
 <p>这篇博客主要介绍对于Windows机器渗透后维持权限的过程，这篇博客是建立在已经getshell的情况下，具体怎么getshell和渗透我在这里不介绍。在拿到域控之后我们有许多手段来维持自己的权限,然而我们不能保证一直对这个服务器保持着root权限，如果服务器管理员补了洞或者发现了入侵者，通常我们就失去了对服务器的控制，所以我主要介绍与建立隐藏账户有关的几种方法。建立影子账户是一种十分有效的方法，隐蔽性强。</p>
 </blockquote>
-<h2 id="win7下通过修改注册表建立隐藏账户"><a href="#win7下通过修改注册表建立隐藏账户" class="headerlink" title="win7下通过修改注册表建立隐藏账户"></a>win7下通过修改注册表建立隐藏账户</h2><blockquote>
+<h1 id="win7下通过修改注册表建立隐藏账户"><a href="#win7下通过修改注册表建立隐藏账户" class="headerlink" title="win7下通过修改注册表建立隐藏账户"></a>win7下通过修改注册表建立隐藏账户</h1><h2 id="功能实现"><a href="#功能实现" class="headerlink" title="功能实现"></a>功能实现</h2><blockquote>
 <p>通常建立的账户可以在nei user命令下看到，所以第一步就是在账户名后面加$可以达到命令行下不显示的目的。</p>
 </blockquote>
 <p><img src="https://i.loli.net/2019/09/01/wHW8mrsJG3gkc56.jpg" alt></p>
@@ -442,6 +442,10 @@ height:50vh;
 <p>现在我们就发现不管是在命令行下还是控制面板里都找不到这个隐藏账户了。</p>
 </blockquote>
 <p><img src="https://i.loli.net/2019/09/01/Vm85XnMW7hPSisC.jpg" alt><br><img src="https://i.loli.net/2019/09/01/EGSe5kTbH1WX4hF.jpg" alt></p>
+<p><strong>5.导入reg文件</strong></p>
+<blockquote>
+<p>regedit /s 1.reg<br>regedit /s 2.reg</p>
+</blockquote>
 <blockquote>
 <p>同时在登陆界面也看不见这个账户了</p>
 </blockquote>
@@ -451,12 +455,67 @@ height:50vh;
 <p>第一步要保证这台机器允许远程登陆，这里是win7系统，所以在控制面板，系统安全里找到远程登陆，点击允许所有用户远程登陆，这就相当于开启了3389端口</p>
 </blockquote>
 <blockquote>
-<p>接下来是查看IP地址<br><img src="https://i.loli.net/2019/09/01/jl7gz6DaEQYVH5h.jpg" alt></p>
+<p>接下来是查看IP地址</p>
+</blockquote>
+<p><img src="https://i.loli.net/2019/09/01/jl7gz6DaEQYVH5h.jpg" alt></p>
+<blockquote>
+<p>我使用win10去连接win7，在win10中打开远程桌面，输入win7IP地址以及账户名，再输入密码就可以远程登陆。</p>
+</blockquote>
+<p><img src="https://i.loli.net/2019/09/01/PTKr1CsVbNZW8dU.jpg" alt></p>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><blockquote>
+<p>那么我们为什么需要修改那一个注册表项的内容呢，我在网上查了下这方面的资料，很可惜微软官方并没有非常完整的对注册表的内容做一个详解，只能依靠谷歌看看前人的研究结果。</p>
+</blockquote>
+<p><strong>注册表 SAM</strong></p>
+<p><img src="https://i.loli.net/2019/09/02/flrv3WHyBDeVGMc.jpg" alt></p>
+<blockquote>
+<p>大家都知道以Windows NT为内核的操作系统,它的注册表保存位置在system32\config目录内,其中与用户和组有关的内容是保存在SAM文件当中.当Windows系统启动后,为了后面对用户和组进行比较方便的访问,就把SAM文件内关于用户和组的部分(不是全部的)内容映射在注册表内两个地方:”HKEY_LOCAL_MACHINE\SAM\SAM”和”HKEY_LOCAL_MACHINE\SECURITY\SAM”.这两处的内容是完全一样的.<br>由于以上两处的内容是完全一样,所以我在这里仅以”HKEY_LOCAL_MACHINE\SAM\SAM”做说明.</p>
+</blockquote>
+<p><strong>HKEY_LOCAL_MACHINE\SAM\SAM</strong></p>
+<blockquote>
+<p>在”HKEY_LOCAL_MACHINE\SAM\SAM”下的”RXACT”项目只有一个默认值,内容不详.<br>在”HKEY_LOCAL_MACHINE\SAM\SAM\Domains”下有二个项目:”Account”、”Builtin”.前者包含系统下所有的用户和由用户创建的组.而后者包含系统所有本身的组.</p>
+</blockquote>
+<p><img src="https://i.loli.net/2019/09/02/IUFBAs6wXdiuZQT.jpg" alt></p>
+<blockquote>
+<p>“HKEY_LOCAL_MACHINE\SAM\SAM\Domains\Builtin”下有三个项目:”Aliases”、”Groups”、”Users”<br>其中Groups和Users没有什么实质性的内容,可以不用去管它.<br>在Aliases下我们可以看到很多的注册表项目,我主要它们分为三类:<br>1)Members这个项目的真正意义我也不是很清楚,只能大概的设想一下.<br>在这个项目下有两个子项:S-1-5和S-1-5-21-<strong><strong>**</strong></strong>-<strong><strong>**</strong></strong>-<strong><strong>*</strong></strong><br>1.S-1-5目前还不是很清楚内容具体是什么，S-1-5-21-<strong><strong>**</strong></strong>-<strong><strong>**</strong></strong>-<strong><strong>*</strong></strong>其中”*”部分为对应的数字,对于这个数字来说,每一台计算机都是不一样的,除GOSHT安装版、网络同传外.这一长串的数字因该是指这台计算机的维一的GUID(全球维一标识符)号码.<br>在这个项目之下的子项是在这台计算机中所有有本地登录权限的用户账户(只是个映射).</p>
+</blockquote>
+<p><img src="https://i.loli.net/2019/09/02/nCabIPmH5Y2VMNk.jpg" alt></p>
+<blockquote>
+<p>在上面我已说过,这里的内容是在这台计算机中所有有本地登录权限的用户账户,现在我来说明一下每个用户的默认值的意思.<br>首先是它的数据,每个用户的默认值的数据都是一个特殊符号,这些符号的意思是什么，特别说明一下这些特殊符号都是Unicode格式,在ASCII格式的文本文件中是不能显示出来的,或显示出来的是乱码.如果大家把这编文章COPY下,并放在计事本中保存,那么记得在保存时,选择编码为”Unicode”就可以了。<br>经我发现这些符号指的是某个用户的主要权限.那什么又是主要权限呢???<br>比方说,一个用户在多个组中,如:Administrator,Users.那这个用户的权限是什么呢,大家一定会说这个用户在管理员.没有错,所以这个特殊符号指的就是这个.我们可以做个试验,添加一个用户,把它放在任何多个组中,其中要有Administrator,那么这个用户在这里的默认值数据就为”Ƞ”,和”000001F4”一样(当然如果用户只属于Administrator组,结果也是一样了).下面我列出一些组与特殊符号的关系:</p>
 </blockquote>
 <blockquote>
-<p>我使用win10去连接win7，在win10中打开远程桌面，输入win7IP地址以及账户名，再输入密码就可以远程登陆。<br><img src="https://i.loli.net/2019/09/01/PTKr1CsVbNZW8dU.jpg" alt></p>
+<p>Administrators(“Ƞ”)<br>Backup Operators(“ȧ”)<br>Distributed COM Users(“Ȳ”)<br>Guests(“Ȣ”)<br>Network Configuration Operators(“Ȭ”)<br>Performance Log Users(“ȯ”)<br>Performance Monitor Users(“Ȯ”)<br>Power Users(“ȣ”)<br>Print Operators(“Ȧ”)<br>Remote Desktop Users(“ȫ”)<br>Replicator(“Ȩ”)<br>Users(“ȡ”)<br>Debugger Users(“无本地登录权限”)<br>HelpServicesGroup(“无本地登录权限”)<br>IIS_WPG(“无本地登录权限”)<br>TelnetClients(“无本地登录权限”)</p>
 </blockquote>
-<p><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt></p>
+<p><img src="https://i.loli.net/2019/09/02/ShkfaUQYWIALXBn.jpg" alt></p>
+<blockquote>
+<p>打开HKEY_LOCAL_MACHINE\SAM\SAM\Domains\Builtin\Aliases时,就已经看到了一些像”00000220”、”0000022B”都是由数字和6个英文字母”A、B、C、D、E、F”组成的注册表项目.这些注册表项目的名称也都是用十六进制表示的,只是没有用”0x”开头而已.<br>看一下右边的内容,这些项目就是前面我所说的组的映射目标,也就是说Windows操作系统自身的所有组的内容都在这里面.<br>现在让我们打开00000220项目,我们可以看到这个项目下有两个健值(默认值我们不用看了).其中有一个名称为”C”,数据类型为”REG_BINARY(二进制)”的健值,双击打开”C”的编辑窗口.<br>首先看第一行”20 02 00 00 00 00 00 00”,这里是小端序存储，我们现在也把这行的内容反过来排列一下”0000000000000220”,然后把前面的8个”0”去掉就成的”00000220”,和这个项目名称刚好对上。<br>接下来我们再把编辑窗口拉到最下,在右边的ASCII码中我们可以明显的看到有”Administrators”的存在.没错,这就是组的名称.也就是在”计算机管理”里面显示的组名.在”Administrators”下面还可以看到一些乱码,这些就是该组的描述.不过有一个现像,如果组的描述是由字母、数字、字符组成,那么就可以在这里看到.如果有中文,就没有办法看到中文.不但如此,连ASCII码都和原来的中文ASCII码不一样,不知是Microsoft加密了,还是用了Unicode码,或是其他的编码.</p>
+</blockquote>
+<p><img src="https://i.loli.net/2019/09/02/rxyYAQUPvGu31dj.jpg" alt></p>
+<p><img src="https://i.loli.net/2019/09/02/AWvyGprfVD3l5YH.jpg" alt></p>
+<p>在最后面,有一段内容是这里面的重点.”01 05 00 00 00 00 00 05 15 00 00 00 AA A7 AC DB 7B B7 81 52 D2 F3 2A 30”这里面有什么内容呢???其实这里面有什么我也不知道(哪来的这么多水果呀,正好饿了.不是吧!?都是些吃过的),大家不要急,听我往下说.重点其实是在这个数据串的后面”F4 01 00 00”,这就是重点中的重点呀,这是什么,这就是”Administrator”(如果你只有一个用户在管理员组的话,如果有多个用户在管理员组就向上找).我为什么看到”F4 01 00 00”就认为是”Administrator”呢,想知道就继续向下发展(不要急).</p>
+<p>大家可能会有一个疑问,既然后面才是重点为什么要写出前面的一串数据呢,其时这是有必要的,为什么?这还用我说吗,难道你的计算机只有一个管理员吗?这么一长串的数据其实就是该组下每个用户的分隔符.</p>
+<p>好了,关于”HKEY_LOCAL_MACHINE\SAM\SAM\Domains\Builtin”的说明就先讲到这里,下面看另一个目标.</p>
+<p>在”HKEY_LOCAL_MACHINE\SAM\SAM\Domains\Account”同样也有三个项目:”Aliases”、”Groups”、”Users”</p>
+<p>其中Groups的内容我也看不懂,所以就不说它了.继续向下.</p>
+<p>在Aliases下我仍然把所有内容分为三类:<br>1)Members这个项目的真正意义我也不是很清楚,只能大概的设想一下.<br>在这个项目下有两个子项:S-1-5和S-1-5-21-<strong><strong>**</strong></strong>-<strong><strong>**</strong></strong>-<strong><strong>*</strong></strong><br>1.S-1-5子项我也看不太懂,因为它的内容太下了,也没有什么联系.<br>2.S-1-5-21-<strong><strong>**</strong></strong>-<strong><strong>**</strong></strong>-<strong><strong>*</strong></strong>其中”*”部分为对应的数字,这个数字每一台计算机是不样了,除GOSHT安装版、网络同传外.这一长串的数字因该是指这台计算机的维一的GUID(全球维一标识符)号码.<br>在这个项目之下的子项是在这台计算机中系统自身的用户账户(也只是个映射).如Administrator(000001F4)、Guest(000001F5)、IWAM_GEXING(000003ED)、SUPPORT_388945a0(000003E9)</p>
+<p>2)Names这里面的内容是非Windows系统的一些用户组的名称,这些组是在安装好Windows系统后,再通过安装软件、服务或是用户手动添加的组.该项目内的结构和”HKEY_LOCAL_MACHINE\SAM\SAM\Domains\Builtin”下的Names是一样的,大家可以参考一下该处的内容.</p>
+<p>3)关于这个类别也没有好说的,大家一样可以参考一下”HKEY_LOCAL_MACHINE\SAM\SAM\Domains\Builtin”下的内容,结构也是大致一样了.</p>
+<p>下面我接着来说明一下”HKEY_LOCAL_MACHINE\SAM\SAM\Domains\Account\Users”里的内容.</p>
+<p>在Users下只有二个类别:<br>1)Names这里面是Windows系统中的所有用户名(也只是个映射),不管是系统自身的,还是后面添加的都可以在这里找到.但其真实的内容还是在第二个类别里.</p>
+<p>2)这个分类里的内容也没有说的,大致和上面的差不多,只是用户的详细内容是在”V”键值下.而别外的一个”F”键值就实在有点难懂.</p>
+<p>有一点,在用户的键值”V”中的开头部分,已经找不到该项目的名称了.</p>
+<p>另外在”V”键值内,中间的一部分乱码内容是用户的一些属性设置.</p>
+<p>好了,现在大家因该看出来为什么我看到”F4 01 00 00”就知道是”Administrator”用户了吗.答案就在”HKEY_LOCAL_MACHINE\SAM\SAM\Domains\Account\Users\000001F4”里.</p>
+<p>最后再说一个关于用户密码的存放位置,相信这是大家都关心的一个问题.我个人做了一个小小的试验,先添加一个用户,并备份”V”健值的数据内容,然后设置密码.注销当前用户并以新用户登录需要密码.用管理员登录,导入备份的”V”键值数据内容.再次注销当前用户并以新用户登录,结果如我所料”密码为空”.</p>
+<p>不过在设置密码或是修改密码后,”F”键值的数据内容都会有4个二进制位的数据有点改变.但可以肯定的是用户的密码不会放在”F”健值中.</p>
+<p>有关注册表中”HKEY_LOCAL_MACHINE\SAM\SAM”的内容我就说到这里.<br>下面我再列出一些我做试验时出现的情况,这样出现同样问题,大家就知道是哪里的问题了.<br>希望大家不要照着我说的去做,不然出了什么问题我自己也没有什么好的解决方法.<br>如果大家没有看到图片,有可能是该论坛不支持图片上传,但还有一个最大的可能就是我不会上传(毕竟上论坛不多),请大家多多见谅.<br>(一)<br>我在”计算机管理”中添加了一个组,然后把”HKEY_LOCAL_MACHINE\SAM\SAM\Domains\Account\Aliases”下有关该组的内容删除,将会出现找不到本地组的错误,如图1.<br>解决方法:把”HKEY_LOCAL_MACHINE\SAM\SAM\Domains\Account\Aliases\Names”下该组的内容删除就不再出现该错误.</p>
+<p>(二)<br>1)我在”计算机管理”中添加了一个用户,然后把”HKEY_LOCAL_MACHINE\SAM\SAM\Domains\Account\Users”下有关该用户的内容删除,虽然用户仍然可以显示,但打开该用户的属性窗口时,将会出现请求未知目录对象的错误,如图2.并且注册表中关于该用户的内容也不会自动删除.</p>
+<p>2)接着删除该用户,又会出现找不到用户名的错误,如图3.</p>
+<p>3)然后再删除”HKEY_LOCAL_MACHINE\SAM\SAM\Domains\Account\Users\Names”下的该用户名,刷新”计算机管理”时出现账户名与安全标识间无任何映射完成的错误,如图4.</p>
+<p>4)再添加一个用户,把第1和第3步反过来,得到的出错提示仍然是先图2,后图4.<br>解决方法:只要重新启动一下计算机,系统会自己删除该用户的信息.</p>
+<p>(三)<br>这是我的一个失误,当时我想通过手动删除注册表中的内容,把”Administrstors”组中的所有用户除”Administrator”外都删除,我没有做好备份,结果当我把”HKEY_LOCAL_MACHINE\SAM\SAM\Domains\Builtin\Aliases\00000220”下的健值”C”中的”f4 01 00 00”以后的内容都删除后,出现一个有趣的情况:在”计算机管理”中查看”administrators”组中的用户,发现没有用户,添加用”Administrator”用户,提示该用户已经在”Administrators”组.打开”Administrator”用户属性,发现该用户仍然在”Administrators”组中,而且其他的用户也在”Administrators”组中.通过”net user administrator”命令一样可以看到”Administrator”用户属于”Administrators”组.重新启动计算机无法恢复.<br>最后试着手动一个用户一个用户添加,也都还没有恢复过来.</p>
+<p>(四)<br>1)添加一个用户,把注册表中的该用户的内容导出,并通过”计算机管理”删除该用户.然后导入备份的用户信息,在”计算机管理”中仍然没有该用户.因为在执行删除用户时,把和该用户对应的标识符一起删除了,所以通过手动修改是不能添加用户的.另外也不可以把导出的用户信息改一个用户名就导入,这样同样没有新用户的标识符存在.</p>
+<p>在试验过程中还出现了一些问题,到现在我想把其他用户通过”计算机管理”从”Administrators”组中删除也都会出现”记录用户 hh 的组成员身份改动时出现了一个多个错误”和”指定的账户名不是本地组的成员”的错误.连最基本的删除一个用户都做不到了.可怜呀</p>
+<p><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt></p>
 
     </article>
     <!-- license  -->
@@ -465,7 +524,7 @@ height:50vh;
             <p>原文作者：<a href="http://yoursite.com">HackPluto</a>
             </p><p>原文链接：<a href="http://yoursite.com/2019/09/01/windows后渗透维权/">http://yoursite.com/2019/09/01/windows后渗透维权/</a>
             </p><p>发表日期：<a href="http://yoursite.com/2019/09/01/windows后渗透维权/">September 1st 2019, 12:21:00 am</a>
-            </p><p>更新日期：<a href="http://yoursite.com/2019/09/01/windows后渗透维权/">September 2nd 2019, 12:05:42 am</a>
+            </p><p>更新日期：<a href="http://yoursite.com/2019/09/01/windows后渗透维权/">September 2nd 2019, 8:12:04 pm</a>
             </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -592,7 +651,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#背景"><span class="toc-number">1.</span> <span class="toc-text">背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#win7下通过修改注册表建立隐藏账户"><span class="toc-number">2.</span> <span class="toc-text">win7下通过修改注册表建立隐藏账户</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#背景"><span class="toc-number">1.</span> <span class="toc-text">背景</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#win7下通过修改注册表建立隐藏账户"><span class="toc-number">2.</span> <span class="toc-text">win7下通过修改注册表建立隐藏账户</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#功能实现"><span class="toc-number">2.1.</span> <span class="toc-text">功能实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原理"><span class="toc-number">2.2.</span> <span class="toc-text">原理</span></a></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -605,6 +664,16 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -1268,23 +1337,21 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="逆向,CTF"><span class="iconfont-archer">&#xe606;</span>逆向,CTF</span>
     
-        <span class="sidebar-tag-name" data-tags="ACM,数论"><span class="iconfont-archer">&#xe606;</span>ACM,数论</span>
-    
         <span class="sidebar-tag-name" data-tags="ctf,web,编码"><span class="iconfont-archer">&#xe606;</span>ctf,web,编码</span>
+    
+        <span class="sidebar-tag-name" data-tags="ACM,数论"><span class="iconfont-archer">&#xe606;</span>ACM,数论</span>
     
         <span class="sidebar-tag-name" data-tags="防火墙,iptables"><span class="iconfont-archer">&#xe606;</span>防火墙,iptables</span>
     
         <span class="sidebar-tag-name" data-tags="Linux,LAMP"><span class="iconfont-archer">&#xe606;</span>Linux,LAMP</span>
     
-        <span class="sidebar-tag-name" data-tags="SSH,端口转发"><span class="iconfont-archer">&#xe606;</span>SSH,端口转发</span>
-    
         <span class="sidebar-tag-name" data-tags="IDA,OllyDB"><span class="iconfont-archer">&#xe606;</span>IDA,OllyDB</span>
+    
+        <span class="sidebar-tag-name" data-tags="SSH,端口转发"><span class="iconfont-archer">&#xe606;</span>SSH,端口转发</span>
     
         <span class="sidebar-tag-name" data-tags="IIS"><span class="iconfont-archer">&#xe606;</span>IIS</span>
     
         <span class="sidebar-tag-name" data-tags="windows,域控,内网渗透"><span class="iconfont-archer">&#xe606;</span>windows,域控,内网渗透</span>
-    
-        <span class="sidebar-tag-name" data-tags="windows,影子账户"><span class="iconfont-archer">&#xe606;</span>windows,影子账户</span>
     
         <span class="sidebar-tag-name" data-tags="信息收集,社会工程学"><span class="iconfont-archer">&#xe606;</span>信息收集,社会工程学</span>
     
@@ -1296,11 +1363,11 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="PWN,BROP,栈溢出"><span class="iconfont-archer">&#xe606;</span>PWN,BROP,栈溢出</span>
     
+        <span class="sidebar-tag-name" data-tags="XCTF,逆向"><span class="iconfont-archer">&#xe606;</span>XCTF,逆向</span>
+    
         <span class="sidebar-tag-name" data-tags="应用层,计算机网络"><span class="iconfont-archer">&#xe606;</span>应用层,计算机网络</span>
     
         <span class="sidebar-tag-name" data-tags="pwn,格式化字符串"><span class="iconfont-archer">&#xe606;</span>pwn,格式化字符串</span>
-    
-        <span class="sidebar-tag-name" data-tags="XCTF,逆向"><span class="iconfont-archer">&#xe606;</span>XCTF,逆向</span>
     
         <span class="sidebar-tag-name" data-tags="工具,python,Netcat"><span class="iconfont-archer">&#xe606;</span>工具,python,Netcat</span>
     
@@ -1309,6 +1376,8 @@ top:50vh;
         <span class="sidebar-tag-name" data-tags="Linux,GOT,PLT"><span class="iconfont-archer">&#xe606;</span>Linux,GOT,PLT</span>
     
         <span class="sidebar-tag-name" data-tags="python,多线程"><span class="iconfont-archer">&#xe606;</span>python,多线程</span>
+    
+        <span class="sidebar-tag-name" data-tags="windows,影子账户"><span class="iconfont-archer">&#xe606;</span>windows,影子账户</span>
     
         <span class="sidebar-tag-name" data-tags="计算机网络,传输层"><span class="iconfont-archer">&#xe606;</span>计算机网络,传输层</span>
     
@@ -1361,9 +1430,9 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="逆向"><span class="iconfont-archer">&#xe60a;</span>逆向</span>
     
-        <span class="sidebar-category-name" data-categories="ACM"><span class="iconfont-archer">&#xe60a;</span>ACM</span>
-    
         <span class="sidebar-category-name" data-categories="CTFweb"><span class="iconfont-archer">&#xe60a;</span>CTFweb</span>
+    
+        <span class="sidebar-category-name" data-categories="ACM"><span class="iconfont-archer">&#xe60a;</span>ACM</span>
     
         <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
     
