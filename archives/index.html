@@ -346,6 +346,41 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href="/2019/09/20/msf恶意代码免杀总结/">
+            
+                <span>msf恶意代码免杀总结</span>
+        </a>
+        <div class="abstract-content">
+            前言
+msf是一个很强大的工具，我经常会在渗透用它来反弹shell，不过它生成的反弹后门会被不少杀软kill，这篇博客我总结一些MSF中的免杀方法
+
+py,go打包exe法
+我以前接触过一款python的远控，并用pyinstaller打包成了exe（缺点是体积太过庞大），惊奇的是，杀毒软件不杀它，然后自己想着其他语言是不是也会这样，于是我用golang写了一个简易版nc反弹，编译之后，也是不查杀的。python和golang有一个共同点，就是可以用来内联C编程，所以C语言的shellcode按理说应该会达到同样的效果。
+
+1msfvenom -p windows/meterpreter...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/09/20</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="MSF,免杀">MSF,免杀</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href="/2019/09/01/windows后渗透维权/">
             
                 <span>windows后渗透维权</span>
@@ -643,40 +678,6 @@ printf函数的第一个参数就是格式化字符串，它主要是依靠一�
             <div class="abstract-tags">
     
         <a class="post-tag" href="javascript:void(0);" data-tags="pwn,格式化字符串">pwn,格式化字符串</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/08/01/Pwn-栈溢出与canary/">
-            
-                <span>Pwn--栈溢出与绕过防护</span>
-        </a>
-        <div class="abstract-content">
-            栈溢出
-在计算机安全领域，缓冲区溢出是个古老而经典的话题。栈溢出是指在栈内写入超出长度限制的数据，从而破坏程序运行甚至获得系统控制权的攻击手段。为了实现栈溢出，要满足两个条件。第一，程序要有向栈内写入数据的行为；如gets(),read()等第二，程序并不限制写入数据的长度。
-
-函数调用栈
-
-函数调用栈是指程序运行时内存一段连续的区域，用来保存函数运行时的状态信息，包括函数参数与局部变量等。称之为“栈”是因为发生函数调用时，调用函数（caller）的状态被保存在栈内，被调用函数（callee）的状态被压入调用栈的栈顶；在函数调用结束时，栈顶的函数（callee）状态被弹出，栈顶恢复到调用...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/08/01</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="PWN,栈溢出">PWN,栈溢出</a>
     
 </div>
             
@@ -1255,9 +1256,26 @@ printf函数的第一个参数就是格式化字符串，它主要是依靠一�
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 34
+        Total : 35
         </div>
         <!-- search  -->
         
@@ -1270,6 +1288,11 @@ printf函数的第一个参数就是格式化字符串，它主要是依靠一�
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/20</span><a class="archive-post-title" href="/2019/09/20/msf恶意代码免杀总结/">msf恶意代码免杀总结</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -1448,19 +1471,21 @@ printf函数的第一个参数就是格式化字符串，它主要是依靠一�
     
         <span class="sidebar-tag-name" data-tags="逆向,恶意代码"><span class="iconfont-archer">&#xe606;</span>逆向,恶意代码</span>
     
-        <span class="sidebar-tag-name" data-tags="逆向,CTF"><span class="iconfont-archer">&#xe606;</span>逆向,CTF</span>
-    
         <span class="sidebar-tag-name" data-tags="ACM,数论"><span class="iconfont-archer">&#xe606;</span>ACM,数论</span>
     
-        <span class="sidebar-tag-name" data-tags="ctf,web,编码"><span class="iconfont-archer">&#xe606;</span>ctf,web,编码</span>
+        <span class="sidebar-tag-name" data-tags="逆向,CTF"><span class="iconfont-archer">&#xe606;</span>逆向,CTF</span>
     
         <span class="sidebar-tag-name" data-tags="Linux,LAMP"><span class="iconfont-archer">&#xe606;</span>Linux,LAMP</span>
     
+        <span class="sidebar-tag-name" data-tags="ctf,web,编码"><span class="iconfont-archer">&#xe606;</span>ctf,web,编码</span>
+    
         <span class="sidebar-tag-name" data-tags="防火墙,iptables"><span class="iconfont-archer">&#xe606;</span>防火墙,iptables</span>
     
-        <span class="sidebar-tag-name" data-tags="IDA,OllyDB"><span class="iconfont-archer">&#xe606;</span>IDA,OllyDB</span>
+        <span class="sidebar-tag-name" data-tags="MSF,免杀"><span class="iconfont-archer">&#xe606;</span>MSF,免杀</span>
     
         <span class="sidebar-tag-name" data-tags="SSH,端口转发"><span class="iconfont-archer">&#xe606;</span>SSH,端口转发</span>
+    
+        <span class="sidebar-tag-name" data-tags="IDA,OllyDB"><span class="iconfont-archer">&#xe606;</span>IDA,OllyDB</span>
     
         <span class="sidebar-tag-name" data-tags="IIS"><span class="iconfont-archer">&#xe606;</span>IIS</span>
     
@@ -1472,13 +1497,13 @@ printf函数的第一个参数就是格式化字符串，它主要是依靠一�
     
         <span class="sidebar-tag-name" data-tags="动态规划(DP)"><span class="iconfont-archer">&#xe606;</span>动态规划(DP)</span>
     
-        <span class="sidebar-tag-name" data-tags="PWN,BROP,栈溢出"><span class="iconfont-archer">&#xe606;</span>PWN,BROP,栈溢出</span>
-    
         <span class="sidebar-tag-name" data-tags="域控制器"><span class="iconfont-archer">&#xe606;</span>域控制器</span>
     
-        <span class="sidebar-tag-name" data-tags="XCTF,逆向"><span class="iconfont-archer">&#xe606;</span>XCTF,逆向</span>
+        <span class="sidebar-tag-name" data-tags="PWN,BROP,栈溢出"><span class="iconfont-archer">&#xe606;</span>PWN,BROP,栈溢出</span>
     
         <span class="sidebar-tag-name" data-tags="应用层,计算机网络"><span class="iconfont-archer">&#xe606;</span>应用层,计算机网络</span>
+    
+        <span class="sidebar-tag-name" data-tags="XCTF,逆向"><span class="iconfont-archer">&#xe606;</span>XCTF,逆向</span>
     
         <span class="sidebar-tag-name" data-tags="pwn,格式化字符串"><span class="iconfont-archer">&#xe606;</span>pwn,格式化字符串</span>
     
@@ -1545,9 +1570,9 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="ACM"><span class="iconfont-archer">&#xe60a;</span>ACM</span>
     
-        <span class="sidebar-category-name" data-categories="CTFweb"><span class="iconfont-archer">&#xe60a;</span>CTFweb</span>
-    
         <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
+    
+        <span class="sidebar-category-name" data-categories="CTFweb"><span class="iconfont-archer">&#xe60a;</span>CTFweb</span>
     
         <span class="sidebar-category-name" data-categories="内网渗透"><span class="iconfont-archer">&#xe60a;</span>内网渗透</span>
     
