@@ -359,6 +359,93 @@ height:50vh;
     
     
     <article class="index-post">
+        <a class="abstract-title" href="/2019/09/25/与权权的秦皇岛之行/">
+            
+                <span>与权权的秦皇岛之行</span>
+        </a>
+        <div class="abstract-content">
+            
+
+2019年20日 我和小权权一起来到了秦皇岛，我来参加CCPC，她来陪我,太开心啦
+
+
+
+在火车上的照片，一家三口嘻嘻
+
+
+
+到达秦皇岛已经是晚上啦。我们吃了海鲜烧烤，哈哈哈来了海边就要吃海鲜
+
+
+权权说鲍鱼壳的颜色好酷，我的镭射女孩
+
+
+
+
+去秦皇岛当然要去看海啦
+
+
+
+
+当获得了很好的爱之后我们又需要让自己成为很棒的人从而不辜负爱 ​​​期待和你的下一次看海
+
+
+
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/09/25</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2019/09/24/反静态调试总结/">
+            
+                <span>反静态调试总结</span>
+        </a>
+        <div class="abstract-content">
+            花指令
+花指令就是一串没有任何实际意义的指令。为什么会产生花指令呢，因为反汇编器并不知道某一个地方的数据到底是数据还是指令的机器码，所以就会将某些花指令反汇编成真正的汇编指令，由于X86平台的指令是密集编码的，所以很多指令都是一个字节编码的，例如生成一个16kb的随即数据，并对其进行了反汇编。效果如下：
+
+
+判断花指令
+特权指令x86处理器有四个保护环（常用Ring0和Ring3）。某些指令只能在Ring0中运行。这些特殊的特权指令也碰巧是单字节操作码，并且经常发生在反汇编花指令中。比如下面这个使用“Lorem ipsum”反汇编出来的指令：
+
+
+
+标红的是单字节指令，如果你知道你正在查...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/09/24</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="花指令,静态调试,Movfuscator">花指令,静态调试,Movfuscator</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href="/2019/09/20/msf恶意代码免杀总结/">
             
                 <span>msf恶意代码免杀总结</span>
@@ -618,79 +705,6 @@ winpcap(windows packet capture)是windows平台下一个免费，公共的网络
             <div class="abstract-tags">
     
         <a class="post-tag" href="javascript:void(0);" data-tags="ACM,数论">ACM,数论</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/08/06/Traceme动态分析与静态分析/">
-            
-                <span>Traceme动态分析与静态分析</span>
-        </a>
-        <div class="abstract-content">
-            对Traceme.exe进行分析，我用两种方法分析，动态分析和静态分析
-静态分析首先进入winmain入口函数，然后进入DialogFunc函数，这个函数应该就是这个程序的主体了。
-
-将两个strcpy的内容转成字符串，可以得出要输入的字符要大于长度4。
-
-现在要找出程序对于输入的用户名和序列号是如何处理的，1v5 = GetDlgItemTextA(hWnd, 110, &amp;String, 81);
-找到了这句话，看到GetDlgItemTextA这个函数就知道他是在获得对话框的内容向数组里存东西，所以可以判断这两个函数是在存储用户名和序列号
-
-进入sub_401340这个函数就...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/08/06</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="IDA,OllyDB">IDA,OllyDB</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/08/03/格式化字符串漏洞/">
-            
-                <span>格式化字符串漏洞</span>
-        </a>
-        <div class="abstract-content">
-            格式化字符串
-printf函数的第一个参数就是格式化字符串，它主要是依靠一个用来告诉程序如何进行格式化输出的说明符。在C程序中我们有许多用来格式化字符串的说明符，在这些说明符后面我们可以填充我们的内容。说明符的前缀总是“%”字符，另外说明符存在许多不同的数据类型，最常见的包括：
-
-
-%d - 十进制 - 输出十进制整数%s - 字符串 - 从内存中读取字符串%x - 十六进制 - 输出十六进制数%c - 字符 - 输出字符%p - 指针 - 指针地址%n - 到目前为止所写的字符数
-
-漏洞原理
-产生这个漏洞的原因只有一个，那就是程序员偷懒。比如我想让用户输入一个名字，然后再把这个名字原样...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/08/03</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="pwn,格式化字符串">pwn,格式化字符串</a>
     
 </div>
             
@@ -1378,9 +1392,41 @@ printf函数的第一个参数就是格式化字符串，它主要是依靠一�
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 35
+        Total : 37
         </div>
         <!-- search  -->
         
@@ -1393,6 +1439,16 @@ printf函数的第一个参数就是格式化字符串，它主要是依靠一�
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/25</span><a class="archive-post-title" href="/2019/09/25/与权权的秦皇岛之行/">与权权的秦皇岛之行</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/24</span><a class="archive-post-title" href="/2019/09/24/反静态调试总结/">反静态调试总结</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -1531,12 +1587,12 @@ printf函数的第一个参数就是格式化字符串，它主要是依靠一�
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/CTF中的编码总结/">CTF中的编码总结</a>
+            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/自己动手写工具(2)--TCP代理/">自己动手写工具(2)--TCP代理</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/自己动手写工具(2)--TCP代理/">自己动手写工具(2)--TCP代理</a>
+            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/CTF中的编码总结/">CTF中的编码总结</a>
         </li>
     
     
@@ -1556,12 +1612,12 @@ printf函数的第一个参数就是格式化字符串，它主要是依靠一�
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/sqli-labs/">sqli-labs 通关详解</a>
+            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/python下多核/">python下多核，单核CPU对于并行，并发执行效率的对比</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/python下多核/">python下多核，单核CPU对于并行，并发执行效率的对比</a>
+            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/sqli-labs/">sqli-labs 通关详解</a>
         </li>
     
     
@@ -1576,21 +1632,21 @@ printf函数的第一个参数就是格式化字符串，它主要是依靠一�
     
         <span class="sidebar-tag-name" data-tags="逆向,恶意代码"><span class="iconfont-archer">&#xe606;</span>逆向,恶意代码</span>
     
-        <span class="sidebar-tag-name" data-tags="ACM,数论"><span class="iconfont-archer">&#xe606;</span>ACM,数论</span>
-    
         <span class="sidebar-tag-name" data-tags="逆向,CTF"><span class="iconfont-archer">&#xe606;</span>逆向,CTF</span>
     
-        <span class="sidebar-tag-name" data-tags="Linux,LAMP"><span class="iconfont-archer">&#xe606;</span>Linux,LAMP</span>
+        <span class="sidebar-tag-name" data-tags="ACM,数论"><span class="iconfont-archer">&#xe606;</span>ACM,数论</span>
     
         <span class="sidebar-tag-name" data-tags="ctf,web,编码"><span class="iconfont-archer">&#xe606;</span>ctf,web,编码</span>
     
-        <span class="sidebar-tag-name" data-tags="防火墙,iptables"><span class="iconfont-archer">&#xe606;</span>防火墙,iptables</span>
+        <span class="sidebar-tag-name" data-tags="Linux,LAMP"><span class="iconfont-archer">&#xe606;</span>Linux,LAMP</span>
     
-        <span class="sidebar-tag-name" data-tags="MSF,免杀"><span class="iconfont-archer">&#xe606;</span>MSF,免杀</span>
+        <span class="sidebar-tag-name" data-tags="防火墙,iptables"><span class="iconfont-archer">&#xe606;</span>防火墙,iptables</span>
     
         <span class="sidebar-tag-name" data-tags="SSH,端口转发"><span class="iconfont-archer">&#xe606;</span>SSH,端口转发</span>
     
         <span class="sidebar-tag-name" data-tags="IDA,OllyDB"><span class="iconfont-archer">&#xe606;</span>IDA,OllyDB</span>
+    
+        <span class="sidebar-tag-name" data-tags="MSF,免杀"><span class="iconfont-archer">&#xe606;</span>MSF,免杀</span>
     
         <span class="sidebar-tag-name" data-tags="IIS"><span class="iconfont-archer">&#xe606;</span>IIS</span>
     
@@ -1602,13 +1658,15 @@ printf函数的第一个参数就是格式化字符串，它主要是依靠一�
     
         <span class="sidebar-tag-name" data-tags="动态规划(DP)"><span class="iconfont-archer">&#xe606;</span>动态规划(DP)</span>
     
+        <span class="sidebar-tag-name" data-tags="花指令,静态调试,Movfuscator"><span class="iconfont-archer">&#xe606;</span>花指令,静态调试,Movfuscator</span>
+    
         <span class="sidebar-tag-name" data-tags="域控制器"><span class="iconfont-archer">&#xe606;</span>域控制器</span>
     
         <span class="sidebar-tag-name" data-tags="PWN,BROP,栈溢出"><span class="iconfont-archer">&#xe606;</span>PWN,BROP,栈溢出</span>
     
-        <span class="sidebar-tag-name" data-tags="应用层,计算机网络"><span class="iconfont-archer">&#xe606;</span>应用层,计算机网络</span>
-    
         <span class="sidebar-tag-name" data-tags="XCTF,逆向"><span class="iconfont-archer">&#xe606;</span>XCTF,逆向</span>
+    
+        <span class="sidebar-tag-name" data-tags="应用层,计算机网络"><span class="iconfont-archer">&#xe606;</span>应用层,计算机网络</span>
     
         <span class="sidebar-tag-name" data-tags="pwn,格式化字符串"><span class="iconfont-archer">&#xe606;</span>pwn,格式化字符串</span>
     
@@ -1675,13 +1733,15 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="ACM"><span class="iconfont-archer">&#xe60a;</span>ACM</span>
     
-        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
-    
         <span class="sidebar-category-name" data-categories="CTFweb"><span class="iconfont-archer">&#xe60a;</span>CTFweb</span>
+    
+        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
     
         <span class="sidebar-category-name" data-categories="内网渗透"><span class="iconfont-archer">&#xe60a;</span>内网渗透</span>
     
         <span class="sidebar-category-name" data-categories="社工"><span class="iconfont-archer">&#xe60a;</span>社工</span>
+    
+        <span class="sidebar-category-name" data-categories="爱的日记"><span class="iconfont-archer">&#xe60a;</span>爱的日记</span>
     
         <span class="sidebar-category-name" data-categories="python"><span class="iconfont-archer">&#xe60a;</span>python</span>
     

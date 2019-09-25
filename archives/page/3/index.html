@@ -346,6 +346,74 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href="/2019/06/12/2019看雪CTF逆向Q1writeup/">
+            
+                <span>2019看雪CTF逆向Q1writeup</span>
+        </a>
+        <div class="abstract-content">
+            第一题 流浪者首先使用die查壳后没有发现壳拖到IDA里这个题我本来想直接看伪C代码发现找关键点函数有些困难（还是我太菜了），所以最后发现了更简单的方法shifr + F12查看字符串
+
+发现了一串可疑字符串查看这串字符串的引用 进入这个函数
+其实看到strcmp函数的时候，这个题的意图就比较明显了，就是比较str1和那一串字符串是不是相等，变量a1应该就是数组的首地址，但是我们不知道a1这个数组是怎么得到的，所以查一下sub_4017F0函数的交叉引用从16行的getbuffer可以看出str是直接从内存中读取的也就是我们输入的这里限制了输入的必须是大小写字母或者数字所以直接暴力破解1...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/06/12</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="逆向,CTF">逆向,CTF</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2019/06/11/传输层知识总结/">
+            
+                <span>传输层知识总结</span>
+        </a>
+        <div class="abstract-content">
+            传输层重点：传输层的作用★★端口★★★★UDP的特点★★★UDP报文格式★★TCP的特点★★★套接字★★★★TCP数据报的首部★★★★★TCP可靠传输的基本原理★★★滑动窗口的思想与原理★★★★拥塞控制的基本算法★★★★TCP连接的建立与释放★★★★★TCP中的定时器★★★★
+1.传输服务的功能：
+
+提供给应用的端到端的服务IP地址复用情况下的实体通信增强网络层的服务：可靠传输，流控，拥塞控制
+
+2.引入传输层的必要性：
+
+1.由于IP是无连接的数据报投递系统，所以需要传输层提供服务质量更高的服务。2.传输层要提供识别应用程序的机制，由于IP传递的数据报中写的是目标的IP地址，无法区分...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/06/11</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="计算机网络,传输层">计算机网络,传输层</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href="/2019/06/10/2018火眼恶意代码逆向分析wp/">
             
                 <span>2018火眼恶意代码逆向分析wp</span>
@@ -585,69 +653,6 @@ ARP协议就是工作在数据链路层的协议，至于ARP到底属于链路�
             <div class="abstract-tags">
     
         <a class="post-tag" href="javascript:void(0);" data-tags="工具,python,proxy">工具,python,proxy</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/05/10/CTF中的编码总结/">
-            
-                <span>CTF中的编码总结</span>
-        </a>
-        <div class="abstract-content">
-            这段时间做的web题比较多，遇到了很多编码的题，所以这里总结一下web方向常用到的编码知识
-1.URL编码首先当我们要去学习一个编码的时候需要知道为什么这里需要编码，通常我们编码的原因是：压缩传输，避免敏感信息泄漏，避免引起歧义等。URL编码顾名思义就是在URL里的编码，为什么要使用URL编码主要是为了避免引起歧义，比如我们在发送GET请求时 /?a=123&amp;b=234 这里我们传递了两个整数给变量a,b，看似没有问题，如果我们要传递的数据里有？或者&amp;就会引起歧义，浏览器就不知道怎么解析了，所以引入了URL编码，将会引起歧义的地方换成URL编码。URL编码也叫百分号编码，...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/05/10</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="ctf,web,编码">ctf,web,编码</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/04/28/一次信息收集之绕过CDN查询真实ip/">
-            
-                <span>一次信息收集之绕过CDN查询真实ip</span>
-        </a>
-        <div class="abstract-content">
-            获取IP地址
-首先拿到一个网址做信息收集的时候，第一步就是获得目标服务器的IP地址，这个是我们进行进一步社工或者渗透的基础。查询IP的网站有很多，我常用的比如 http//ping.chinaz.com，http//whois.chinaz.com，都可以做域名的DNS解析，但是一些网站为了增加访问速度以及隐藏真正的IP地址会做CDN，CDN就是一个网站的一个文本缓存服务器，我们通常直接访问到的就是CDN服务器，
-
-
-CDN全称:Content Delivery Network或Content Ddistribute Network，即内容分发网络基本思路：尽可能避开互联网上有可能影响数...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/28</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="信息收集,社会工程学">信息收集,社会工程学</a>
     
 </div>
             
@@ -1243,9 +1248,41 @@ CDN全称:Content Delivery Network或Content Ddistribute Network，即内容分�
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 35
+        Total : 37
         </div>
         <!-- search  -->
         
@@ -1258,6 +1295,16 @@ CDN全称:Content Delivery Network或Content Ddistribute Network，即内容分�
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/25</span><a class="archive-post-title" href="/2019/09/25/与权权的秦皇岛之行/">与权权的秦皇岛之行</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/24</span><a class="archive-post-title" href="/2019/09/24/反静态调试总结/">反静态调试总结</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -1396,12 +1443,12 @@ CDN全称:Content Delivery Network或Content Ddistribute Network，即内容分�
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/CTF中的编码总结/">CTF中的编码总结</a>
+            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/自己动手写工具(2)--TCP代理/">自己动手写工具(2)--TCP代理</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/自己动手写工具(2)--TCP代理/">自己动手写工具(2)--TCP代理</a>
+            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/CTF中的编码总结/">CTF中的编码总结</a>
         </li>
     
     
@@ -1421,12 +1468,12 @@ CDN全称:Content Delivery Network或Content Ddistribute Network，即内容分�
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/sqli-labs/">sqli-labs 通关详解</a>
+            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/python下多核/">python下多核，单核CPU对于并行，并发执行效率的对比</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/python下多核/">python下多核，单核CPU对于并行，并发执行效率的对比</a>
+            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/sqli-labs/">sqli-labs 通关详解</a>
         </li>
     
     
@@ -1441,21 +1488,21 @@ CDN全称:Content Delivery Network或Content Ddistribute Network，即内容分�
     
         <span class="sidebar-tag-name" data-tags="逆向,恶意代码"><span class="iconfont-archer">&#xe606;</span>逆向,恶意代码</span>
     
-        <span class="sidebar-tag-name" data-tags="ACM,数论"><span class="iconfont-archer">&#xe606;</span>ACM,数论</span>
-    
         <span class="sidebar-tag-name" data-tags="逆向,CTF"><span class="iconfont-archer">&#xe606;</span>逆向,CTF</span>
     
-        <span class="sidebar-tag-name" data-tags="Linux,LAMP"><span class="iconfont-archer">&#xe606;</span>Linux,LAMP</span>
+        <span class="sidebar-tag-name" data-tags="ACM,数论"><span class="iconfont-archer">&#xe606;</span>ACM,数论</span>
     
         <span class="sidebar-tag-name" data-tags="ctf,web,编码"><span class="iconfont-archer">&#xe606;</span>ctf,web,编码</span>
     
-        <span class="sidebar-tag-name" data-tags="防火墙,iptables"><span class="iconfont-archer">&#xe606;</span>防火墙,iptables</span>
+        <span class="sidebar-tag-name" data-tags="Linux,LAMP"><span class="iconfont-archer">&#xe606;</span>Linux,LAMP</span>
     
-        <span class="sidebar-tag-name" data-tags="MSF,免杀"><span class="iconfont-archer">&#xe606;</span>MSF,免杀</span>
+        <span class="sidebar-tag-name" data-tags="防火墙,iptables"><span class="iconfont-archer">&#xe606;</span>防火墙,iptables</span>
     
         <span class="sidebar-tag-name" data-tags="SSH,端口转发"><span class="iconfont-archer">&#xe606;</span>SSH,端口转发</span>
     
         <span class="sidebar-tag-name" data-tags="IDA,OllyDB"><span class="iconfont-archer">&#xe606;</span>IDA,OllyDB</span>
+    
+        <span class="sidebar-tag-name" data-tags="MSF,免杀"><span class="iconfont-archer">&#xe606;</span>MSF,免杀</span>
     
         <span class="sidebar-tag-name" data-tags="IIS"><span class="iconfont-archer">&#xe606;</span>IIS</span>
     
@@ -1467,13 +1514,15 @@ CDN全称:Content Delivery Network或Content Ddistribute Network，即内容分�
     
         <span class="sidebar-tag-name" data-tags="动态规划(DP)"><span class="iconfont-archer">&#xe606;</span>动态规划(DP)</span>
     
+        <span class="sidebar-tag-name" data-tags="花指令,静态调试,Movfuscator"><span class="iconfont-archer">&#xe606;</span>花指令,静态调试,Movfuscator</span>
+    
         <span class="sidebar-tag-name" data-tags="域控制器"><span class="iconfont-archer">&#xe606;</span>域控制器</span>
     
         <span class="sidebar-tag-name" data-tags="PWN,BROP,栈溢出"><span class="iconfont-archer">&#xe606;</span>PWN,BROP,栈溢出</span>
     
-        <span class="sidebar-tag-name" data-tags="应用层,计算机网络"><span class="iconfont-archer">&#xe606;</span>应用层,计算机网络</span>
-    
         <span class="sidebar-tag-name" data-tags="XCTF,逆向"><span class="iconfont-archer">&#xe606;</span>XCTF,逆向</span>
+    
+        <span class="sidebar-tag-name" data-tags="应用层,计算机网络"><span class="iconfont-archer">&#xe606;</span>应用层,计算机网络</span>
     
         <span class="sidebar-tag-name" data-tags="pwn,格式化字符串"><span class="iconfont-archer">&#xe606;</span>pwn,格式化字符串</span>
     
@@ -1540,13 +1589,15 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="ACM"><span class="iconfont-archer">&#xe60a;</span>ACM</span>
     
-        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
-    
         <span class="sidebar-category-name" data-categories="CTFweb"><span class="iconfont-archer">&#xe60a;</span>CTFweb</span>
+    
+        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
     
         <span class="sidebar-category-name" data-categories="内网渗透"><span class="iconfont-archer">&#xe60a;</span>内网渗透</span>
     
         <span class="sidebar-category-name" data-categories="社工"><span class="iconfont-archer">&#xe60a;</span>社工</span>
+    
+        <span class="sidebar-category-name" data-categories="爱的日记"><span class="iconfont-archer">&#xe60a;</span>爱的日记</span>
     
         <span class="sidebar-category-name" data-categories="python"><span class="iconfont-archer">&#xe60a;</span>python</span>
     
