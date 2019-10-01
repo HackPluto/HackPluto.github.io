@@ -355,12 +355,8 @@
 花指令就是一串没有任何实际意义的指令。为什么会产生花指令呢，因为反汇编器并不知道某一个地方的数据到底是数据还是指令的机器码，所以就会将某些花指令反汇编成真正的汇编指令，由于X86平台的指令是密集编码的，所以很多指令都是一个字节编码的，例如生成一个16kb的随即数据，并对其进行了反汇编。效果如下：
 
 
-判断花指令
-特权指令x86处理器有四个保护环（常用Ring0和Ring3）。某些指令只能在Ring0中运行。这些特殊的特权指令也碰巧是单字节操作码，并且经常发生在反汇编花指令中。比如下面这个使用“Lorem ipsum”反汇编出来的指令：
 
-
-
-标红的是单字节指令，如果你知道你正在查...
+可以通过_EMIT指令实现花指令123456789101112131415#include &lt;iostream.h&gt;#include &lt;windows.h&gt;void main()&#123;    _asm    &#123;            jmp ...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -995,9 +991,55 @@
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 37
+        Total : 39
         </div>
         <!-- search  -->
         
@@ -1010,6 +1052,21 @@
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/30</span><a class="archive-post-title" href="/2019/09/30/格式化字符串漏洞/">格式化字符串漏洞</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/29</span><a class="archive-post-title" href="/2019/09/29/花式栈溢出技巧/">花式栈溢出技巧</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/27</span><a class="archive-post-title" href="/2019/09/27/看雪KCTF2019wp/">看雪KCTF2019wp</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -1064,11 +1121,6 @@
     
         <li class="archive-post-item">
             <span class="archive-post-date">08/06</span><a class="archive-post-title" href="/2019/08/06/Traceme动态分析与静态分析/">Traceme动态分析与静态分析</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/03</span><a class="archive-post-title" href="/2019/08/03/格式化字符串漏洞/">格式化字符串漏洞</a>
         </li>
     
     
@@ -1148,12 +1200,12 @@
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2019/05/22/素数个数求解与素数的判定/">素数个数求解与素数的判定</a>
+            <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2019/05/22/使用动态规划-DP-解决最大公共子串与最大公共子序列问题/">使用动态规划(DP)解决最大公共子串与最大公共子序列问题</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2019/05/22/使用动态规划-DP-解决最大公共子串与最大公共子序列问题/">使用动态规划(DP)解决最大公共子串与最大公共子序列问题</a>
+            <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2019/05/22/素数个数求解与素数的判定/">素数个数求解与素数的判定</a>
         </li>
     
     
@@ -1201,8 +1253,6 @@
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="逆向,恶意代码"><span class="iconfont-archer">&#xe606;</span>逆向,恶意代码</span>
-    
         <span class="sidebar-tag-name" data-tags="逆向,CTF"><span class="iconfont-archer">&#xe606;</span>逆向,CTF</span>
     
         <span class="sidebar-tag-name" data-tags="ACM,数论"><span class="iconfont-archer">&#xe606;</span>ACM,数论</span>
@@ -1213,9 +1263,9 @@
     
         <span class="sidebar-tag-name" data-tags="防火墙,iptables"><span class="iconfont-archer">&#xe606;</span>防火墙,iptables</span>
     
-        <span class="sidebar-tag-name" data-tags="SSH,端口转发"><span class="iconfont-archer">&#xe606;</span>SSH,端口转发</span>
-    
         <span class="sidebar-tag-name" data-tags="IDA,OllyDB"><span class="iconfont-archer">&#xe606;</span>IDA,OllyDB</span>
+    
+        <span class="sidebar-tag-name" data-tags="SSH,端口转发"><span class="iconfont-archer">&#xe606;</span>SSH,端口转发</span>
     
         <span class="sidebar-tag-name" data-tags="MSF,免杀"><span class="iconfont-archer">&#xe606;</span>MSF,免杀</span>
     
@@ -1233,23 +1283,29 @@
     
         <span class="sidebar-tag-name" data-tags="域控制器"><span class="iconfont-archer">&#xe606;</span>域控制器</span>
     
+        <span class="sidebar-tag-name" data-tags="应用层,计算机网络"><span class="iconfont-archer">&#xe606;</span>应用层,计算机网络</span>
+    
         <span class="sidebar-tag-name" data-tags="PWN,BROP,栈溢出"><span class="iconfont-archer">&#xe606;</span>PWN,BROP,栈溢出</span>
     
         <span class="sidebar-tag-name" data-tags="XCTF,逆向"><span class="iconfont-archer">&#xe606;</span>XCTF,逆向</span>
     
-        <span class="sidebar-tag-name" data-tags="应用层,计算机网络"><span class="iconfont-archer">&#xe606;</span>应用层,计算机网络</span>
-    
-        <span class="sidebar-tag-name" data-tags="pwn,格式化字符串"><span class="iconfont-archer">&#xe606;</span>pwn,格式化字符串</span>
+        <span class="sidebar-tag-name" data-tags="看雪,KCTF,逆向,PWN"><span class="iconfont-archer">&#xe606;</span>看雪,KCTF,逆向,PWN</span>
     
         <span class="sidebar-tag-name" data-tags="工具,python,Netcat"><span class="iconfont-archer">&#xe606;</span>工具,python,Netcat</span>
     
         <span class="sidebar-tag-name" data-tags="工具,python,proxy"><span class="iconfont-archer">&#xe606;</span>工具,python,proxy</span>
+    
+        <span class="sidebar-tag-name" data-tags="栈溢出,PWN"><span class="iconfont-archer">&#xe606;</span>栈溢出,PWN</span>
+    
+        <span class="sidebar-tag-name" data-tags="逆向,恶意代码"><span class="iconfont-archer">&#xe606;</span>逆向,恶意代码</span>
     
         <span class="sidebar-tag-name" data-tags="Linux,GOT,PLT"><span class="iconfont-archer">&#xe606;</span>Linux,GOT,PLT</span>
     
         <span class="sidebar-tag-name" data-tags="python,多线程"><span class="iconfont-archer">&#xe606;</span>python,多线程</span>
     
         <span class="sidebar-tag-name" data-tags="计算机网络,传输层"><span class="iconfont-archer">&#xe606;</span>计算机网络,传输层</span>
+    
+        <span class="sidebar-tag-name" data-tags="pwn,Format String Vulnerability"><span class="iconfont-archer">&#xe606;</span>pwn,Format String Vulnerability</span>
     
         <span class="sidebar-tag-name" data-tags="计算机网络,数据链路层"><span class="iconfont-archer">&#xe606;</span>计算机网络,数据链路层</span>
     
@@ -1310,15 +1366,15 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="内网渗透"><span class="iconfont-archer">&#xe60a;</span>内网渗透</span>
     
-        <span class="sidebar-category-name" data-categories="社工"><span class="iconfont-archer">&#xe60a;</span>社工</span>
-    
         <span class="sidebar-category-name" data-categories="爱的日记"><span class="iconfont-archer">&#xe60a;</span>爱的日记</span>
+    
+        <span class="sidebar-category-name" data-categories="社工"><span class="iconfont-archer">&#xe60a;</span>社工</span>
     
         <span class="sidebar-category-name" data-categories="python"><span class="iconfont-archer">&#xe60a;</span>python</span>
     
-        <span class="sidebar-category-name" data-categories="Pwn"><span class="iconfont-archer">&#xe60a;</span>Pwn</span>
-    
         <span class="sidebar-category-name" data-categories="计算机网络"><span class="iconfont-archer">&#xe60a;</span>计算机网络</span>
+    
+        <span class="sidebar-category-name" data-categories="Pwn"><span class="iconfont-archer">&#xe60a;</span>Pwn</span>
     
         <span class="sidebar-category-name" data-categories="BlackHatTools"><span class="iconfont-archer">&#xe60a;</span>BlackHatTools</span>
     
