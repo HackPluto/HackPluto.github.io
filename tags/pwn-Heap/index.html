@@ -346,143 +346,24 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href="/2019/07/11/数据链路层知识总结/">
+        <a class="abstract-title" href="/2019/10/09/pwn-堆溢出/">
             
-                <span>数据链路层知识总结</span>
+                <span>PWN-堆溢出</span>
         </a>
         <div class="abstract-content">
-            数据链路层1.提供给网络层的服务：
-
-无确认无连接的服务 LAN有确认无连接的服务 WLAN有确认面向连接的服务 PtoP link
-
-2.成帧
-
-为什么要成桢：1.将数据变得更小2.避免信道长期被占领
-
-成帧由网络适配器实现。成帧：标志/记法 问题：确定一帧的开始和结束分界方法：1.字节计数法2.字节填充的标志字节法3.比特填充的标志比特法4.物理层编码违禁法
-
-字节计数法基于计数器在帧的头部给出帧的长度。问题：出错后无法同步
-
-
-字节填充的标志字节法在帧的头部和尾部添加FLAG，如果FLAG出现在数据中，在FLAG前加ESC，如果数据中出现ESC，就在ESC前加ESC。
-
-
-比特填充...
+            堆的详解什么是堆
+堆是分配给每个程序的内存区域。与堆栈不同，堆内存可以动态分配。这意味着程序可以在需要时从堆段中“请求”和“释放”内存。同样，该存储器是全局的，即可以从程序中的任何位置访问和修改该存储器，并且不局限于分配它的功能。这是通过使用“指针”引用动态分配的内存来实现的，与使用局部变量（在堆栈上）相比，这反过来导致性能略有下降。我们一般称管理堆的那部分程序为堆管理器。堆管理器处于用户程序与内核中间，主要做以下工作1.响应用户的申请内存请求，向操作系统申请内存，然后将其返回给用户程序。同时，为了保持内存管理的高效性，内核一般都会预先分配很大的一块连续的内存，然后让堆管理器通过某种算法...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/07/11</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/10/09</span>
             </div>
             <!-- tags  -->
             
             <div class="abstract-tags">
     
-        <a class="post-tag" href="javascript:void(0);" data-tags="计算机网络,数据链路层">计算机网络,数据链路层</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/07/08/应用层知识总结/">
-            
-                <span>应用层知识总结</span>
-        </a>
-        <div class="abstract-content">
-            重点知识点：    DHCP ★★★★    DNS  ★★★★★    HTTP ★★★★★    WWW ★★★★★
-一.引导协议BOOTP：
-
-1.BOOTP是RATRP的替代协议，解决了RARP只能返回IP地址和不能被路由器转发的不足（迫使每一个局域网都得建立一个RARP服务器）2.基于UDP，要求计算校验和，客户端68端口，服务器67端口，通常和TFTP协同工作。3.无盘工作站启动时，用有限广播在本网广播BOOTP请求报文。4.客户端广播请求，服务器可以广播回应也可以在本机内设置一个ARP缓存然后定向单播应答。5.使用超时重传，重传使用指数退避策略。6.请求和响应报文不能分片（...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/07/08</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="应用层,计算机网络">应用层,计算机网络</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/06/11/传输层知识总结/">
-            
-                <span>传输层知识总结</span>
-        </a>
-        <div class="abstract-content">
-            传输层重点：传输层的作用★★端口★★★★UDP的特点★★★UDP报文格式★★TCP的特点★★★套接字★★★★TCP数据报的首部★★★★★TCP可靠传输的基本原理★★★滑动窗口的思想与原理★★★★拥塞控制的基本算法★★★★TCP连接的建立与释放★★★★★TCP中的定时器★★★★
-1.传输服务的功能：
-
-提供给应用的端到端的服务IP地址复用情况下的实体通信增强网络层的服务：可靠传输，流控，拥塞控制
-
-2.引入传输层的必要性：
-
-1.由于IP是无连接的数据报投递系统，所以需要传输层提供服务质量更高的服务。2.传输层要提供识别应用程序的机制，由于IP传递的数据报中写的是目标的IP地址，无法区分...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/06/11</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="计算机网络,传输层">计算机网络,传输层</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/06/09/网络层知识总结/">
-            
-                <span>网络层知识总结</span>
-        </a>
-        <div class="abstract-content">
-            网络层重点：虚电路与数据报网络的比较★★★☆☆最短路径算法★★★☆☆距离矢量算法★★★★★链路状态算法★★★★★IPv4协议★★★★★IP地址★★★★★Internet控制协议★★★★★OSPF——内部网关路由协议★★★☆☆Internet编址方式★★★★☆第四章  互联网协议IP★★★★★Internet控制报文协议ICMP★★★★★
-1.网络层的功能：
-
-1.将上层的报文段从源主机传输到目的主机，将报文段封装成分组2.控制子网（路由，拥塞控制，服务质量，网络互连）
-
-2.网络层设计的问题：
-
-1.存储转发数据包交换：LAN，WAN和Int的数据包交换基于分组的存储转发2.提供给传输层...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/06/09</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="计算机网络,网络层">计算机网络,网络层</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags="pwn,Heap">pwn,Heap</a>
     
 </div>
             
@@ -943,186 +824,9 @@
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 39
+        Total : 28
         </div>
         <!-- search  -->
         
@@ -1135,6 +839,11 @@
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/09</span><a class="archive-post-title" href="/2019/10/09/pwn-堆溢出/">PWN-堆溢出</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -1173,22 +882,7 @@
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/22</span><a class="archive-post-title" href="/2019/08/22/使用Scrapy爬取名人名言/">使用Scrapy爬取名人名言</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/17</span><a class="archive-post-title" href="/2019/08/17/使用winpacap制作嗅探器/">使用winpacap制作嗅探器</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">08/14</span><a class="archive-post-title" href="/2019/08/14/基于BROP的栈溢出漏洞利用/">基于BROP的栈溢出漏洞利用</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/12</span><a class="archive-post-title" href="/2019/08/12/pintia题解/">pintia题解</a>
         </li>
     
     
@@ -1218,27 +912,7 @@
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">07/31</span><a class="archive-post-title" href="/2019/07/31/域控制器构建与配置/">域控制器构建与配置</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">07/31</span><a class="archive-post-title" href="/2019/07/31/LAMP安装及配置/">LAMP安装及配置</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/31</span><a class="archive-post-title" href="/2019/07/31/win2008Server搭建IIS及配置/">win2008Server搭建IIS及配置</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/11</span><a class="archive-post-title" href="/2019/07/11/数据链路层知识总结/">数据链路层知识总结</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/08</span><a class="archive-post-title" href="/2019/07/08/应用层知识总结/">应用层知识总结</a>
         </li>
     
     
@@ -1253,26 +927,6 @@
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/11</span><a class="archive-post-title" href="/2019/06/11/传输层知识总结/">传输层知识总结</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/10</span><a class="archive-post-title" href="/2019/06/10/2018火眼恶意代码逆向分析wp/">2018火眼恶意代码逆向分析wp</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/09</span><a class="archive-post-title" href="/2019/06/09/网络层知识总结/">网络层知识总结</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/04</span><a class="archive-post-title" href="/2019/06/04/windows2018R2读书笔记/">windows2018R2读书笔记</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">06/02</span><a class="archive-post-title" href="/2019/06/02/Linux下的iptables详解/">Linux下的iptables详解</a>
         </li>
     
@@ -1283,17 +937,12 @@
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2019/05/22/使用动态规划-DP-解决最大公共子串与最大公共子序列问题/">使用动态规划(DP)解决最大公共子串与最大公共子序列问题</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2019/05/22/素数个数求解与素数的判定/">素数个数求解与素数的判定</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/自己动手写工具(2)--TCP代理/">自己动手写工具(2)--TCP代理</a>
+            <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2019/05/22/使用动态规划-DP-解决最大公共子串与最大公共子序列问题/">使用动态规划(DP)解决最大公共子串与最大公共子序列问题</a>
         </li>
     
     
@@ -1303,7 +952,7 @@
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/28</span><a class="archive-post-title" href="/2019/04/28/一次信息收集之绕过CDN查询真实ip/">一次信息收集之绕过CDN查询真实ip</a>
+            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/自己动手写工具(2)--TCP代理/">自己动手写工具(2)--TCP代理</a>
         </li>
     
     
@@ -1318,12 +967,12 @@
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/python下多核/">python下多核，单核CPU对于并行，并发执行效率的对比</a>
+            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/sqli-labs/">sqli-labs 通关详解</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/sqli-labs/">sqli-labs 通关详解</a>
+            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/python下多核/">python下多核，单核CPU对于并行，并发执行效率的对比</a>
         </li>
     
     
@@ -1338,39 +987,27 @@
     
         <span class="sidebar-tag-name" data-tags="逆向,CTF"><span class="iconfont-archer">&#xe606;</span>逆向,CTF</span>
     
-        <span class="sidebar-tag-name" data-tags="逆向,恶意代码"><span class="iconfont-archer">&#xe606;</span>逆向,恶意代码</span>
+        <span class="sidebar-tag-name" data-tags="ctf,web,编码"><span class="iconfont-archer">&#xe606;</span>ctf,web,编码</span>
     
         <span class="sidebar-tag-name" data-tags="ACM,数论"><span class="iconfont-archer">&#xe606;</span>ACM,数论</span>
-    
-        <span class="sidebar-tag-name" data-tags="ctf,web,编码"><span class="iconfont-archer">&#xe606;</span>ctf,web,编码</span>
     
         <span class="sidebar-tag-name" data-tags="Linux,LAMP"><span class="iconfont-archer">&#xe606;</span>Linux,LAMP</span>
     
         <span class="sidebar-tag-name" data-tags="防火墙,iptables"><span class="iconfont-archer">&#xe606;</span>防火墙,iptables</span>
     
-        <span class="sidebar-tag-name" data-tags="SSH,端口转发"><span class="iconfont-archer">&#xe606;</span>SSH,端口转发</span>
-    
         <span class="sidebar-tag-name" data-tags="IDA,OllyDB"><span class="iconfont-archer">&#xe606;</span>IDA,OllyDB</span>
+    
+        <span class="sidebar-tag-name" data-tags="SSH,端口转发"><span class="iconfont-archer">&#xe606;</span>SSH,端口转发</span>
     
         <span class="sidebar-tag-name" data-tags="MSF,免杀"><span class="iconfont-archer">&#xe606;</span>MSF,免杀</span>
     
-        <span class="sidebar-tag-name" data-tags="IIS"><span class="iconfont-archer">&#xe606;</span>IIS</span>
-    
-        <span class="sidebar-tag-name" data-tags="windows,域控,内网渗透"><span class="iconfont-archer">&#xe606;</span>windows,域控,内网渗透</span>
+        <span class="sidebar-tag-name" data-tags="动态规划(DP)"><span class="iconfont-archer">&#xe606;</span>动态规划(DP)</span>
     
         <span class="sidebar-tag-name" data-tags="信息收集,社会工程学"><span class="iconfont-archer">&#xe606;</span>信息收集,社会工程学</span>
     
-        <span class="sidebar-tag-name" data-tags="Scrapy,python"><span class="iconfont-archer">&#xe606;</span>Scrapy,python</span>
-    
-        <span class="sidebar-tag-name" data-tags="动态规划(DP)"><span class="iconfont-archer">&#xe606;</span>动态规划(DP)</span>
-    
         <span class="sidebar-tag-name" data-tags="花指令,静态调试,Movfuscator"><span class="iconfont-archer">&#xe606;</span>花指令,静态调试,Movfuscator</span>
     
-        <span class="sidebar-tag-name" data-tags="域控制器"><span class="iconfont-archer">&#xe606;</span>域控制器</span>
-    
         <span class="sidebar-tag-name" data-tags="PWN,BROP,栈溢出"><span class="iconfont-archer">&#xe606;</span>PWN,BROP,栈溢出</span>
-    
-        <span class="sidebar-tag-name" data-tags="应用层,计算机网络"><span class="iconfont-archer">&#xe606;</span>应用层,计算机网络</span>
     
         <span class="sidebar-tag-name" data-tags="XCTF,逆向"><span class="iconfont-archer">&#xe606;</span>XCTF,逆向</span>
     
@@ -1386,21 +1023,15 @@
     
         <span class="sidebar-tag-name" data-tags="python,多线程"><span class="iconfont-archer">&#xe606;</span>python,多线程</span>
     
-        <span class="sidebar-tag-name" data-tags="计算机网络,传输层"><span class="iconfont-archer">&#xe606;</span>计算机网络,传输层</span>
-    
-        <span class="sidebar-tag-name" data-tags="计算机网络,数据链路层"><span class="iconfont-archer">&#xe606;</span>计算机网络,数据链路层</span>
+        <span class="sidebar-tag-name" data-tags="pwn,Heap"><span class="iconfont-archer">&#xe606;</span>pwn,Heap</span>
     
         <span class="sidebar-tag-name" data-tags="概率法求素数,算法"><span class="iconfont-archer">&#xe606;</span>概率法求素数,算法</span>
     
         <span class="sidebar-tag-name" data-tags="工具,python,arp_poison"><span class="iconfont-archer">&#xe606;</span>工具,python,arp_poison</span>
     
-        <span class="sidebar-tag-name" data-tags="ACM,pintia"><span class="iconfont-archer">&#xe606;</span>ACM,pintia</span>
-    
         <span class="sidebar-tag-name" data-tags="ctf,web,sql注入"><span class="iconfont-archer">&#xe606;</span>ctf,web,sql注入</span>
     
         <span class="sidebar-tag-name" data-tags="pwn,Format String Vulnerability"><span class="iconfont-archer">&#xe606;</span>pwn,Format String Vulnerability</span>
-    
-        <span class="sidebar-tag-name" data-tags="计算机网络,网络层"><span class="iconfont-archer">&#xe606;</span>计算机网络,网络层</span>
     
         <span class="sidebar-tag-name" data-tags="PWN,栈溢出"><span class="iconfont-archer">&#xe606;</span>PWN,栈溢出</span>
     
@@ -1441,25 +1072,23 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="逆向"><span class="iconfont-archer">&#xe60a;</span>逆向</span>
     
-        <span class="sidebar-category-name" data-categories="ACM"><span class="iconfont-archer">&#xe60a;</span>ACM</span>
-    
         <span class="sidebar-category-name" data-categories="CTFweb"><span class="iconfont-archer">&#xe60a;</span>CTFweb</span>
+    
+        <span class="sidebar-category-name" data-categories="ACM"><span class="iconfont-archer">&#xe60a;</span>ACM</span>
     
         <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
     
         <span class="sidebar-category-name" data-categories="内网渗透"><span class="iconfont-archer">&#xe60a;</span>内网渗透</span>
     
-        <span class="sidebar-category-name" data-categories="社工"><span class="iconfont-archer">&#xe60a;</span>社工</span>
-    
         <span class="sidebar-category-name" data-categories="爱的日记"><span class="iconfont-archer">&#xe60a;</span>爱的日记</span>
     
-        <span class="sidebar-category-name" data-categories="python"><span class="iconfont-archer">&#xe60a;</span>python</span>
+        <span class="sidebar-category-name" data-categories="社工"><span class="iconfont-archer">&#xe60a;</span>社工</span>
     
         <span class="sidebar-category-name" data-categories="Pwn"><span class="iconfont-archer">&#xe60a;</span>Pwn</span>
     
-        <span class="sidebar-category-name" data-categories="计算机网络"><span class="iconfont-archer">&#xe60a;</span>计算机网络</span>
-    
         <span class="sidebar-category-name" data-categories="BlackHatTools"><span class="iconfont-archer">&#xe60a;</span>BlackHatTools</span>
+    
+        <span class="sidebar-category-name" data-categories="python"><span class="iconfont-archer">&#xe60a;</span>python</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>

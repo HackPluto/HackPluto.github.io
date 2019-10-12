@@ -346,39 +346,6 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href="/2019/07/31/域控制器构建与配置/">
-            
-                <span>域控制器构建与配置</span>
-        </a>
-        <div class="abstract-content">
-            域控制器的安装首先在服务器添加角色中，添加AD域服务，然后在摘要中点击AD的安装向导，一直下一步，唯一的问题是机子需要设置静态IP，这个只需要在网络连接里设置静态的IP地址就好
-设置好AD域控服务器后，更改DNS的设置，方便之后设置辅额外域控服务器
-添加用户首先进入IIS配置界面，点进AD域服务，再点Users
-添加一个用户，用户名设置好之后，新建一个普通的win虚拟机，进入虚拟机点开网络设置，配置静态的DNS服务器，IP地址为AD域控制器的IP。
-重启机器，输入用户名密码即可加入域。在主域控服务器上，Users里新建三个组，分别命名为，WA，TX，RJ，每一个组下新建一个用户，即可将用...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/07/31</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="域控制器">域控制器</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
         <a class="abstract-title" href="/2019/07/31/LAMP安装及配置/">
             
                 <span>LAMP安装及配置</span>
@@ -406,118 +373,6 @@ ser...
             <div class="abstract-tags">
     
         <a class="post-tag" href="javascript:void(0);" data-tags="Linux,LAMP">Linux,LAMP</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/07/31/win2008Server搭建IIS及配置/">
-            
-                <span>win2008Server搭建IIS及配置</span>
-        </a>
-        <div class="abstract-content">
-            IIS安装在服务器管理器中添加角色，然后添加web服务器，安装。安装完毕后，访问127.0.0.1可以看到IIS的界面
-IIS基本配置点开IIS服务器，点击网站，删除默认的站点，新建一个站点。
-在设置站点下放置一个html文件
-在浏览器中访问站点，可以正常访问
-开启目录浏览在网页的功能视图中找到目录浏览双击，打开目录浏览
-在网站根目录中放置一个图片，打开浏览器可以对其下载
-
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/07/31</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="IIS">IIS</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/07/11/数据链路层知识总结/">
-            
-                <span>数据链路层知识总结</span>
-        </a>
-        <div class="abstract-content">
-            数据链路层1.提供给网络层的服务：
-
-无确认无连接的服务 LAN有确认无连接的服务 WLAN有确认面向连接的服务 PtoP link
-
-2.成帧
-
-为什么要成桢：1.将数据变得更小2.避免信道长期被占领
-
-成帧由网络适配器实现。成帧：标志/记法 问题：确定一帧的开始和结束分界方法：1.字节计数法2.字节填充的标志字节法3.比特填充的标志比特法4.物理层编码违禁法
-
-字节计数法基于计数器在帧的头部给出帧的长度。问题：出错后无法同步
-
-
-字节填充的标志字节法在帧的头部和尾部添加FLAG，如果FLAG出现在数据中，在FLAG前加ESC，如果数据中出现ESC，就在ESC前加ESC。
-
-
-比特填充...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/07/11</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="计算机网络,数据链路层">计算机网络,数据链路层</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/07/08/应用层知识总结/">
-            
-                <span>应用层知识总结</span>
-        </a>
-        <div class="abstract-content">
-            重点知识点：    DHCP ★★★★    DNS  ★★★★★    HTTP ★★★★★    WWW ★★★★★
-一.引导协议BOOTP：
-
-1.BOOTP是RATRP的替代协议，解决了RARP只能返回IP地址和不能被路由器转发的不足（迫使每一个局域网都得建立一个RARP服务器）2.基于UDP，要求计算校验和，客户端68端口，服务器67端口，通常和TFTP协同工作。3.无盘工作站启动时，用有限广播在本网广播BOOTP请求报文。4.客户端广播请求，服务器可以广播回应也可以在本机内设置一个ARP缓存然后定向单播应答。5.使用超时重传，重传使用指数退避策略。6.请求和响应报文不能分片（...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/07/08</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="应用层,计算机网络">应用层,计算机网络</a>
     
 </div>
             
@@ -978,186 +833,9 @@ IIS基本配置点开IIS服务器，点击网站，删除默认的站点，新�
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 39
+        Total : 28
         </div>
         <!-- search  -->
         
@@ -1170,6 +848,11 @@ IIS基本配置点开IIS服务器，点击网站，删除默认的站点，新�
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/09</span><a class="archive-post-title" href="/2019/10/09/pwn-堆溢出/">PWN-堆溢出</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -1208,22 +891,7 @@ IIS基本配置点开IIS服务器，点击网站，删除默认的站点，新�
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/22</span><a class="archive-post-title" href="/2019/08/22/使用Scrapy爬取名人名言/">使用Scrapy爬取名人名言</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/17</span><a class="archive-post-title" href="/2019/08/17/使用winpacap制作嗅探器/">使用winpacap制作嗅探器</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">08/14</span><a class="archive-post-title" href="/2019/08/14/基于BROP的栈溢出漏洞利用/">基于BROP的栈溢出漏洞利用</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/12</span><a class="archive-post-title" href="/2019/08/12/pintia题解/">pintia题解</a>
         </li>
     
     
@@ -1253,27 +921,7 @@ IIS基本配置点开IIS服务器，点击网站，删除默认的站点，新�
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">07/31</span><a class="archive-post-title" href="/2019/07/31/域控制器构建与配置/">域控制器构建与配置</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">07/31</span><a class="archive-post-title" href="/2019/07/31/LAMP安装及配置/">LAMP安装及配置</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/31</span><a class="archive-post-title" href="/2019/07/31/win2008Server搭建IIS及配置/">win2008Server搭建IIS及配置</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/11</span><a class="archive-post-title" href="/2019/07/11/数据链路层知识总结/">数据链路层知识总结</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/08</span><a class="archive-post-title" href="/2019/07/08/应用层知识总结/">应用层知识总结</a>
         </li>
     
     
@@ -1288,26 +936,6 @@ IIS基本配置点开IIS服务器，点击网站，删除默认的站点，新�
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/11</span><a class="archive-post-title" href="/2019/06/11/传输层知识总结/">传输层知识总结</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/10</span><a class="archive-post-title" href="/2019/06/10/2018火眼恶意代码逆向分析wp/">2018火眼恶意代码逆向分析wp</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/09</span><a class="archive-post-title" href="/2019/06/09/网络层知识总结/">网络层知识总结</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/04</span><a class="archive-post-title" href="/2019/06/04/windows2018R2读书笔记/">windows2018R2读书笔记</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">06/02</span><a class="archive-post-title" href="/2019/06/02/Linux下的iptables详解/">Linux下的iptables详解</a>
         </li>
     
@@ -1318,17 +946,12 @@ IIS基本配置点开IIS服务器，点击网站，删除默认的站点，新�
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2019/05/22/使用动态规划-DP-解决最大公共子串与最大公共子序列问题/">使用动态规划(DP)解决最大公共子串与最大公共子序列问题</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2019/05/22/素数个数求解与素数的判定/">素数个数求解与素数的判定</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/自己动手写工具(2)--TCP代理/">自己动手写工具(2)--TCP代理</a>
+            <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2019/05/22/使用动态规划-DP-解决最大公共子串与最大公共子序列问题/">使用动态规划(DP)解决最大公共子串与最大公共子序列问题</a>
         </li>
     
     
@@ -1338,7 +961,7 @@ IIS基本配置点开IIS服务器，点击网站，删除默认的站点，新�
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/28</span><a class="archive-post-title" href="/2019/04/28/一次信息收集之绕过CDN查询真实ip/">一次信息收集之绕过CDN查询真实ip</a>
+            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/自己动手写工具(2)--TCP代理/">自己动手写工具(2)--TCP代理</a>
         </li>
     
     
@@ -1353,12 +976,12 @@ IIS基本配置点开IIS服务器，点击网站，删除默认的站点，新�
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/python下多核/">python下多核，单核CPU对于并行，并发执行效率的对比</a>
+            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/sqli-labs/">sqli-labs 通关详解</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/sqli-labs/">sqli-labs 通关详解</a>
+            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/python下多核/">python下多核，单核CPU对于并行，并发执行效率的对比</a>
         </li>
     
     
@@ -1373,39 +996,27 @@ IIS基本配置点开IIS服务器，点击网站，删除默认的站点，新�
     
         <span class="sidebar-tag-name" data-tags="逆向,CTF"><span class="iconfont-archer">&#xe606;</span>逆向,CTF</span>
     
-        <span class="sidebar-tag-name" data-tags="逆向,恶意代码"><span class="iconfont-archer">&#xe606;</span>逆向,恶意代码</span>
+        <span class="sidebar-tag-name" data-tags="ctf,web,编码"><span class="iconfont-archer">&#xe606;</span>ctf,web,编码</span>
     
         <span class="sidebar-tag-name" data-tags="ACM,数论"><span class="iconfont-archer">&#xe606;</span>ACM,数论</span>
-    
-        <span class="sidebar-tag-name" data-tags="ctf,web,编码"><span class="iconfont-archer">&#xe606;</span>ctf,web,编码</span>
     
         <span class="sidebar-tag-name" data-tags="Linux,LAMP"><span class="iconfont-archer">&#xe606;</span>Linux,LAMP</span>
     
         <span class="sidebar-tag-name" data-tags="防火墙,iptables"><span class="iconfont-archer">&#xe606;</span>防火墙,iptables</span>
     
-        <span class="sidebar-tag-name" data-tags="SSH,端口转发"><span class="iconfont-archer">&#xe606;</span>SSH,端口转发</span>
-    
         <span class="sidebar-tag-name" data-tags="IDA,OllyDB"><span class="iconfont-archer">&#xe606;</span>IDA,OllyDB</span>
+    
+        <span class="sidebar-tag-name" data-tags="SSH,端口转发"><span class="iconfont-archer">&#xe606;</span>SSH,端口转发</span>
     
         <span class="sidebar-tag-name" data-tags="MSF,免杀"><span class="iconfont-archer">&#xe606;</span>MSF,免杀</span>
     
-        <span class="sidebar-tag-name" data-tags="IIS"><span class="iconfont-archer">&#xe606;</span>IIS</span>
-    
-        <span class="sidebar-tag-name" data-tags="windows,域控,内网渗透"><span class="iconfont-archer">&#xe606;</span>windows,域控,内网渗透</span>
+        <span class="sidebar-tag-name" data-tags="动态规划(DP)"><span class="iconfont-archer">&#xe606;</span>动态规划(DP)</span>
     
         <span class="sidebar-tag-name" data-tags="信息收集,社会工程学"><span class="iconfont-archer">&#xe606;</span>信息收集,社会工程学</span>
     
-        <span class="sidebar-tag-name" data-tags="Scrapy,python"><span class="iconfont-archer">&#xe606;</span>Scrapy,python</span>
-    
-        <span class="sidebar-tag-name" data-tags="动态规划(DP)"><span class="iconfont-archer">&#xe606;</span>动态规划(DP)</span>
-    
         <span class="sidebar-tag-name" data-tags="花指令,静态调试,Movfuscator"><span class="iconfont-archer">&#xe606;</span>花指令,静态调试,Movfuscator</span>
     
-        <span class="sidebar-tag-name" data-tags="域控制器"><span class="iconfont-archer">&#xe606;</span>域控制器</span>
-    
         <span class="sidebar-tag-name" data-tags="PWN,BROP,栈溢出"><span class="iconfont-archer">&#xe606;</span>PWN,BROP,栈溢出</span>
-    
-        <span class="sidebar-tag-name" data-tags="应用层,计算机网络"><span class="iconfont-archer">&#xe606;</span>应用层,计算机网络</span>
     
         <span class="sidebar-tag-name" data-tags="XCTF,逆向"><span class="iconfont-archer">&#xe606;</span>XCTF,逆向</span>
     
@@ -1421,21 +1032,15 @@ IIS基本配置点开IIS服务器，点击网站，删除默认的站点，新�
     
         <span class="sidebar-tag-name" data-tags="python,多线程"><span class="iconfont-archer">&#xe606;</span>python,多线程</span>
     
-        <span class="sidebar-tag-name" data-tags="计算机网络,传输层"><span class="iconfont-archer">&#xe606;</span>计算机网络,传输层</span>
-    
-        <span class="sidebar-tag-name" data-tags="计算机网络,数据链路层"><span class="iconfont-archer">&#xe606;</span>计算机网络,数据链路层</span>
+        <span class="sidebar-tag-name" data-tags="pwn,Heap"><span class="iconfont-archer">&#xe606;</span>pwn,Heap</span>
     
         <span class="sidebar-tag-name" data-tags="概率法求素数,算法"><span class="iconfont-archer">&#xe606;</span>概率法求素数,算法</span>
     
         <span class="sidebar-tag-name" data-tags="工具,python,arp_poison"><span class="iconfont-archer">&#xe606;</span>工具,python,arp_poison</span>
     
-        <span class="sidebar-tag-name" data-tags="ACM,pintia"><span class="iconfont-archer">&#xe606;</span>ACM,pintia</span>
-    
         <span class="sidebar-tag-name" data-tags="ctf,web,sql注入"><span class="iconfont-archer">&#xe606;</span>ctf,web,sql注入</span>
     
         <span class="sidebar-tag-name" data-tags="pwn,Format String Vulnerability"><span class="iconfont-archer">&#xe606;</span>pwn,Format String Vulnerability</span>
-    
-        <span class="sidebar-tag-name" data-tags="计算机网络,网络层"><span class="iconfont-archer">&#xe606;</span>计算机网络,网络层</span>
     
         <span class="sidebar-tag-name" data-tags="PWN,栈溢出"><span class="iconfont-archer">&#xe606;</span>PWN,栈溢出</span>
     
@@ -1476,25 +1081,23 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="逆向"><span class="iconfont-archer">&#xe60a;</span>逆向</span>
     
-        <span class="sidebar-category-name" data-categories="ACM"><span class="iconfont-archer">&#xe60a;</span>ACM</span>
-    
         <span class="sidebar-category-name" data-categories="CTFweb"><span class="iconfont-archer">&#xe60a;</span>CTFweb</span>
+    
+        <span class="sidebar-category-name" data-categories="ACM"><span class="iconfont-archer">&#xe60a;</span>ACM</span>
     
         <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
     
         <span class="sidebar-category-name" data-categories="内网渗透"><span class="iconfont-archer">&#xe60a;</span>内网渗透</span>
     
-        <span class="sidebar-category-name" data-categories="社工"><span class="iconfont-archer">&#xe60a;</span>社工</span>
-    
         <span class="sidebar-category-name" data-categories="爱的日记"><span class="iconfont-archer">&#xe60a;</span>爱的日记</span>
     
-        <span class="sidebar-category-name" data-categories="python"><span class="iconfont-archer">&#xe60a;</span>python</span>
+        <span class="sidebar-category-name" data-categories="社工"><span class="iconfont-archer">&#xe60a;</span>社工</span>
     
         <span class="sidebar-category-name" data-categories="Pwn"><span class="iconfont-archer">&#xe60a;</span>Pwn</span>
     
-        <span class="sidebar-category-name" data-categories="计算机网络"><span class="iconfont-archer">&#xe60a;</span>计算机网络</span>
-    
         <span class="sidebar-category-name" data-categories="BlackHatTools"><span class="iconfont-archer">&#xe60a;</span>BlackHatTools</span>
+    
+        <span class="sidebar-category-name" data-categories="python"><span class="iconfont-archer">&#xe60a;</span>python</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
