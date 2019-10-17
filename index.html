@@ -359,13 +359,96 @@ height:50vh;
     
     
     <article class="index-post">
+        <a class="abstract-title" href="/2019/10/17/堆的分配原理分析/">
+            
+                <span>堆的分配原理分析</span>
+        </a>
+        <div class="abstract-content">
+            
+这段时间在学习堆溢出，在网上找到了一些好的堆的讲解，在这里做一个总结
+
+
+参考文献：
+
+https://paper.seebug.org/papers/Archive/refs/heap/glibc%e5%86%85%e5%ad%98%e7%ae%a1%e7%90%86ptmalloc%e6%ba%90%e4%bb%a3%e7%a0%81%e5%88%86%e6%9e%90.pdf
+
+
+基础知识X86 平台 Linux 进程内存布局
+在Linux上，以32 位机器为例，程序在固定位置开始加载，通常是128M处，首先被载入的是.text 段，然后是.data 段，最后是.bss 段。这可...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/10/17</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="pwn,堆,glibc">pwn,堆,glibc</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2019/10/14/ucore-lab0,lab1/">
+            
+                <span>ucore_lab0,lab1</span>
+        </a>
+        <div class="abstract-content">
+            lab0
+之前对于Linux和汇编也有一些接触，所以实验报告里我只记录之前不太熟悉的内容
+
+make和makefile
+在阅读实验指导书的同时，这里也记录我学习make的心得
+
+makefile的规则
+make命令是GNU的工程化编译工具，它用于编译大量互相关联的源代码，使用它可以实现项目的工程化管理，提高开发效率。
+
+
+综上，编译链接的过程是：
+
+首先源文件会通过编译阶段生成中间目标文件，再由中间目标文件生成执行文件。
+编译时编译器只检测程序的语法、函数，变量是否声明以及一些预处理。如果函数只是声明但是未实现则编译器只会警告(不是所有的编译器都是这样)，仍然可以生成中间目标文件。
+在链...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/10/14</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="ucore,lab0,lab1">ucore,lab0,lab1</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href="/2019/10/09/pwn-堆溢出/">
             
                 <span>PWN-堆溢出</span>
         </a>
         <div class="abstract-content">
-            堆的详解什么是堆
-堆是分配给每个程序的内存区域。与堆栈不同，堆内存可以动态分配。这意味着程序可以在需要时从堆段中“请求”和“释放”内存。同样，该存储器是全局的，即可以从程序中的任何位置访问和修改该存储器，并且不局限于分配它的功能。这是通过使用“指针”引用动态分配的内存来实现的，与使用局部变量（在堆栈上）相比，这反过来导致性能略有下降。我们一般称管理堆的那部分程序为堆管理器。堆管理器处于用户程序与内核中间，主要做以下工作1.响应用户的申请内存请求，向操作系统申请内存，然后将其返回给用户程序。同时，为了保持内存管理的高效性，内核一般都会预先分配很大的一块连续的内存，然后让堆管理器通过某种算法...
+            堆的详解https://sploitfun.wordpress.com/2015/02/10/understanding-glibc-malloc/comment-page-1/
+什么是堆
+堆是分配给每个程序的内存区域。与堆栈不同，堆内存可以动态分配。这意味着程序可以在需要时从堆段中“请求”和“释放”内存。同样，该存储器是全局的，即可以从程序中的任何位置访问和修改该存储器，并且不局限于分配它的功能。这是通过使用“指针”引用动态分配的内存来实现的，与使用局部变量（在堆栈上）相比，这反过来导致性能略有下降。我们一般称管理堆的那部分程序为堆管理器。堆管理器处于用户程序与内核中间，主要做以下工作...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -640,69 +723,6 @@ win7下通过修改注册表建立隐藏账户功能实现
             <div class="abstract-tags">
     
         <a class="post-tag" href="javascript:void(0);" data-tags="windows,影子账户">windows,影子账户</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/08/14/基于BROP的栈溢出漏洞利用/">
-            
-                <span>基于BROP的栈溢出漏洞利用</span>
-        </a>
-        <div class="abstract-content">
-            BROP
-黑客入侵软件时，有三种漏洞利用方案：1.开源（例如，Apache）2.开放二进制（例如，Internet Explorer）3.封闭二进制和源（例如，某些专有网络服务）BROP针对攻击第三种情况。BROP攻击可以在不拥有目标二进制文件的情况下编写漏洞利用程序。它需要堆栈溢出和崩溃后重新启动的服务。根据服务是否崩溃（即连接关闭或保持打开），BROP攻击能够构建一个导致shell的完整远程攻击。BROP远程构造足够的小工具来执行写系统调用，之后二进制文件从内存传输到攻击者的套接字。之后，可以执行标准的ROP攻击。除了攻击专有服务外，BROP在定位开源软件方面非常有用，开源软件使用不...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/08/14</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="PWN,BROP,栈溢出">PWN,BROP,栈溢出</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/08/11/Linux动态链接库之GOT-PLT/">
-            
-                <span>Linux动态链接库之GOT,PLT</span>
-        </a>
-        <div class="abstract-content">
-            
-今天做到了一个pwn的题目涉及到了GOT,PLT，是关于GOT表泄漏地址的一个题，所以在这里总结下Linux动态链接库的知识。
-
-静态链接与动态链接
-任何操作系统对于二进制文件的链接方式有两种，静态链接与动态链接。静态链接的二进制文件就包含在程序自身的代码里，并且不依赖外部的库。动态链接的二进制文件通常很多函数是不包含的，需要系统提供依赖，比如程序中使用了printf函数，而这个函数是C库函数，自己写的程序中是没有的，那么printf就需要动态链接库来提供，在Linux上就是libc.so.6这个文件。在二进制文件（比如object file）中会有一段叫relocations的部分，...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/08/11</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="Linux,GOT,PLT">Linux,GOT,PLT</a>
     
 </div>
             
@@ -1259,9 +1279,57 @@ win7下通过修改注册表建立隐藏账户功能实现
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 28
+        Total : 30
         </div>
         <!-- search  -->
         
@@ -1274,6 +1342,16 @@ win7下通过修改注册表建立隐藏账户功能实现
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/17</span><a class="archive-post-title" href="/2019/10/17/堆的分配原理分析/">堆的分配原理分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/14</span><a class="archive-post-title" href="/2019/10/14/ucore-lab0,lab1/">ucore_lab0,lab1</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -1372,12 +1450,12 @@ win7下通过修改注册表建立隐藏账户功能实现
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2019/05/22/素数个数求解与素数的判定/">素数个数求解与素数的判定</a>
+            <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2019/05/22/使用动态规划-DP-解决最大公共子串与最大公共子序列问题/">使用动态规划(DP)解决最大公共子串与最大公共子序列问题</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2019/05/22/使用动态规划-DP-解决最大公共子串与最大公共子序列问题/">使用动态规划(DP)解决最大公共子串与最大公共子序列问题</a>
+            <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2019/05/22/素数个数求解与素数的判定/">素数个数求解与素数的判定</a>
         </li>
     
     
@@ -1420,11 +1498,11 @@ win7下通过修改注册表建立隐藏账户功能实现
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
+        <span class="sidebar-tag-name" data-tags="ACM,数论"><span class="iconfont-archer">&#xe606;</span>ACM,数论</span>
+    
         <span class="sidebar-tag-name" data-tags="逆向,CTF"><span class="iconfont-archer">&#xe606;</span>逆向,CTF</span>
     
         <span class="sidebar-tag-name" data-tags="ctf,web,编码"><span class="iconfont-archer">&#xe606;</span>ctf,web,编码</span>
-    
-        <span class="sidebar-tag-name" data-tags="ACM,数论"><span class="iconfont-archer">&#xe606;</span>ACM,数论</span>
     
         <span class="sidebar-tag-name" data-tags="Linux,LAMP"><span class="iconfont-archer">&#xe606;</span>Linux,LAMP</span>
     
@@ -1436,9 +1514,9 @@ win7下通过修改注册表建立隐藏账户功能实现
     
         <span class="sidebar-tag-name" data-tags="MSF,免杀"><span class="iconfont-archer">&#xe606;</span>MSF,免杀</span>
     
-        <span class="sidebar-tag-name" data-tags="动态规划(DP)"><span class="iconfont-archer">&#xe606;</span>动态规划(DP)</span>
-    
         <span class="sidebar-tag-name" data-tags="信息收集,社会工程学"><span class="iconfont-archer">&#xe606;</span>信息收集,社会工程学</span>
+    
+        <span class="sidebar-tag-name" data-tags="动态规划(DP)"><span class="iconfont-archer">&#xe606;</span>动态规划(DP)</span>
     
         <span class="sidebar-tag-name" data-tags="花指令,静态调试,Movfuscator"><span class="iconfont-archer">&#xe606;</span>花指令,静态调试,Movfuscator</span>
     
@@ -1456,15 +1534,19 @@ win7下通过修改注册表建立隐藏账户功能实现
     
         <span class="sidebar-tag-name" data-tags="Linux,GOT,PLT"><span class="iconfont-archer">&#xe606;</span>Linux,GOT,PLT</span>
     
+        <span class="sidebar-tag-name" data-tags="pwn,Heap"><span class="iconfont-archer">&#xe606;</span>pwn,Heap</span>
+    
         <span class="sidebar-tag-name" data-tags="python,多线程"><span class="iconfont-archer">&#xe606;</span>python,多线程</span>
     
-        <span class="sidebar-tag-name" data-tags="pwn,Heap"><span class="iconfont-archer">&#xe606;</span>pwn,Heap</span>
+        <span class="sidebar-tag-name" data-tags="pwn,堆,glibc"><span class="iconfont-archer">&#xe606;</span>pwn,堆,glibc</span>
     
         <span class="sidebar-tag-name" data-tags="概率法求素数,算法"><span class="iconfont-archer">&#xe606;</span>概率法求素数,算法</span>
     
         <span class="sidebar-tag-name" data-tags="工具,python,arp_poison"><span class="iconfont-archer">&#xe606;</span>工具,python,arp_poison</span>
     
         <span class="sidebar-tag-name" data-tags="ctf,web,sql注入"><span class="iconfont-archer">&#xe606;</span>ctf,web,sql注入</span>
+    
+        <span class="sidebar-tag-name" data-tags="ucore,lab0,lab1"><span class="iconfont-archer">&#xe606;</span>ucore,lab0,lab1</span>
     
         <span class="sidebar-tag-name" data-tags="pwn,Format String Vulnerability"><span class="iconfont-archer">&#xe606;</span>pwn,Format String Vulnerability</span>
     
@@ -1505,19 +1587,19 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
+        <span class="sidebar-category-name" data-categories="ACM"><span class="iconfont-archer">&#xe60a;</span>ACM</span>
+    
         <span class="sidebar-category-name" data-categories="逆向"><span class="iconfont-archer">&#xe60a;</span>逆向</span>
     
         <span class="sidebar-category-name" data-categories="CTFweb"><span class="iconfont-archer">&#xe60a;</span>CTFweb</span>
-    
-        <span class="sidebar-category-name" data-categories="ACM"><span class="iconfont-archer">&#xe60a;</span>ACM</span>
     
         <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
     
         <span class="sidebar-category-name" data-categories="内网渗透"><span class="iconfont-archer">&#xe60a;</span>内网渗透</span>
     
-        <span class="sidebar-category-name" data-categories="爱的日记"><span class="iconfont-archer">&#xe60a;</span>爱的日记</span>
-    
         <span class="sidebar-category-name" data-categories="社工"><span class="iconfont-archer">&#xe60a;</span>社工</span>
+    
+        <span class="sidebar-category-name" data-categories="爱的日记"><span class="iconfont-archer">&#xe60a;</span>爱的日记</span>
     
         <span class="sidebar-category-name" data-categories="Pwn"><span class="iconfont-archer">&#xe60a;</span>Pwn</span>
     
