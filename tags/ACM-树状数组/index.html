@@ -346,25 +346,37 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href="/2019/10/09/pwn-堆溢出/">
+        <a class="abstract-title" href="/2019/10/28/树状数组/">
             
-                <span>PWN-堆溢出</span>
+                <span>树状数组</span>
         </a>
         <div class="abstract-content">
-            堆的详解https://sploitfun.wordpress.com/2015/02/10/understanding-glibc-malloc/comment-page-1/
-什么是堆
-堆是分配给每个程序的内存区域。与堆栈不同，堆内存可以动态分配。这意味着程序可以在需要时从堆段中“请求”和“释放”内存。同样，该存储器是全局的，即可以从程序中的任何位置访问和修改该存储器，并且不局限于分配它的功能。这是通过使用“指针”引用动态分配的内存来实现的，与使用局部变量（在堆栈上）相比，这反过来导致性能略有下降。我们一般称管理堆的那部分程序为堆管理器。堆管理器处于用户程序与内核中间，主要做以下工作...
+            引入
+这里通过一个简单的题目展开介绍，先输入一个长度为n的数组，然后我们有如下两种操作：
+
+输入一个数m，输出数组中下标1~m的前缀和
+对某个指定下标的数进行值的修改多次执行上述两种操作
+
+
+
+普通方法对于一个的数组，如果需要求1~m的前缀和我们可以将其从下标1开始对m个数进行求和，对于n次操作，时间复杂度是O(n^2)，12for i 1 -&gt; msum += num[i]
+
+
+对于值的修改，我们可以直接通过下标找到要修改的数，n次操作时间复杂度为O(n)，在数组n开得比较大的时候，求前缀和的效率显得低了
+
+
+优化的方式：初始我们用一个数组A的保存每个位置的初始值，然后用一个辅助...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/10/09</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/10/28</span>
             </div>
             <!-- tags  -->
             
             <div class="abstract-tags">
     
-        <a class="post-tag" href="javascript:void(0);" data-tags="pwn,Heap">pwn,Heap</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags="ACM,树状数组">ACM,树状数组</a>
     
 </div>
             

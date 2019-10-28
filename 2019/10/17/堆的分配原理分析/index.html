@@ -272,7 +272,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">10k</span>阅读时长: <span class="post-count reading-time">37 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">10.5k</span>阅读时长: <span class="post-count reading-time">40 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -586,6 +586,13 @@ height:50vh;
 <blockquote>
 <p>chunk 结构体的前两个域刚好也是 2<em>SIZE_SZ 大小，对于已经分配的 chunk，通过 chunk2mem 宏根据 chunk 地址获得返回给用户的内存地址，反过来通过 mem2chunk 宏根据 mem 地址得到 chunk 地址.宏 aligned_OK 和 misaligned_chunk(p)用于校验地址是否是按 2</em>SIZE_SZ 对齐的。<br>MIN_CHUNK_SIZE 定义了最小的 chunk 的大小，32 位平台上位 16 字节，64 位平台为 24<br>字节或是 32 字节。MINSIZE 定义了最小的分配的内存大小，是对 MIN_CHUNK_SIZE 进行了<br>2*SIZE_SZ 对齐，地址对齐后与 MIN_CHUNK_SIZE 的大小仍然是一样的。</p>
 </blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> Check if a request is so large that it would wrap around zero when</span></span><br><span class="line"><span class="comment"> padded and aligned. To simplify some other code, the bound is made</span></span><br><span class="line"><span class="comment"> low enough so that adding MINSIZE will also not wrap around zero.</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> REQUEST_OUT_OF_RANGE(req) \</span></span><br><span class="line"> ((<span class="keyword">unsigned</span> <span class="keyword">long</span>)(req) &gt;= \</span><br><span class="line"> (<span class="keyword">unsigned</span> <span class="keyword">long</span>)(INTERNAL_SIZE_T)(<span class="number">-2</span> * MINSIZE))</span><br><span class="line"></span><br><span class="line"> <span class="comment">/* pad request bytes into a usable size -- internal version */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> request2size(req) \</span></span><br><span class="line"> (((req) + SIZE_SZ + MALLOC_ALIGN_MASK &lt; MINSIZE) ? \</span><br><span class="line"> MINSIZE : \</span><br><span class="line"> ((req) + SIZE_SZ + MALLOC_ALIGN_MASK) &amp; ~MALLOC_ALIGN_MASK)</span><br><span class="line"> <span class="comment">/* Same, except also perform argument check */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> checked_request2size(req, sz) \</span></span><br><span class="line"> <span class="keyword">if</span> (REQUEST_OUT_OF_RANGE(req)) &#123; \</span><br><span class="line"> MALLOC_FAILURE_ACTION; \</span><br><span class="line"> <span class="keyword">return</span> <span class="number">0</span>; \</span><br><span class="line"> &#125; \</span><br><span class="line"> (sz) = request2size(req);</span><br></pre></td></tr></table></figure>
+<p>重要结构体：<br>malloc_chunk<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">malloc_chunk</span> &#123;</span></span><br><span class="line"></span><br><span class="line">  INTERNAL_SIZE_T      prev_size;  <span class="comment">/* Size of previous chunk (if free).  */</span></span><br><span class="line">  INTERNAL_SIZE_T      size;       <span class="comment">/* Size in bytes, including overhead. */</span></span><br><span class="line"></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">malloc_chunk</span>* <span class="title">fd</span>;</span>         <span class="comment">/* double links -- used only if free. */</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">malloc_chunk</span>* <span class="title">bk</span>;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">/* Only used for large blocks: pointer to next larger size.  */</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">malloc_chunk</span>* <span class="title">fd_nextsize</span>;</span> <span class="comment">/* double links -- used only if free. */</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">malloc_chunk</span>* <span class="title">bk_nextsize</span>;</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>malloc_state<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">malloc_state</span> &#123;</span></span><br><span class="line">  <span class="comment">/* 序列化访问  */</span></span><br><span class="line">  <span class="keyword">mutex_t</span> mutex;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* Flags (formerly in max_fast).  */</span></span><br><span class="line">  <span class="keyword">int</span> flags;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> THREAD_STATS</span></span><br><span class="line">  <span class="comment">/* Statistics for locking.  Only used if THREAD_STATS is defined.  */</span></span><br><span class="line">  <span class="keyword">long</span> stat_lock_direct, stat_lock_loop, stat_lock_wait;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">  <span class="comment">/* Fastbins NFASTBINS=10 */</span></span><br><span class="line">  mfastbinptr      fastbinsY[NFASTBINS];</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* Base of the topmost chunk -- not otherwise kept in a bin */</span></span><br><span class="line">  mchunkptr        top;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* 剩余部分来自最近一次小请求的拆分 */</span></span><br><span class="line">  mchunkptr        last_remainder;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* Normal bins packed as described above */</span></span><br><span class="line">  mchunkptr        bins[NBINS * <span class="number">2</span> - <span class="number">2</span>];</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* Bitmap of bins */</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span>     binmap[BINMAPSIZE];</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* Linked list */</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">malloc_state</span> *<span class="title">next</span>;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> PER_THREAD</span></span><br><span class="line">  <span class="comment">/* Linked list for free arenas.  */</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">malloc_state</span> *<span class="title">next_free</span>;</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">  <span class="comment">/* 在此arena中从系统分配的内存。  */</span></span><br><span class="line">  INTERNAL_SIZE_T system_mem;</span><br><span class="line">  INTERNAL_SIZE_T max_system_mem;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>mfastbinptr,mchunkptr,均为malloc_chunk类型。<br>fastbinsY 拥有 10（NFASTBINS）个元素的数组，用于存放每个 fast chunk 链表头指针，<br>所以 fast bins 最多包含 10 个 fast chunk 的单向链表。<br>top 是一个 chunk 指针，指向分配区的 top chunk。<br>last_remainder 是一个 chunk 指针，分配区上次分配 small chunk 时，从一个 chunk 中分<br>裂出一个 small chunk 返回给用户，分裂后的剩余部分形成一个 chunk，last_remainder 就是<br>指向的这个 chunk。</p>
+</blockquote>
+<p>malloc_par<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">malloc_par</span> &#123;</span></span><br><span class="line">  <span class="comment">/* Tunable parameters */</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">long</span>    trim_threshold;</span><br><span class="line">  INTERNAL_SIZE_T  top_pad;</span><br><span class="line">  INTERNAL_SIZE_T  mmap_threshold;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> PER_THREAD</span></span><br><span class="line">  INTERNAL_SIZE_T  arena_test;</span><br><span class="line">  INTERNAL_SIZE_T  arena_max;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">  <span class="comment">/* Memory map support */</span></span><br><span class="line">  <span class="keyword">int</span>              n_mmaps;</span><br><span class="line">  <span class="keyword">int</span>              n_mmaps_max;</span><br><span class="line">  <span class="keyword">int</span>              max_n_mmaps;</span><br><span class="line">  <span class="comment">/* the mmap_threshold is dynamic, until the user sets</span></span><br><span class="line"><span class="comment">     it manually, at which point we need to disable any</span></span><br><span class="line"><span class="comment">     dynamic behavior. */</span></span><br><span class="line">  <span class="keyword">int</span>              no_dyn_threshold;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* Cache malloc_getpagesize */</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span>     pagesize;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* Statistics */</span></span><br><span class="line">  INTERNAL_SIZE_T  mmapped_mem;</span><br><span class="line">  <span class="comment">/*INTERNAL_SIZE_T  sbrked_mem;*/</span></span><br><span class="line">  <span class="comment">/*INTERNAL_SIZE_T  max_sbrked_mem;*/</span></span><br><span class="line">  INTERNAL_SIZE_T  max_mmapped_mem;</span><br><span class="line">  INTERNAL_SIZE_T  max_total_mem; <span class="comment">/* only kept for NO_THREADS */</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">/* First address handed out by MORECORE/sbrk.  */</span></span><br><span class="line">  <span class="keyword">char</span>*            sbrk_base;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
 <p><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt></p>
 
     </article>
@@ -595,13 +602,18 @@ height:50vh;
             <p>原文作者：<a href="http://yoursite.com">HackPluto</a>
             </p><p>原文链接：<a href="http://yoursite.com/2019/10/17/堆的分配原理分析/">http://yoursite.com/2019/10/17/堆的分配原理分析/</a>
             </p><p>发表日期：<a href="http://yoursite.com/2019/10/17/堆的分配原理分析/">October 17th 2019, 1:30:26 am</a>
-            </p><p>更新日期：<a href="http://yoursite.com/2019/10/17/堆的分配原理分析/">October 22nd 2019, 1:28:16 am</a>
+            </p><p>更新日期：<a href="http://yoursite.com/2019/10/17/堆的分配原理分析/">October 28th 2019, 12:15:07 am</a>
             </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
     <!-- paginator  -->
     <ul class="post-paginator">
         <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href="/2019/10/28/树状数组/" title="树状数组">
+                    <div class="nextTitle">树状数组</div>
+                </a>
             
         </li>
         <li class="previous">
@@ -1146,9 +1158,30 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 31
+        Total : 32
         </div>
         <!-- search  -->
         
@@ -1161,6 +1194,11 @@ top:50vh;
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/28</span><a class="archive-post-title" href="/2019/10/28/树状数组/">树状数组</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -1304,12 +1342,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/python下多核/">python下多核，单核CPU对于并行，并发执行效率的对比</a>
+            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/sqli-labs/">sqli-labs 通关详解</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/sqli-labs/">sqli-labs 通关详解</a>
+            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/python下多核/">python下多核，单核CPU对于并行，并发执行效率的对比</a>
         </li>
     
     
@@ -1322,15 +1360,15 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
+        <span class="sidebar-tag-name" data-tags="逆向,CTF"><span class="iconfont-archer">&#xe606;</span>逆向,CTF</span>
+    
         <span class="sidebar-tag-name" data-tags="ACM,数论"><span class="iconfont-archer">&#xe606;</span>ACM,数论</span>
     
         <span class="sidebar-tag-name" data-tags="ctf,web,编码"><span class="iconfont-archer">&#xe606;</span>ctf,web,编码</span>
     
-        <span class="sidebar-tag-name" data-tags="防火墙,iptables"><span class="iconfont-archer">&#xe606;</span>防火墙,iptables</span>
-    
         <span class="sidebar-tag-name" data-tags="Linux,LAMP"><span class="iconfont-archer">&#xe606;</span>Linux,LAMP</span>
     
-        <span class="sidebar-tag-name" data-tags="逆向,CTF"><span class="iconfont-archer">&#xe606;</span>逆向,CTF</span>
+        <span class="sidebar-tag-name" data-tags="防火墙,iptables"><span class="iconfont-archer">&#xe606;</span>防火墙,iptables</span>
     
         <span class="sidebar-tag-name" data-tags="IDA,OllyDB"><span class="iconfont-archer">&#xe606;</span>IDA,OllyDB</span>
     
@@ -1350,6 +1388,8 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="看雪,KCTF,逆向,PWN"><span class="iconfont-archer">&#xe606;</span>看雪,KCTF,逆向,PWN</span>
     
+        <span class="sidebar-tag-name" data-tags="ACM,树状数组"><span class="iconfont-archer">&#xe606;</span>ACM,树状数组</span>
+    
         <span class="sidebar-tag-name" data-tags="工具,python,Netcat"><span class="iconfont-archer">&#xe606;</span>工具,python,Netcat</span>
     
         <span class="sidebar-tag-name" data-tags="工具,python,proxy"><span class="iconfont-archer">&#xe606;</span>工具,python,proxy</span>
@@ -1358,13 +1398,13 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="Linux,GOT,PLT"><span class="iconfont-archer">&#xe606;</span>Linux,GOT,PLT</span>
     
-        <span class="sidebar-tag-name" data-tags="pwn,Heap"><span class="iconfont-archer">&#xe606;</span>pwn,Heap</span>
-    
         <span class="sidebar-tag-name" data-tags="python,多线程"><span class="iconfont-archer">&#xe606;</span>python,多线程</span>
     
-        <span class="sidebar-tag-name" data-tags="工具,python,arp_poison"><span class="iconfont-archer">&#xe606;</span>工具,python,arp_poison</span>
+        <span class="sidebar-tag-name" data-tags="pwn,Heap"><span class="iconfont-archer">&#xe606;</span>pwn,Heap</span>
     
         <span class="sidebar-tag-name" data-tags="概率法求素数,算法"><span class="iconfont-archer">&#xe606;</span>概率法求素数,算法</span>
+    
+        <span class="sidebar-tag-name" data-tags="工具,python,arp_poison"><span class="iconfont-archer">&#xe606;</span>工具,python,arp_poison</span>
     
         <span class="sidebar-tag-name" data-tags="ctf,web,sql注入"><span class="iconfont-archer">&#xe606;</span>ctf,web,sql注入</span>
     
@@ -1372,9 +1412,9 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="PWN,栈溢出"><span class="iconfont-archer">&#xe606;</span>PWN,栈溢出</span>
     
-        <span class="sidebar-tag-name" data-tags="ucore,lab0,lab1"><span class="iconfont-archer">&#xe606;</span>ucore,lab0,lab1</span>
-    
         <span class="sidebar-tag-name" data-tags="windows,影子账户"><span class="iconfont-archer">&#xe606;</span>windows,影子账户</span>
+    
+        <span class="sidebar-tag-name" data-tags="ucore,lab0,lab1"><span class="iconfont-archer">&#xe606;</span>ucore,lab0,lab1</span>
     
         <span class="sidebar-tag-name" data-tags="pwn,堆,glibc"><span class="iconfont-archer">&#xe606;</span>pwn,堆,glibc</span>
     
@@ -1411,13 +1451,13 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
+        <span class="sidebar-category-name" data-categories="逆向"><span class="iconfont-archer">&#xe60a;</span>逆向</span>
+    
         <span class="sidebar-category-name" data-categories="ACM"><span class="iconfont-archer">&#xe60a;</span>ACM</span>
     
         <span class="sidebar-category-name" data-categories="CTFweb"><span class="iconfont-archer">&#xe60a;</span>CTFweb</span>
     
         <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
-    
-        <span class="sidebar-category-name" data-categories="逆向"><span class="iconfont-archer">&#xe60a;</span>逆向</span>
     
         <span class="sidebar-category-name" data-categories="内网渗透"><span class="iconfont-archer">&#xe60a;</span>内网渗透</span>
     
