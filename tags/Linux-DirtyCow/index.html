@@ -346,24 +346,27 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href="/2019/05/10/自己动手写工具(2)--TCP代理/">
+        <a class="abstract-title" href="/2019/10/28/DirtyCow漏洞复现及原理分析/">
             
-                <span>自己动手写工具(2)--TCP代理</span>
+                <span>DirtyCow漏洞复现及原理分析</span>
         </a>
         <div class="abstract-content">
-            ##TCP代理的简介这次的博客给大家再介绍一个TCP代理的小工具，TCP代理是什么呢，就是处在应用层上位于真正的服务器和客户端之间用TCP的方式将流量从一个机子转到另一个机子，可以起到监控流量，修改数据包的功能。代理服务器还有一个重要的作用就是隐藏背后的真正服务器，使服务器免受攻击。假如代理服务器挂了，后面的服务器仍然可以正常运行，而且如果背后的服务器还拥有多台代理服务器就会使自己更加安全。
-##实现的原理1.代理先开启一个TCP服务2.客户端先去连接代理3.代理在与客户端取得连接后立即与远程的服务端建立TCP链接4.无论是客户端还是服务端发送数据都是先发送到代理然后代理再决...
+            基本概括
+漏洞编号：CVE-2016-5195漏洞名称：脏牛（Dirty COW）漏洞危害：低权限用户利用该漏洞技术可以在全版本Linux系统上实现本地提权影响范围：Linux内核&gt;=2.6.22（2007年发行）开始就受影响了，直到2016年10月18日才修复
+
+
+脏牛漏洞是竞争危害中的一个案例。自从2007年开始它就已经存在于Linux之中，但直到2016年10月份才被发现和利用。这一个漏洞几乎影响所有的以Linux为基础发展起来的操作系统，包括安卓，因此产生了严重的后果：攻击者可以通过该漏洞获得ROOT权限。该漏洞存在于Linux内核的Copy-On-Write代码中。通过该...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/05/10</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/10/28</span>
             </div>
             <!-- tags  -->
             
             <div class="abstract-tags">
     
-        <a class="post-tag" href="javascript:void(0);" data-tags="工具,python,proxy">工具,python,proxy</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags="Linux,DirtyCow">Linux,DirtyCow</a>
     
 </div>
             
