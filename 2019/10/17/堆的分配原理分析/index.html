@@ -272,7 +272,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">12.3k</span>阅读时长: <span class="post-count reading-time">48 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">13.4k</span>阅读时长: <span class="post-count reading-time">53 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -620,6 +620,29 @@ height:50vh;
 <p>先考虑 unsorted bin，再考虑 last remainder ，但是对于 small bin chunk 的请求会有所例外。<br>注意 unsorted bin 的遍历顺序为 bk。</p>
 </blockquote>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 如果 unsorted bin 不为空</span></span><br><span class="line"><span class="comment">// First In First Out</span></span><br><span class="line"><span class="keyword">while</span> ((victim = unsorted_chunks(av)-&gt;bk) != unsorted_chunks(av)) &#123;</span><br><span class="line">    <span class="comment">// victim 为 unsorted bin 的最后一个 chunk</span></span><br><span class="line">    <span class="comment">// bck 为 unsorted bin 的倒数第二个 chunk</span></span><br><span class="line">    bck = victim-&gt;bk;</span><br><span class="line">    <span class="comment">// 判断得到的 chunk 是否满足要求，不能过小，也不能过大</span></span><br><span class="line">    <span class="comment">// 一般 system_mem 的大小为132K</span></span><br><span class="line">    <span class="keyword">if</span> (__builtin_expect(chunksize_nomask(victim) &lt;= <span class="number">2</span> * SIZE_SZ, <span class="number">0</span>) ||</span><br><span class="line">        __builtin_expect(chunksize_nomask(victim) &gt; av-&gt;system_mem, <span class="number">0</span>))</span><br><span class="line">        malloc_printerr(check_action, <span class="string">"malloc(): memory corruption"</span>,</span><br><span class="line">                        chunk2mem(victim), av);</span><br><span class="line">    <span class="comment">// 得到victim对应的chunk大小。</span></span><br><span class="line">    size = chunksize(victim);</span><br></pre></td></tr></table></figure>
+<p><strong>SMALL REQUEST</strong></p>
+<blockquote>
+<p>如果用户的请求为 small bin chunk，那么我们首先考虑 last remainder，如果 last remainder 是 unsorted bin 中的唯一一块的话， 并且 last remainder 的大小分割够还可以作为一个 chunk ，为什么没有等号？<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    If a small request, try to use last remainder if it is the</span></span><br><span class="line"><span class="comment">    only chunk in unsorted bin.  This helps promote locality for</span></span><br><span class="line"><span class="comment">    runs of consecutive small requests. This is the only</span></span><br><span class="line"><span class="comment">    exception to best-fit, and applies only when there is</span></span><br><span class="line"><span class="comment">    no exact fit for a small chunk.</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (in_smallbin_range(nb) &amp;&amp; bck == unsorted_chunks(av) &amp;&amp;</span><br><span class="line">    victim == av-&gt;last_remainder &amp;&amp;</span><br><span class="line">    (<span class="keyword">unsigned</span> <span class="keyword">long</span>) (size) &gt; (<span class="keyword">unsigned</span> <span class="keyword">long</span>) (nb + MINSIZE)) &#123;</span><br><span class="line">    <span class="comment">/* split and reattach remainder */</span></span><br><span class="line">    <span class="comment">// 获取新的 remainder 的大小</span></span><br><span class="line">    remainder_size          = size - nb;</span><br><span class="line">    <span class="comment">// 获取新的 remainder 的位置</span></span><br><span class="line">    remainder               = chunk_at_offset(victim, nb);</span><br><span class="line">    <span class="comment">// 更新 unsorted bin 的情况</span></span><br><span class="line">    unsorted_chunks(av)-&gt;bk = unsorted_chunks(av)-&gt;fd = remainder;</span><br><span class="line">    <span class="comment">// 更新 av 中记录的 last_remainder</span></span><br><span class="line">    av-&gt;last_remainder                                = remainder;</span><br><span class="line">    <span class="comment">// 更新last remainder的指针</span></span><br><span class="line">    remainder-&gt;bk = remainder-&gt;fd = unsorted_chunks(av);</span><br><span class="line">    <span class="keyword">if</span> (!in_smallbin_range(remainder_size)) &#123;</span><br><span class="line">        remainder-&gt;fd_nextsize = <span class="literal">NULL</span>;</span><br><span class="line">        remainder-&gt;bk_nextsize = <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 设置victim的头部，</span></span><br><span class="line">    set_head(victim, nb | PREV_INUSE |</span><br><span class="line">                          (av != &amp;main_arena ? NON_MAIN_ARENA : <span class="number">0</span>));</span><br><span class="line">    <span class="comment">// 设置 remainder 的头部</span></span><br><span class="line">    set_head(remainder, remainder_size | PREV_INUSE);</span><br><span class="line">    <span class="comment">// 设置记录 remainder 大小的 prev_size 字段，因为此时 remainder 处于空闲状态。</span></span><br><span class="line">    set_foot(remainder, remainder_size);</span><br><span class="line">    <span class="comment">// 细致的检查，非调试状态下没有作用</span></span><br><span class="line">    check_malloced_chunk(av, victim, nb);</span><br><span class="line">    <span class="comment">// 将 victim 从 chunk 模式转化为mem模式</span></span><br><span class="line">    <span class="keyword">void</span> *p = chunk2mem(victim);</span><br><span class="line">    <span class="comment">// 如果设置了perturb_type, 则将获取到的chunk初始化为 perturb_type ^ 0xff</span></span><br><span class="line">    alloc_perturb(p, bytes);</span><br><span class="line">    <span class="keyword">return</span> p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p><strong>初始取出</strong><br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* remove from unsorted list */</span></span><br><span class="line">unsorted_chunks(av)-&gt;bk = bck;</span><br><span class="line">bck-&gt;fd                 = unsorted_chunks(av);</span><br></pre></td></tr></table></figure></p>
+<p><strong>EXACT FIT</strong></p>
+<blockquote>
+<p>如果从 unsorted bin 中取出来的 chunk 大小正好合适，就直接使用。这里应该已经把合并后恰好合适的 chunk 给分配出去了。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/* Take now instead of binning if exact fit */</span></span><br><span class="line"><span class="keyword">if</span> (size == nb) &#123;</span><br><span class="line">    set_inuse_bit_at_offset(victim, size);</span><br><span class="line">    <span class="keyword">if</span> (av != &amp;main_arena) set_non_main_arena(victim);</span><br><span class="line">    check_malloced_chunk(av, victim, nb);</span><br><span class="line">    <span class="keyword">void</span> *p = chunk2mem(victim);</span><br><span class="line">    alloc_perturb(p, bytes);</span><br><span class="line">    <span class="keyword">return</span> p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p><strong>PLACE CHUNK IN SMALL BIN</strong></p>
+<blockquote>
+<p>把取出来的 chunk 放到对应的 small bin 中。</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* place chunk in bin */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (in_smallbin_range(size)) &#123;</span><br><span class="line">    victim_index = smallbin_index(size);</span><br><span class="line">    bck          = bin_at(av, victim_index);</span><br><span class="line">    fwd          = bck-&gt;fd;</span><br></pre></td></tr></table></figure>
+<p><strong>PLACE CHUNK IN LARGE BIN</strong></p>
+<blockquote>
+<p>把取出来的 chunk 放到对应的 large bin 中。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// large bin 范围</span></span><br><span class="line">    victim_index = largebin_index(size);</span><br><span class="line">    bck          = bin_at(av, victim_index); <span class="comment">// 当前 large bin 的头部</span></span><br><span class="line">    fwd          = bck-&gt;fd;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* maintain large bins in sorted order */</span></span><br><span class="line">    <span class="comment">/* 从这里我们可以总结出，largebin 以 fd_nextsize 递减排序。</span></span><br><span class="line"><span class="comment">        同样大小的 chunk，后来的只会插入到之前同样大小的 chunk 后，</span></span><br><span class="line"><span class="comment">        而不会修改之前相同大小的fd/bk_nextsize，这也很容易理解，</span></span><br><span class="line"><span class="comment">        可以减低开销。此外，bin 头不参与 nextsize 链接。*/</span></span><br><span class="line">    <span class="comment">// 如果 large bin 链表不空</span></span><br><span class="line">    <span class="keyword">if</span> (fwd != bck) &#123;</span><br><span class="line">        <span class="comment">/* Or with inuse bit to speed comparisons */</span></span><br><span class="line">        <span class="comment">// 加速比较，应该不仅仅有这个考虑，因为链表里的 chunk 都会设置该位。</span></span><br><span class="line">        size |= PREV_INUSE;</span><br><span class="line">        <span class="comment">/* if smaller than smallest, bypass loop below */</span></span><br><span class="line">        <span class="comment">// bck-bk 存储着相应 large bin 中最小的chunk。</span></span><br><span class="line">        <span class="comment">// 如果遍历的 chunk 比当前最小的还要小，那就只需要插入到链表尾部。</span></span><br><span class="line">        <span class="comment">// 判断 bck-&gt;bk 是不是在 main arena。</span></span><br><span class="line">        assert(chunk_main_arena(bck-&gt;bk));</span><br><span class="line">        <span class="keyword">if</span> ((<span class="keyword">unsigned</span> <span class="keyword">long</span>) (size) &lt;</span><br><span class="line">            (<span class="keyword">unsigned</span> <span class="keyword">long</span>) chunksize_nomask(bck-&gt;bk)) &#123;</span><br><span class="line">            <span class="comment">// 令 fwd 指向 large bin 头</span></span><br><span class="line">            fwd = bck;</span><br><span class="line">            <span class="comment">// 令 bck 指向 largin bin 尾部 chunk</span></span><br><span class="line">            bck = bck-&gt;bk;</span><br><span class="line">            <span class="comment">// victim 的 fd_nextsize 指向 largin bin 的第一个 chunk</span></span><br><span class="line">            victim-&gt;fd_nextsize = fwd-&gt;fd;</span><br><span class="line">            <span class="comment">// victim 的 bk_nextsize 指向原来链表的第一个 chunk 指向的 bk_nextsize</span></span><br><span class="line">            victim-&gt;bk_nextsize = fwd-&gt;fd-&gt;bk_nextsize;</span><br><span class="line">            <span class="comment">// 原来链表的第一个 chunk 的 bk_nextsize 指向 victim</span></span><br><span class="line">            <span class="comment">// 原来指向链表第一个 chunk 的 fd_nextsize 指向 victim</span></span><br><span class="line">            fwd-&gt;fd-&gt;bk_nextsize =</span><br><span class="line">                victim-&gt;bk_nextsize-&gt;fd_nextsize = victim;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 当前要插入的 victim 的大小大于最小的 chunk</span></span><br><span class="line">            <span class="comment">// 判断 fwd 是否在 main arena</span></span><br><span class="line">            assert(chunk_main_arena(fwd));</span><br><span class="line">            <span class="comment">// 从链表头部开始找到不比 victim 大的 chunk</span></span><br><span class="line">            <span class="keyword">while</span> ((<span class="keyword">unsigned</span> <span class="keyword">long</span>) size &lt; chunksize_nomask(fwd)) &#123;</span><br><span class="line">                fwd = fwd-&gt;fd_nextsize;</span><br><span class="line">                assert(chunk_main_arena(fwd));</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 如果找到了一个和 victim 一样大的 chunk，</span></span><br><span class="line">            <span class="comment">// 那就直接将 chunk 插入到该chunk的后面，并不修改 nextsize 指针。</span></span><br><span class="line">            <span class="keyword">if</span> ((<span class="keyword">unsigned</span> <span class="keyword">long</span>) size ==</span><br><span class="line">                (<span class="keyword">unsigned</span> <span class="keyword">long</span>) chunksize_nomask(fwd))</span><br><span class="line">                <span class="comment">/* Always insert in the second position.  */</span></span><br><span class="line">                fwd = fwd-&gt;fd;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// 如果找到的chunk和当前victim大小不一样</span></span><br><span class="line">                <span class="comment">// 那么就需要构造 nextsize 双向链表了</span></span><br><span class="line">                victim-&gt;fd_nextsize              = fwd;</span><br><span class="line">                victim-&gt;bk_nextsize              = fwd-&gt;bk_nextsize;</span><br><span class="line">                fwd-&gt;bk_nextsize                 = victim;</span><br><span class="line">                victim-&gt;bk_nextsize-&gt;fd_nextsize = victim;</span><br><span class="line">            &#125;</span><br><span class="line">            bck = fwd-&gt;bk;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span></span><br><span class="line">        <span class="comment">// 如果空的话，直接简单使得 fd_nextsize 与 bk_nextsize 构成一个双向链表即可。</span></span><br><span class="line">        victim-&gt;fd_nextsize = victim-&gt;bk_nextsize = victim;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p><strong>最终取出</strong><br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 放到对应的 bin 中，构成 bck&lt;--&gt;victim&lt;--&gt;fwd。</span></span><br><span class="line">mark_bin(av, victim_index);</span><br><span class="line">victim-&gt;bk = bck;</span><br><span class="line">victim-&gt;fd = fwd;</span><br><span class="line">fwd-&gt;bk    = victim;</span><br><span class="line">bck-&gt;fd    = victim;</span><br></pre></td></tr></table></figure></p>
+<p><strong>WHILE 迭代次数</strong></p>
+<blockquote>
+<p>while 最多迭代 10000 次后退出。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">      <span class="comment">//</span></span><br><span class="line">#<span class="meta">#<span class="meta-keyword">define</span> MAX_ITERS 10000</span></span><br><span class="line">      <span class="keyword">if</span> (++iters &gt;= MAX_ITERS) <span class="keyword">break</span>;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
 <p><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt></p>
 
     </article>
@@ -629,7 +652,7 @@ height:50vh;
             <p>原文作者：<a href="http://yoursite.com">HackPluto</a>
             </p><p>原文链接：<a href="http://yoursite.com/2019/10/17/堆的分配原理分析/">http://yoursite.com/2019/10/17/堆的分配原理分析/</a>
             </p><p>发表日期：<a href="http://yoursite.com/2019/10/17/堆的分配原理分析/">October 17th 2019, 1:30:26 am</a>
-            </p><p>更新日期：<a href="http://yoursite.com/2019/10/17/堆的分配原理分析/">October 31st 2019, 1:38:02 am</a>
+            </p><p>更新日期：<a href="http://yoursite.com/2019/10/17/堆的分配原理分析/">October 31st 2019, 11:45:39 am</a>
             </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -1243,9 +1266,18 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 33
+        Total : 34
         </div>
         <!-- search  -->
         
@@ -1258,6 +1290,11 @@ top:50vh;
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/01</span><a class="archive-post-title" href="/2019/11/01/CCProxy栈溢出漏洞分析及利用/">CCProxy栈溢出漏洞分析及利用</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -1376,22 +1413,22 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2019/05/22/使用动态规划-DP-解决最大公共子串与最大公共子序列问题/">使用动态规划(DP)解决最大公共子串与最大公共子序列问题</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2019/05/22/素数个数求解与素数的判定/">素数个数求解与素数的判定</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/CTF中的编码总结/">CTF中的编码总结</a>
+            <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2019/05/22/使用动态规划-DP-解决最大公共子串与最大公共子序列问题/">使用动态规划(DP)解决最大公共子串与最大公共子序列问题</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/自己动手写工具(2)--TCP代理/">自己动手写工具(2)--TCP代理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/CTF中的编码总结/">CTF中的编码总结</a>
         </li>
     
     
@@ -1411,12 +1448,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/sqli-labs/">sqli-labs 通关详解</a>
+            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/python下多核/">python下多核，单核CPU对于并行，并发执行效率的对比</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/python下多核/">python下多核，单核CPU对于并行，并发执行效率的对比</a>
+            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/sqli-labs/">sqli-labs 通关详解</a>
         </li>
     
     
@@ -1429,19 +1466,19 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
+        <span class="sidebar-tag-name" data-tags="逆向,CTF"><span class="iconfont-archer">&#xe606;</span>逆向,CTF</span>
+    
         <span class="sidebar-tag-name" data-tags="ACM,数论"><span class="iconfont-archer">&#xe606;</span>ACM,数论</span>
     
         <span class="sidebar-tag-name" data-tags="防火墙,iptables"><span class="iconfont-archer">&#xe606;</span>防火墙,iptables</span>
     
-        <span class="sidebar-tag-name" data-tags="ctf,web,编码"><span class="iconfont-archer">&#xe606;</span>ctf,web,编码</span>
-    
-        <span class="sidebar-tag-name" data-tags="逆向,CTF"><span class="iconfont-archer">&#xe606;</span>逆向,CTF</span>
-    
         <span class="sidebar-tag-name" data-tags="Linux,LAMP"><span class="iconfont-archer">&#xe606;</span>Linux,LAMP</span>
     
-        <span class="sidebar-tag-name" data-tags="IDA,OllyDB"><span class="iconfont-archer">&#xe606;</span>IDA,OllyDB</span>
+        <span class="sidebar-tag-name" data-tags="ctf,web,编码"><span class="iconfont-archer">&#xe606;</span>ctf,web,编码</span>
     
         <span class="sidebar-tag-name" data-tags="SSH,端口转发"><span class="iconfont-archer">&#xe606;</span>SSH,端口转发</span>
+    
+        <span class="sidebar-tag-name" data-tags="IDA,OllyDB"><span class="iconfont-archer">&#xe606;</span>IDA,OllyDB</span>
     
         <span class="sidebar-tag-name" data-tags="MSF,免杀"><span class="iconfont-archer">&#xe606;</span>MSF,免杀</span>
     
@@ -1465,11 +1502,13 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="栈溢出,PWN"><span class="iconfont-archer">&#xe606;</span>栈溢出,PWN</span>
     
+        <span class="sidebar-tag-name" data-tags="CCProxy,栈溢出,pwn"><span class="iconfont-archer">&#xe606;</span>CCProxy,栈溢出,pwn</span>
+    
         <span class="sidebar-tag-name" data-tags="Linux,GOT,PLT"><span class="iconfont-archer">&#xe606;</span>Linux,GOT,PLT</span>
     
-        <span class="sidebar-tag-name" data-tags="python,多线程"><span class="iconfont-archer">&#xe606;</span>python,多线程</span>
-    
         <span class="sidebar-tag-name" data-tags="pwn,Heap"><span class="iconfont-archer">&#xe606;</span>pwn,Heap</span>
+    
+        <span class="sidebar-tag-name" data-tags="python,多线程"><span class="iconfont-archer">&#xe606;</span>python,多线程</span>
     
         <span class="sidebar-tag-name" data-tags="概率法求素数,算法"><span class="iconfont-archer">&#xe606;</span>概率法求素数,算法</span>
     
@@ -1479,9 +1518,9 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="pwn,Format String Vulnerability"><span class="iconfont-archer">&#xe606;</span>pwn,Format String Vulnerability</span>
     
-        <span class="sidebar-tag-name" data-tags="Linux,DirtyCow"><span class="iconfont-archer">&#xe606;</span>Linux,DirtyCow</span>
-    
         <span class="sidebar-tag-name" data-tags="PWN,栈溢出"><span class="iconfont-archer">&#xe606;</span>PWN,栈溢出</span>
+    
+        <span class="sidebar-tag-name" data-tags="Linux,DirtyCow"><span class="iconfont-archer">&#xe606;</span>Linux,DirtyCow</span>
     
         <span class="sidebar-tag-name" data-tags="windows,影子账户"><span class="iconfont-archer">&#xe606;</span>windows,影子账户</span>
     
@@ -1522,13 +1561,13 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
+        <span class="sidebar-category-name" data-categories="逆向"><span class="iconfont-archer">&#xe60a;</span>逆向</span>
+    
         <span class="sidebar-category-name" data-categories="ACM"><span class="iconfont-archer">&#xe60a;</span>ACM</span>
     
         <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
     
         <span class="sidebar-category-name" data-categories="CTFweb"><span class="iconfont-archer">&#xe60a;</span>CTFweb</span>
-    
-        <span class="sidebar-category-name" data-categories="逆向"><span class="iconfont-archer">&#xe60a;</span>逆向</span>
     
         <span class="sidebar-category-name" data-categories="内网渗透"><span class="iconfont-archer">&#xe60a;</span>内网渗透</span>
     
@@ -1539,6 +1578,8 @@ jsonContent:
         <span class="sidebar-category-name" data-categories="Pwn"><span class="iconfont-archer">&#xe60a;</span>Pwn</span>
     
         <span class="sidebar-category-name" data-categories="BlackHatTools"><span class="iconfont-archer">&#xe60a;</span>BlackHatTools</span>
+    
+        <span class="sidebar-category-name" data-categories="PWN"><span class="iconfont-archer">&#xe60a;</span>PWN</span>
     
         <span class="sidebar-category-name" data-categories="python"><span class="iconfont-archer">&#xe60a;</span>python</span>
     

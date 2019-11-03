@@ -359,6 +359,40 @@ height:50vh;
     
     
     <article class="index-post">
+        <a class="abstract-title" href="/2019/09/24/反静态调试总结/">
+            
+                <span>反静态调试总结</span>
+        </a>
+        <div class="abstract-content">
+            花指令
+花指令就是一串没有任何实际意义的指令。为什么会产生花指令呢，因为反汇编器并不知道某一个地方的数据到底是数据还是指令的机器码，所以就会将某些花指令反汇编成真正的汇编指令，由于X86平台的指令是密集编码的，所以很多指令都是一个字节编码的，例如生成一个16kb的随即数据，并对其进行了反汇编。效果如下：
+
+
+
+可以通过_EMIT指令实现花指令123456789101112131415#include &lt;iostream.h&gt;#include &lt;windows.h&gt;void main()&#123;    _asm    &#123;            jmp ...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/09/24</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="花指令,静态调试,Movfuscator">花指令,静态调试,Movfuscator</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href="/2019/09/20/msf恶意代码免杀总结/">
             
                 <span>msf恶意代码免杀总结</span>
@@ -661,40 +695,6 @@ ser...
             <div class="abstract-tags">
     
         <a class="post-tag" href="javascript:void(0);" data-tags="Linux,LAMP">Linux,LAMP</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/06/13/攻防世界逆向入门writeup/">
-            
-                <span>攻防世界逆向入门writeup</span>
-        </a>
-        <div class="abstract-content">
-            1.re1这个题方法挺多的，我主要介绍两种1 逆向分析法：拖入IDA后，进入main函数，反汇编看伪C代码简单的分析下整个函数，输入字符串v9，再比较v5,v9,如果不相等就输出 aFlag,相等就输出 unk_413E90。
-
-分别点进这两个内存查看内容
-
-发现这两个地方都不是flag,所以我认为这个题不是输出flag,而是看我们的输入是不是flag,所以跟踪v5字符串对 _mm_storeu_si128() 函数进行进一步分析，这个是intel的一个指令，简而言之就是将参数里后面的直接赋值给前面，所以直接查看 xmmword_413E34 找到了flag
-2 查找字符串：因为我...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/06/13</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="XCTF,逆向">XCTF,逆向</a>
     
 </div>
             
@@ -1358,9 +1358,18 @@ ser...
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 33
+        Total : 34
         </div>
         <!-- search  -->
         
@@ -1373,6 +1382,11 @@ ser...
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/01</span><a class="archive-post-title" href="/2019/11/01/CCProxy栈溢出漏洞分析及利用/">CCProxy栈溢出漏洞分析及利用</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -1491,22 +1505,22 @@ ser...
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2019/05/22/使用动态规划-DP-解决最大公共子串与最大公共子序列问题/">使用动态规划(DP)解决最大公共子串与最大公共子序列问题</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2019/05/22/素数个数求解与素数的判定/">素数个数求解与素数的判定</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/CTF中的编码总结/">CTF中的编码总结</a>
+            <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2019/05/22/使用动态规划-DP-解决最大公共子串与最大公共子序列问题/">使用动态规划(DP)解决最大公共子串与最大公共子序列问题</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/自己动手写工具(2)--TCP代理/">自己动手写工具(2)--TCP代理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/CTF中的编码总结/">CTF中的编码总结</a>
         </li>
     
     
@@ -1526,12 +1540,12 @@ ser...
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/sqli-labs/">sqli-labs 通关详解</a>
+            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/python下多核/">python下多核，单核CPU对于并行，并发执行效率的对比</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/python下多核/">python下多核，单核CPU对于并行，并发执行效率的对比</a>
+            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/sqli-labs/">sqli-labs 通关详解</a>
         </li>
     
     
@@ -1544,19 +1558,19 @@ ser...
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
+        <span class="sidebar-tag-name" data-tags="逆向,CTF"><span class="iconfont-archer">&#xe606;</span>逆向,CTF</span>
+    
         <span class="sidebar-tag-name" data-tags="ACM,数论"><span class="iconfont-archer">&#xe606;</span>ACM,数论</span>
     
         <span class="sidebar-tag-name" data-tags="防火墙,iptables"><span class="iconfont-archer">&#xe606;</span>防火墙,iptables</span>
     
-        <span class="sidebar-tag-name" data-tags="ctf,web,编码"><span class="iconfont-archer">&#xe606;</span>ctf,web,编码</span>
-    
-        <span class="sidebar-tag-name" data-tags="逆向,CTF"><span class="iconfont-archer">&#xe606;</span>逆向,CTF</span>
-    
         <span class="sidebar-tag-name" data-tags="Linux,LAMP"><span class="iconfont-archer">&#xe606;</span>Linux,LAMP</span>
     
-        <span class="sidebar-tag-name" data-tags="IDA,OllyDB"><span class="iconfont-archer">&#xe606;</span>IDA,OllyDB</span>
+        <span class="sidebar-tag-name" data-tags="ctf,web,编码"><span class="iconfont-archer">&#xe606;</span>ctf,web,编码</span>
     
         <span class="sidebar-tag-name" data-tags="SSH,端口转发"><span class="iconfont-archer">&#xe606;</span>SSH,端口转发</span>
+    
+        <span class="sidebar-tag-name" data-tags="IDA,OllyDB"><span class="iconfont-archer">&#xe606;</span>IDA,OllyDB</span>
     
         <span class="sidebar-tag-name" data-tags="MSF,免杀"><span class="iconfont-archer">&#xe606;</span>MSF,免杀</span>
     
@@ -1580,11 +1594,13 @@ ser...
     
         <span class="sidebar-tag-name" data-tags="栈溢出,PWN"><span class="iconfont-archer">&#xe606;</span>栈溢出,PWN</span>
     
+        <span class="sidebar-tag-name" data-tags="CCProxy,栈溢出,pwn"><span class="iconfont-archer">&#xe606;</span>CCProxy,栈溢出,pwn</span>
+    
         <span class="sidebar-tag-name" data-tags="Linux,GOT,PLT"><span class="iconfont-archer">&#xe606;</span>Linux,GOT,PLT</span>
     
-        <span class="sidebar-tag-name" data-tags="python,多线程"><span class="iconfont-archer">&#xe606;</span>python,多线程</span>
-    
         <span class="sidebar-tag-name" data-tags="pwn,Heap"><span class="iconfont-archer">&#xe606;</span>pwn,Heap</span>
+    
+        <span class="sidebar-tag-name" data-tags="python,多线程"><span class="iconfont-archer">&#xe606;</span>python,多线程</span>
     
         <span class="sidebar-tag-name" data-tags="概率法求素数,算法"><span class="iconfont-archer">&#xe606;</span>概率法求素数,算法</span>
     
@@ -1594,9 +1610,9 @@ ser...
     
         <span class="sidebar-tag-name" data-tags="pwn,Format String Vulnerability"><span class="iconfont-archer">&#xe606;</span>pwn,Format String Vulnerability</span>
     
-        <span class="sidebar-tag-name" data-tags="Linux,DirtyCow"><span class="iconfont-archer">&#xe606;</span>Linux,DirtyCow</span>
-    
         <span class="sidebar-tag-name" data-tags="PWN,栈溢出"><span class="iconfont-archer">&#xe606;</span>PWN,栈溢出</span>
+    
+        <span class="sidebar-tag-name" data-tags="Linux,DirtyCow"><span class="iconfont-archer">&#xe606;</span>Linux,DirtyCow</span>
     
         <span class="sidebar-tag-name" data-tags="windows,影子账户"><span class="iconfont-archer">&#xe606;</span>windows,影子账户</span>
     
@@ -1637,13 +1653,13 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
+        <span class="sidebar-category-name" data-categories="逆向"><span class="iconfont-archer">&#xe60a;</span>逆向</span>
+    
         <span class="sidebar-category-name" data-categories="ACM"><span class="iconfont-archer">&#xe60a;</span>ACM</span>
     
         <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
     
         <span class="sidebar-category-name" data-categories="CTFweb"><span class="iconfont-archer">&#xe60a;</span>CTFweb</span>
-    
-        <span class="sidebar-category-name" data-categories="逆向"><span class="iconfont-archer">&#xe60a;</span>逆向</span>
     
         <span class="sidebar-category-name" data-categories="内网渗透"><span class="iconfont-archer">&#xe60a;</span>内网渗透</span>
     
@@ -1654,6 +1670,8 @@ jsonContent:
         <span class="sidebar-category-name" data-categories="Pwn"><span class="iconfont-archer">&#xe60a;</span>Pwn</span>
     
         <span class="sidebar-category-name" data-categories="BlackHatTools"><span class="iconfont-archer">&#xe60a;</span>BlackHatTools</span>
+    
+        <span class="sidebar-category-name" data-categories="PWN"><span class="iconfont-archer">&#xe60a;</span>PWN</span>
     
         <span class="sidebar-category-name" data-categories="python"><span class="iconfont-archer">&#xe60a;</span>python</span>
     

