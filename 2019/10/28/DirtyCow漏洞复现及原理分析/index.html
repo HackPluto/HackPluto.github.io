@@ -272,7 +272,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">7.1k</span>阅读时长: <span class="post-count reading-time">28 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">7.7k</span>阅读时长: <span class="post-count reading-time">30 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -474,7 +474,7 @@ height:50vh;
 <p>add()方法就是一个临界区,它会产生竞态条件。</p>
 </blockquote>
 <h2 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h2><blockquote>
-<p>fork()之后，kernel把父进程中所有的内存页的权限都设为read-only，然后子进程的地址空间指向父进程。当父子进程都只读内存时，相安无事。当其中某个进程写内存时，CPU硬件检测到内存页是read-only的，于是触发页异常中断（page-fault），陷入kernel的一个中断例程。中断例程中，kernel就会把触发的异常的页复制一份，于是父子进程各自持有独立的一份。</p>
+<p>当调用write系统调用向/proc/self/mem文件中写入数据时，进入内核态后内核会调get_user_pages函数获取要写入内存地址。get_user_pages会调用follow_page_mask来获取这块内存的页表项，并同时要求页表项所指向的内存映射具有可写的权限。<br>第一次获取内存的页表项会因为缺页而失败。get_user_page调用faultin_page进行缺页处理后第二次调用follow_page_mask获取这块内存的页表项，如果需要获取的页表项指向的是一个只读的映射，那第二次获取也会失败。这时候get_user_pages函数会第三次调用follow_page_mask来获取该内存的页表项，并且不再要求页表项所指向的内存映射具有可写的权限，这时是可以成功获取的，获取成功后内核会对这个只读的内存进行强制的写入操作。<br>这个实现是没有问题的，因为本来写入/proc/self/mem就是一个无视映射权限的强行写入，就算是文件映射到虚拟内存中，也不会出现越权写：如果写入的虚拟内存是一个VM_PRIVATE的映射，那在缺页的时候内核就会执行COW操作产生一个副本来进行写入，写入的内容是不会同步到文件中的如果写入的虚拟内存是一个VM_SHARE的映射，那mmap能够映射成功的充要条件就是进程拥有对该文件的写权限，这样写入的内容同步到文件中也不算越权了。但是，在上述流程中，如果第二次获取页表项失败之后，另一个线程调用madvice(addr,addrlen,MADV_DONTNEED),其中addr~addr+addrlen是一个只读文件VM_PRIVATE的只读内存映射，那该映射的页表项会被置空。这时如果get_user_pages函数第三次调用follow_page_mask来获取该内存的页表项。由于这次调用不再要求该内存映射具有写权限，所以在缺页处理的时候内核也不再会执行COW操作产生一个副本以供写入。<br>所以缺页处理完成后后第四次调follow_page_mask获取这块内存的页表项的时候，不仅可以成功获取，而且获取之后强制的写入的内容也会同步到映射的只读文件中。从而导致了只读文件的越权写。</p>
 </blockquote>
 <h1 id="攻击"><a href="#攻击" class="headerlink" title="攻击"></a>攻击</h1><blockquote>
 <p>在进行漏洞复现的时候，我第一次使用Ubuntu14.04.5发现这个洞已经被补上了，后来使用Ubuntu14.04.1成功getshell</p>
@@ -582,7 +582,9 @@ height:50vh;
 <blockquote>
 <p>然而，faultin_page会吝啬的处理访问违例，通过创建一个脏的 COWed页返回来使其合理合法（这毕竟是一个只读的，kernel不能如此轻松让你直接返回映射的页），相信kernel将会有一个完美的理由来violate这个访问，没有段错误。<br>为什么内核采用如此多步骤来提供这种Out-of-band的内存访问呢？为什么内核支持这种侵入式的访问，从一个进程来访问另一个进程的地址空间？<br>答案很简单，即使每个进程的地址空间是神圣的，私有性很强，等等。但是仍然需要调试器或别的侵入式的程序来有方法访问和获取一个进程的数据。这是一个了不起的实现，不然调试器从一个bug程序中如何设置断点和观察变量。</p>
 </blockquote>
-<p><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt></p>
+<h1 id="漏洞修复"><a href="#漏洞修复" class="headerlink" title="漏洞修复"></a>漏洞修复</h1><blockquote>
+<p>该漏洞的patch。现在不再是把FOLL_WRITE标记去掉，而是添加了一个FOLL_COW标志来表示获取一个COW分配的页。即使是竞态条件破坏了一次完整的获取页的过程，但是因为FOLL_WRITE标志还在，所以会重头开始分配一个COW页，从而保证该过程的完整性。</p>
+</blockquote>
 
     </article>
     <!-- license  -->
@@ -591,7 +593,7 @@ height:50vh;
             <p>原文作者：<a href="http://yoursite.com">HackPluto</a>
             </p><p>原文链接：<a href="http://yoursite.com/2019/10/28/DirtyCow漏洞复现及原理分析/">http://yoursite.com/2019/10/28/DirtyCow漏洞复现及原理分析/</a>
             </p><p>发表日期：<a href="http://yoursite.com/2019/10/28/DirtyCow漏洞复现及原理分析/">October 28th 2019, 11:36:05 pm</a>
-            </p><p>更新日期：<a href="http://yoursite.com/2019/10/28/DirtyCow漏洞复现及原理分析/">October 31st 2019, 8:25:34 am</a>
+            </p><p>更新日期：<a href="http://yoursite.com/2019/10/28/DirtyCow漏洞复现及原理分析/">November 10th 2019, 9:26:37 pm</a>
             </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -723,7 +725,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#基本概括"><span class="toc-number">1.</span> <span class="toc-text">基本概括</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#预备知识"><span class="toc-number">2.</span> <span class="toc-text">预备知识</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#fork"><span class="toc-number">2.1.</span> <span class="toc-text">fork</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#exec"><span class="toc-number">2.2.</span> <span class="toc-text">exec()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mmap"><span class="toc-number">2.3.</span> <span class="toc-text">mmap</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#copy-on-write"><span class="toc-number">2.4.</span> <span class="toc-text">copy-on-write</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#竞争条件"><span class="toc-number">2.5.</span> <span class="toc-text">竞争条件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#漏洞原理"><span class="toc-number">2.6.</span> <span class="toc-text">漏洞原理</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#攻击"><span class="toc-number">3.</span> <span class="toc-text">攻击</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#EXP详解"><span class="toc-number">3.1.</span> <span class="toc-text">EXP详解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#write-2"><span class="toc-number">3.1.1.</span> <span class="toc-text">write(2)</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#基本概括"><span class="toc-number">1.</span> <span class="toc-text">基本概括</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#预备知识"><span class="toc-number">2.</span> <span class="toc-text">预备知识</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#fork"><span class="toc-number">2.1.</span> <span class="toc-text">fork</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#exec"><span class="toc-number">2.2.</span> <span class="toc-text">exec()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mmap"><span class="toc-number">2.3.</span> <span class="toc-text">mmap</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#copy-on-write"><span class="toc-number">2.4.</span> <span class="toc-text">copy-on-write</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#竞争条件"><span class="toc-number">2.5.</span> <span class="toc-text">竞争条件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#漏洞原理"><span class="toc-number">2.6.</span> <span class="toc-text">漏洞原理</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#攻击"><span class="toc-number">3.</span> <span class="toc-text">攻击</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#EXP详解"><span class="toc-number">3.1.</span> <span class="toc-text">EXP详解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#write-2"><span class="toc-number">3.1.1.</span> <span class="toc-text">write(2)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#漏洞修复"><span class="toc-number">4.</span> <span class="toc-text">漏洞修复</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -1214,9 +1216,30 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 34
+        Total : 35
         </div>
         <!-- search  -->
         
@@ -1229,6 +1252,11 @@ top:50vh;
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/06</span><a class="archive-post-title" href="/2019/11/06/Heap-Overflow-堆溢出/">Heap Overflow(堆溢出)</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -1362,12 +1390,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/自己动手写工具(2)--TCP代理/">自己动手写工具(2)--TCP代理</a>
+            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/CTF中的编码总结/">CTF中的编码总结</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/CTF中的编码总结/">CTF中的编码总结</a>
+            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/自己动手写工具(2)--TCP代理/">自己动手写工具(2)--TCP代理</a>
         </li>
     
     
@@ -1405,15 +1433,15 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
+        <span class="sidebar-tag-name" data-tags="ACM,数论"><span class="iconfont-archer">&#xe606;</span>ACM,数论</span>
+    
         <span class="sidebar-tag-name" data-tags="逆向,CTF"><span class="iconfont-archer">&#xe606;</span>逆向,CTF</span>
     
-        <span class="sidebar-tag-name" data-tags="ACM,数论"><span class="iconfont-archer">&#xe606;</span>ACM,数论</span>
+        <span class="sidebar-tag-name" data-tags="ctf,web,编码"><span class="iconfont-archer">&#xe606;</span>ctf,web,编码</span>
     
         <span class="sidebar-tag-name" data-tags="防火墙,iptables"><span class="iconfont-archer">&#xe606;</span>防火墙,iptables</span>
     
         <span class="sidebar-tag-name" data-tags="Linux,LAMP"><span class="iconfont-archer">&#xe606;</span>Linux,LAMP</span>
-    
-        <span class="sidebar-tag-name" data-tags="ctf,web,编码"><span class="iconfont-archer">&#xe606;</span>ctf,web,编码</span>
     
         <span class="sidebar-tag-name" data-tags="SSH,端口转发"><span class="iconfont-archer">&#xe606;</span>SSH,端口转发</span>
     
@@ -1443,6 +1471,8 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="CCProxy,栈溢出,pwn"><span class="iconfont-archer">&#xe606;</span>CCProxy,栈溢出,pwn</span>
     
+        <span class="sidebar-tag-name" data-tags="Heap,overflow,pwn"><span class="iconfont-archer">&#xe606;</span>Heap,overflow,pwn</span>
+    
         <span class="sidebar-tag-name" data-tags="Linux,GOT,PLT"><span class="iconfont-archer">&#xe606;</span>Linux,GOT,PLT</span>
     
         <span class="sidebar-tag-name" data-tags="pwn,Heap"><span class="iconfont-archer">&#xe606;</span>pwn,Heap</span>
@@ -1459,9 +1489,9 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="PWN,栈溢出"><span class="iconfont-archer">&#xe606;</span>PWN,栈溢出</span>
     
-        <span class="sidebar-tag-name" data-tags="Linux,DirtyCow"><span class="iconfont-archer">&#xe606;</span>Linux,DirtyCow</span>
-    
         <span class="sidebar-tag-name" data-tags="windows,影子账户"><span class="iconfont-archer">&#xe606;</span>windows,影子账户</span>
+    
+        <span class="sidebar-tag-name" data-tags="Linux,DirtyCow"><span class="iconfont-archer">&#xe606;</span>Linux,DirtyCow</span>
     
         <span class="sidebar-tag-name" data-tags="ucore,lab0,lab1"><span class="iconfont-archer">&#xe606;</span>ucore,lab0,lab1</span>
     
@@ -1500,13 +1530,13 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="逆向"><span class="iconfont-archer">&#xe60a;</span>逆向</span>
-    
         <span class="sidebar-category-name" data-categories="ACM"><span class="iconfont-archer">&#xe60a;</span>ACM</span>
     
-        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
+        <span class="sidebar-category-name" data-categories="逆向"><span class="iconfont-archer">&#xe60a;</span>逆向</span>
     
         <span class="sidebar-category-name" data-categories="CTFweb"><span class="iconfont-archer">&#xe60a;</span>CTFweb</span>
+    
+        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
     
         <span class="sidebar-category-name" data-categories="内网渗透"><span class="iconfont-archer">&#xe60a;</span>内网渗透</span>
     
