@@ -346,6 +346,49 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href="/2019/11/11/eclispe-qemu-gdb调试linux-kernel/">
+            
+                <span>eclispe+qemu+gdb调试linux kernel</span>
+        </a>
+        <div class="abstract-content">
+            
+对于一些命令行使用不是很熟练的同学来说，直接用GDB调试Linux内核难度太大，那么可以使用Eclipse使用GUI的界面来调试。这篇博客主要介绍在Ubuntu16.04的环境下搭建Eclipse调试Linux内核的环境。
+
+环境下载
+JDK 1.8.0 
+Eclipse：
+Qemu：
+OS：Ubuntu16.04，64bit
+keinel: ucoreJava+EclipseUbuntu16.04上安装jdk下载jdk安装包
+首先我们在oracle官网上下jdk-8u180-linux-x64.tar.gz
+
+
+
+
+创建java的安装目录，并且解压该安装包。12sudo mkdir ...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/11/11</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="eclispe,qemu,kernel">eclispe,qemu,kernel</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href="/2019/11/06/Heap-Overflow-堆溢出/">
             
                 <span>Heap Overflow(堆溢出)</span>
@@ -671,44 +714,6 @@ stack pivoting，就是劫持栈指针指向攻击者所能控制的内存处，
             <div class="abstract-tags">
     
         <a class="post-tag" href="javascript:void(0);" data-tags="栈溢出,PWN">栈溢出,PWN</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/09/27/看雪KCTF2019wp/">
-            
-                <span>看雪KCTF2019wp</span>
-        </a>
-        <div class="abstract-content">
-            1.神秘来信
-先将程序放入IDA中
-
-
-
-可以看到这个需要输入一个序列号，长度不能超过7，并且后3位为353，前三位和不能超过149。直接看反汇编的代码有些奇怪，因为并没有成功时候的条件，这里需要查看汇编，发现这里有一个除0异常
-
-
-
-这里涉及到了Windows的SEH机制SEH 的工作原理：Windows 程序设计中最重要的理念就是消息传递，事件驱动。当GUI应用程序触发一个消息时，系统将把该消息放入消息队列，然后去查找并调用窗体的消息处理函数(CALLBACK)，传递的参数当然就是这个消息。我们同样可以把异常也当作是一种消息，应用程序发生异常时就触发了该消息并告知系统。系统接收后同样...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/09/27</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="看雪,KCTF,逆向,PWN">看雪,KCTF,逆向,PWN</a>
     
 </div>
             
@@ -1310,9 +1315,36 @@ stack pivoting，就是劫持栈指针指向攻击者所能控制的内存处，
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 35
+        Total : 36
         </div>
         <!-- search  -->
         
@@ -1325,6 +1357,11 @@ stack pivoting，就是劫持栈指针指向攻击者所能控制的内存处，
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/11</span><a class="archive-post-title" href="/2019/11/11/eclispe-qemu-gdb调试linux-kernel/">eclispe+qemu+gdb调试linux kernel</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -1463,12 +1500,12 @@ stack pivoting，就是劫持栈指针指向攻击者所能控制的内存处，
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/CTF中的编码总结/">CTF中的编码总结</a>
+            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/自己动手写工具(2)--TCP代理/">自己动手写工具(2)--TCP代理</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/自己动手写工具(2)--TCP代理/">自己动手写工具(2)--TCP代理</a>
+            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/CTF中的编码总结/">CTF中的编码总结</a>
         </li>
     
     
@@ -1512,21 +1549,19 @@ stack pivoting，就是劫持栈指针指向攻击者所能控制的内存处，
     
         <span class="sidebar-tag-name" data-tags="ctf,web,编码"><span class="iconfont-archer">&#xe606;</span>ctf,web,编码</span>
     
-        <span class="sidebar-tag-name" data-tags="防火墙,iptables"><span class="iconfont-archer">&#xe606;</span>防火墙,iptables</span>
+        <span class="sidebar-tag-name" data-tags="eclispe,qemu,kernel"><span class="iconfont-archer">&#xe606;</span>eclispe,qemu,kernel</span>
     
         <span class="sidebar-tag-name" data-tags="Linux,LAMP"><span class="iconfont-archer">&#xe606;</span>Linux,LAMP</span>
     
         <span class="sidebar-tag-name" data-tags="SSH,端口转发"><span class="iconfont-archer">&#xe606;</span>SSH,端口转发</span>
     
-        <span class="sidebar-tag-name" data-tags="IDA,OllyDB"><span class="iconfont-archer">&#xe606;</span>IDA,OllyDB</span>
-    
         <span class="sidebar-tag-name" data-tags="MSF,免杀"><span class="iconfont-archer">&#xe606;</span>MSF,免杀</span>
     
+        <span class="sidebar-tag-name" data-tags="防火墙,iptables"><span class="iconfont-archer">&#xe606;</span>防火墙,iptables</span>
+    
+        <span class="sidebar-tag-name" data-tags="IDA,OllyDB"><span class="iconfont-archer">&#xe606;</span>IDA,OllyDB</span>
+    
         <span class="sidebar-tag-name" data-tags="信息收集,社会工程学"><span class="iconfont-archer">&#xe606;</span>信息收集,社会工程学</span>
-    
-        <span class="sidebar-tag-name" data-tags="动态规划(DP)"><span class="iconfont-archer">&#xe606;</span>动态规划(DP)</span>
-    
-        <span class="sidebar-tag-name" data-tags="花指令,静态调试,Movfuscator"><span class="iconfont-archer">&#xe606;</span>花指令,静态调试,Movfuscator</span>
     
         <span class="sidebar-tag-name" data-tags="PWN,BROP,栈溢出"><span class="iconfont-archer">&#xe606;</span>PWN,BROP,栈溢出</span>
     
@@ -1538,9 +1573,13 @@ stack pivoting，就是劫持栈指针指向攻击者所能控制的内存处，
     
         <span class="sidebar-tag-name" data-tags="工具,python,Netcat"><span class="iconfont-archer">&#xe606;</span>工具,python,Netcat</span>
     
+        <span class="sidebar-tag-name" data-tags="花指令,静态调试,Movfuscator"><span class="iconfont-archer">&#xe606;</span>花指令,静态调试,Movfuscator</span>
+    
         <span class="sidebar-tag-name" data-tags="工具,python,proxy"><span class="iconfont-archer">&#xe606;</span>工具,python,proxy</span>
     
         <span class="sidebar-tag-name" data-tags="栈溢出,PWN"><span class="iconfont-archer">&#xe606;</span>栈溢出,PWN</span>
+    
+        <span class="sidebar-tag-name" data-tags="动态规划(DP)"><span class="iconfont-archer">&#xe606;</span>动态规划(DP)</span>
     
         <span class="sidebar-tag-name" data-tags="CCProxy,栈溢出,pwn"><span class="iconfont-archer">&#xe606;</span>CCProxy,栈溢出,pwn</span>
     
@@ -1615,9 +1654,9 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="社工"><span class="iconfont-archer">&#xe60a;</span>社工</span>
     
-        <span class="sidebar-category-name" data-categories="爱的日记"><span class="iconfont-archer">&#xe60a;</span>爱的日记</span>
-    
         <span class="sidebar-category-name" data-categories="Pwn"><span class="iconfont-archer">&#xe60a;</span>Pwn</span>
+    
+        <span class="sidebar-category-name" data-categories="爱的日记"><span class="iconfont-archer">&#xe60a;</span>爱的日记</span>
     
         <span class="sidebar-category-name" data-categories="BlackHatTools"><span class="iconfont-archer">&#xe60a;</span>BlackHatTools</span>
     
