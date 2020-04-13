@@ -346,6 +346,262 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href="/2019/07/31/LAMP安装及配置/">
+            
+                <span>LAMP安装及配置</span>
+        </a>
+        <div class="abstract-content">
+            搭建LAMP1.安装Apache
+sudo apt-get install apache2
+测试： 浏览器访问127.0.0.1，出现It Works!网页。
+2.安装MySQL
+sudo apt-get install mysql-server mysql-client
+测试：mysql -u root -p
+3.安装PHPsudo apt-get install php7.0
+测试：php7.0 -v
+4.安装其他模块sudo apt-get install libapache2-mod-php7.0sudo apt-get install php7.0-mysql
+重启服务
+ser...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/07/31</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="Linux,LAMP">Linux,LAMP</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2019/06/13/攻防世界逆向入门writeup/">
+            
+                <span>攻防世界逆向入门writeup</span>
+        </a>
+        <div class="abstract-content">
+            1.re1这个题方法挺多的，我主要介绍两种1 逆向分析法：拖入IDA后，进入main函数，反汇编看伪C代码简单的分析下整个函数，输入字符串v9，再比较v5,v9,如果不相等就输出 aFlag,相等就输出 unk_413E90。
+
+分别点进这两个内存查看内容
+
+发现这两个地方都不是flag,所以我认为这个题不是输出flag,而是看我们的输入是不是flag,所以跟踪v5字符串对 _mm_storeu_si128() 函数进行进一步分析，这个是intel的一个指令，简而言之就是将参数里后面的直接赋值给前面，所以直接查看 xmmword_413E34 找到了flag
+2 查找字符串：因为我...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/06/13</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="XCTF,逆向">XCTF,逆向</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2019/06/12/2019看雪CTF逆向Q1writeup/">
+            
+                <span>2019看雪CTF逆向Q1writeup</span>
+        </a>
+        <div class="abstract-content">
+            第一题 流浪者首先使用die查壳后没有发现壳拖到IDA里这个题我本来想直接看伪C代码发现找关键点函数有些困难（还是我太菜了），所以最后发现了更简单的方法shifr + F12查看字符串
+
+发现了一串可疑字符串查看这串字符串的引用 进入这个函数
+其实看到strcmp函数的时候，这个题的意图就比较明显了，就是比较str1和那一串字符串是不是相等，变量a1应该就是数组的首地址，但是我们不知道a1这个数组是怎么得到的，所以查一下sub_4017F0函数的交叉引用从16行的getbuffer可以看出str是直接从内存中读取的也就是我们输入的这里限制了输入的必须是大小写字母或者数字所以直接暴力破解1...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/06/12</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="逆向,CTF">逆向,CTF</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2019/06/02/Linux下的iptables详解/">
+            
+                <span>Linux下的iptables详解</span>
+        </a>
+        <div class="abstract-content">
+            最近在写DNS欺骗的小工具，突然遇到了Linux下的iptables，之前没有听过这个，所以专门查了这方面的知识，在这里做一个整理。
+防火墙的概念从逻辑上讲。防火墙可以大体分为主机防火墙和网络防火墙。主机防火墙：针对于单个主机进行防护。网络防火墙：往往处于网络入口或边缘，针对于网络入口进行防护，服务于防火墙背后的本地局域网。网络防火墙和主机防火墙并不冲突，可以理解为，网络防火墙主外（集体）， 主机防火墙主内（个人）。从物理上讲，防火墙可以分为硬件防火墙和软件防火墙。硬件防火墙：在硬件级别实现部分防火墙功能，另一部分功能基于软件实现，性能高，成本高。软件防火墙：应用软件处理逻辑运行于通用硬...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/06/02</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="防火墙,iptables">防火墙,iptables</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2019/05/27/自己动手写工具(3)--ARP欺骗/">
+            
+                <span>自己动手写工具(3)--ARP欺骗</span>
+        </a>
+        <div class="abstract-content">
+            最近在计网里学习了ARP协议，为了加深理解，所以决定自己写一个ARP的欺骗工具（有的地方也可以翻译成ARP投毒）。
+ARP协议首先介绍一下ARP协议的定义，先看一下网络的结构模型
+
+ARP协议就是工作在数据链路层的协议，至于ARP到底属于链路层还是网络层是众说纷纭所以不必纠结这个地方。在以太网协议中规定，同一局域网中的一台主机要和另一台主机进行直接通信，必须要知道目标主机的MAC地址。而在TCP/IP协议中，网络层和传输层只关心目标主机的IP地址。这就导致在以太网中使用IP协议时，数据链路层的以太网协议接到上层IP协议提供的数据中，只包含目的主机的IP地址。于是需要一种方法，根据目的主机...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/05/27</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="工具,python,arp_poison">工具,python,arp_poison</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2019/05/22/使用动态规划-DP-解决最大公共子串与最大公共子序列问题/">
+            
+                <span>使用动态规划(DP)解决最大公共子串与最大公共子序列问题</span>
+        </a>
+        <div class="abstract-content">
+            
+我们从一道题目来引入我们今天的内容首先介绍一下子串和子序列的区别对于两个字符串 ABCDEF BCYHEF子序列为字符串中 一定顺序的字符不一定相连子串为字符串中相连的字符所以他们的最大公共子序列为 BCEF最大公共子串为 BC或者EF那么对于求解最大公共子串和最大公共子序列用什么方法呢，可能我们最开始想到的就是不断的枚举两个的子串或者子序列，再比较哪个最长，这个方法也不是不行，但是对于两个长度分别为n,m的字符串，这个算法的时间复杂为n^m 显然时间复杂度太大，在ACM中这种算法一定会超时的。那么我们怎么优化呢？我们发现在枚举的过程中，其实我们其实一直都在重复一个操作，那就是枚举子串...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/05/22</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="动态规划(DP)">动态规划(DP)</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2019/05/22/素数个数求解与素数的判定/">
+            
+                <span>素数个数求解与素数的判定</span>
+        </a>
+        <div class="abstract-content">
+            1.素数质数（Prime number），又称素数，指在大于1的自然数中，除了1和该数自身外，无法被其他自然数整除的数（也可定义为只有1与该数本身两个正因数的数）。对于写代码的人来说，素数比想像中的更重要，Google一下BigPrime或者big_prime你总会发现大堆大堆用到了素数常量的程序代码。平时没事时可以记一些素数下来以 备急用。我会选一些好记的素数，比如4567, 124567, 3214567, 23456789, 55566677, 1234567894987654321, 11111111111111111111111 (23个1)。   　　素数有很多神奇的性质。我...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/05/22</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="概率法求素数,算法">概率法求素数,算法</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2019/05/10/自己动手写工具(2)--TCP代理/">
+            
+                <span>自己动手写工具(2)--TCP代理</span>
+        </a>
+        <div class="abstract-content">
+            ##TCP代理的简介这次的博客给大家再介绍一个TCP代理的小工具，TCP代理是什么呢，就是处在应用层上位于真正的服务器和客户端之间用TCP的方式将流量从一个机子转到另一个机子，可以起到监控流量，修改数据包的功能。代理服务器还有一个重要的作用就是隐藏背后的真正服务器，使服务器免受攻击。假如代理服务器挂了，后面的服务器仍然可以正常运行，而且如果背后的服务器还拥有多台代理服务器就会使自己更加安全。
+##实现的原理1.代理先开启一个TCP服务2.客户端先去连接代理3.代理在与客户端取得连接后立即与远程的服务端建立TCP链接4.无论是客户端还是服务端发送数据都是先发送到代理然后代理再决...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/05/10</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="工具,python,proxy">工具,python,proxy</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href="/2019/05/10/CTF中的编码总结/">
             
                 <span>CTF中的编码总结</span>
@@ -403,159 +659,10 @@ CDN全称:Content Delivery Network或Content Ddistribute Network，即内容分�
         </div>
     </article>
     
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/04/25/信息收集之DNS域名解析/">
-            
-                <span>信息收集之DNS域名解析</span>
-        </a>
-        <div class="abstract-content">
-            我们在做信息收集的时候通常只能获得目标的域名，那么如何获取对方真正的IP地址呢，最常用的方法就是DNS解析，获得对方的IP地址（在不考虑对方部署了CDN的情况下）
-DNS域名解析是互联网上非常重要的一项服务，那么是DNS呢：DNS，就是Domain Name System的缩写，翻译过来就是域名系统，是互联网上一个关于IP和域名相互映射的分布式数据库，DNS能够使用户更方便的访问互联网，而不用去记住能够被机器直接读取的IP数串。通过域名，最终得到该域名对应的IP地址的过程叫做域名解析（或主机名解析）。
-上图就是一个DNS解析过程
-下面介绍关于DNS的一些基本概念:
-一.域的划分1.根...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/25</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="信息收集,社会工程学">信息收集,社会工程学</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/04/23/自己动手写工具(1)--Netcat/">
-            
-                <span>自己动手写工具（1）--Netcat</span>
-        </a>
-        <div class="abstract-content">
-            一直以来都是在用别人写好的工具，为了锻炼自己的编程能力以及更加深刻的理解网络，所以我准备做一个长期的写工具计划。第一个工具呢就是仿照一个类似于netcat的网络连接工具Pdao，netcat被称为网络界的“瑞士军刀”，功能十分丰富，我的工具参考了NC的功能，主要有如下几种功能：1.服务端的监听2.上传文件3.反弹shell4.下载文件
-12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/23</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="工具,python,Netcat">工具,python,Netcat</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/04/19/sqli-labs/">
-            
-                <span>sqli-labs 通关详解</span>
-        </a>
-        <div class="abstract-content">
-             CTF-web学习笔记之 sqli-labs第一关：第一关如图首先可以判断这里接受的是一个GET请求，先在1后面加一个’ 发现报错，说明这里没有过滤掉引号，所以这里是一个注入点SQL注入通常有两种类型，整形注入和字符型注入，那么判断这里是哪种注入就要分析这里的报错语句，报错信息中共有5个单引号，”实际上是两个单引号，最外面的两个是报错信息的提示引号，’1’两边的引号是后台代码的引号，多出来的就是我们加上的，因为这里给输入的1加上了引号所以后台接受的是字符型，那么我们在后续的注入中需要加 ‘ 来闭合后面的引号
-接下来需要判断表中有几列，通常使用order by加数字 1 2 3 4 5一...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/19</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="ctf,web,sql注入">ctf,web,sql注入</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/04/19/python下多核/">
-            
-                <span>python下多核，单核CPU对于并行，并发执行效率的对比</span>
-        </a>
-        <div class="abstract-content">
-            这篇博客主要内容为python 中多线程以及多进程的效率对比，以及记录自己在做这个实验中遇到的一些问题以及心得
-背景引入：CPU制造商为了追求CPU效率放弃了在CPU频率上的追求（CPU频率即CPU单位时间内可以完成任务的多少），反而开始把方向转向了多核CPU上。那么如何在多核CPU上充分发挥出多核的优势就成了一个问题。
-首先是简单介绍下多线程与多进程：线程：是程序执行流的最小单元，是系统独立调度和分配CPU（独立运行）的基本单位。线程(有时被称为轻量级进程)跟进程有些相似，不同的是，所有的线程运行在同一个进程中， 共享相同的运行环境。它们可以想像成是在主进程或“主线程”中并行运行的“迷...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/19</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="python,多线程">python,多线程</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/04/16/hello-world/">
-            
-                <span>HackPluto&#39;s Blog</span>
-        </a>
-        <div class="abstract-content">
-            Welcome to HackPluto’s Blog! If you get any problems when reading my blogs, you can ask me on GitHub,or send email to me.
-博客介绍现在是2019年4月19日，今天终于有了自己的博客，其实自己写博客时间也不短，但都是在CSDN上或者逼乎专栏里发，现在终于有了自己的博客网站（第一次建站踩了无数的坑）。写博客的初衷呢，是分享和记录自己的知识，我的博客以后主题就是分享黑客技术知识，我主要想以以下几个方面展开：
-1.ACM以及算法2.CTF闯关3.渗透测试（web渗透为主)4....
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/16</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
     <!-- paginator  -->
     
     <nav class="page-nav">
-        <a class="extend prev" rel="prev" href="/archives/page/3/">&#60; PREV</a><a class="page-number" href="/archives/">1</a><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><span class="page-number current">4</span>
+        <a class="extend prev" rel="prev" href="/archives/page/3/">&#60; PREV</a><a class="page-number" href="/archives/">1</a><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/archives/page/5/">5</a><a class="extend next" rel="next" href="/archives/page/5/">NEXT &#62;</a>
     </nav>
     
 </main>
@@ -1169,9 +1276,161 @@ DNS域名解析是互联网上非常重要的一项服务，那么是DNS呢：DN
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 37
+        Total : 45
         </div>
         <!-- search  -->
         
@@ -1181,6 +1440,60 @@ DNS域名解析是互联网上非常重要的一项服务，那么是DNS呢：DN
     
     
     
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/15</span><a class="archive-post-title" href="/2020/03/15/BUUCTF_pwn_writeup/">[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/14</span><a class="archive-post-title" href="/2020/03/14/ctfhub_pwn刷题WP/">[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/11</span><a class="archive-post-title" href="/2020/03/11/Pwnable.kr详解/">[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/05</span><a class="archive-post-title" href="/2020/03/05/SQL词义分析(状态自动机)/">[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/04</span><a class="archive-post-title" href="/2020/03/04/Mikrotik Chimay-Red 分析/">[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/02</span><a class="archive-post-title" href="/2020/03/02/how2heap/">[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/09</span><a class="archive-post-title" href="/2020/02/09/HITCON Training Writeup/">[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/07</span><a class="archive-post-title" href="/2020/02/07/pwnxyz/">[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/03</span><a class="archive-post-title" href="/2020/01/03/PowerPC汇编学习/">PowerPC汇编学习</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
@@ -1243,11 +1556,6 @@ DNS域名解析是互联网上非常重要的一项服务，那么是DNS呢：DN
     
         <li class="archive-post-item">
             <span class="archive-post-date">09/27</span><a class="archive-post-title" href="/2019/09/27/看雪KCTF2019wp/">看雪KCTF2019wp</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/25</span><a class="archive-post-title" href="/2019/09/25/与权权的秦皇岛之行/">与权权的秦皇岛之行</a>
         </li>
     
     
@@ -1322,22 +1630,22 @@ DNS域名解析是互联网上非常重要的一项服务，那么是DNS呢：DN
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2019/05/22/使用动态规划-DP-解决最大公共子串与最大公共子序列问题/">使用动态规划(DP)解决最大公共子串与最大公共子序列问题</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2019/05/22/素数个数求解与素数的判定/">素数个数求解与素数的判定</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/CTF中的编码总结/">CTF中的编码总结</a>
+            <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2019/05/22/使用动态规划-DP-解决最大公共子串与最大公共子序列问题/">使用动态规划(DP)解决最大公共子串与最大公共子序列问题</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/自己动手写工具(2)--TCP代理/">自己动手写工具(2)--TCP代理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/CTF中的编码总结/">CTF中的编码总结</a>
         </li>
     
     
@@ -1375,17 +1683,19 @@ DNS域名解析是互联网上非常重要的一项服务，那么是DNS呢：DN
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="逆向,CTF"><span class="iconfont-archer">&#xe606;</span>逆向,CTF</span>
-    
         <span class="sidebar-tag-name" data-tags="ACM,数论"><span class="iconfont-archer">&#xe606;</span>ACM,数论</span>
     
         <span class="sidebar-tag-name" data-tags="ctf,web,编码"><span class="iconfont-archer">&#xe606;</span>ctf,web,编码</span>
     
-        <span class="sidebar-tag-name" data-tags="Heap,overflow,pwn"><span class="iconfont-archer">&#xe606;</span>Heap,overflow,pwn</span>
-    
         <span class="sidebar-tag-name" data-tags="Linux,LAMP"><span class="iconfont-archer">&#xe606;</span>Linux,LAMP</span>
     
         <span class="sidebar-tag-name" data-tags="防火墙,iptables"><span class="iconfont-archer">&#xe606;</span>防火墙,iptables</span>
+    
+        <span class="sidebar-tag-name" data-tags="Heap,overflow,pwn"><span class="iconfont-archer">&#xe606;</span>Heap,overflow,pwn</span>
+    
+        <span class="sidebar-tag-name" data-tags="逆向,CTF"><span class="iconfont-archer">&#xe606;</span>逆向,CTF</span>
+    
+        <span class="sidebar-tag-name" data-tags="powerpc,汇编"><span class="iconfont-archer">&#xe606;</span>powerpc,汇编</span>
     
         <span class="sidebar-tag-name" data-tags="SSH,端口转发"><span class="iconfont-archer">&#xe606;</span>SSH,端口转发</span>
     
@@ -1401,11 +1711,11 @@ DNS域名解析是互联网上非常重要的一项服务，那么是DNS呢：DN
     
         <span class="sidebar-tag-name" data-tags="花指令,静态调试,Movfuscator"><span class="iconfont-archer">&#xe606;</span>花指令,静态调试,Movfuscator</span>
     
+        <span class="sidebar-tag-name" data-tags="ACM,树状数组"><span class="iconfont-archer">&#xe606;</span>ACM,树状数组</span>
+    
         <span class="sidebar-tag-name" data-tags="XCTF,逆向"><span class="iconfont-archer">&#xe606;</span>XCTF,逆向</span>
     
         <span class="sidebar-tag-name" data-tags="看雪,KCTF,逆向,PWN"><span class="iconfont-archer">&#xe606;</span>看雪,KCTF,逆向,PWN</span>
-    
-        <span class="sidebar-tag-name" data-tags="ACM,树状数组"><span class="iconfont-archer">&#xe606;</span>ACM,树状数组</span>
     
         <span class="sidebar-tag-name" data-tags="工具,python,Netcat"><span class="iconfont-archer">&#xe606;</span>工具,python,Netcat</span>
     
@@ -1415,9 +1725,9 @@ DNS域名解析是互联网上非常重要的一项服务，那么是DNS呢：DN
     
         <span class="sidebar-tag-name" data-tags="CCProxy,栈溢出,pwn"><span class="iconfont-archer">&#xe606;</span>CCProxy,栈溢出,pwn</span>
     
-        <span class="sidebar-tag-name" data-tags="Linux,GOT,PLT"><span class="iconfont-archer">&#xe606;</span>Linux,GOT,PLT</span>
-    
         <span class="sidebar-tag-name" data-tags="unlink,heap,pwn,Android"><span class="iconfont-archer">&#xe606;</span>unlink,heap,pwn,Android</span>
+    
+        <span class="sidebar-tag-name" data-tags="Linux,GOT,PLT"><span class="iconfont-archer">&#xe606;</span>Linux,GOT,PLT</span>
     
         <span class="sidebar-tag-name" data-tags="pwn,Heap"><span class="iconfont-archer">&#xe606;</span>pwn,Heap</span>
     
@@ -1474,19 +1784,17 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="逆向"><span class="iconfont-archer">&#xe60a;</span>逆向</span>
-    
         <span class="sidebar-category-name" data-categories="ACM"><span class="iconfont-archer">&#xe60a;</span>ACM</span>
     
         <span class="sidebar-category-name" data-categories="CTFweb"><span class="iconfont-archer">&#xe60a;</span>CTFweb</span>
     
-        <span class="sidebar-category-name" data-categories="PWN"><span class="iconfont-archer">&#xe60a;</span>PWN</span>
-    
         <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
     
-        <span class="sidebar-category-name" data-categories="内网渗透"><span class="iconfont-archer">&#xe60a;</span>内网渗透</span>
+        <span class="sidebar-category-name" data-categories="PWN"><span class="iconfont-archer">&#xe60a;</span>PWN</span>
     
-        <span class="sidebar-category-name" data-categories="爱的日记"><span class="iconfont-archer">&#xe60a;</span>爱的日记</span>
+        <span class="sidebar-category-name" data-categories="逆向"><span class="iconfont-archer">&#xe60a;</span>逆向</span>
+    
+        <span class="sidebar-category-name" data-categories="内网渗透"><span class="iconfont-archer">&#xe60a;</span>内网渗透</span>
     
         <span class="sidebar-category-name" data-categories="社工"><span class="iconfont-archer">&#xe60a;</span>社工</span>
     

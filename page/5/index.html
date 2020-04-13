@@ -78,8 +78,6 @@
     <link rel="preload" href="/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="stylesheet" href="/css/mobile.css?v=20180824" media="(max-width: 980px)">
     
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    
     <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
 /* This file is meant as a standalone workflow for
 - testing support for link[rel=preload]
@@ -203,8 +201,10 @@
 </head>
 
     
+        <body class="home-body">
     
-<header class="header">
+    
+<header class="header index-header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
@@ -220,21 +220,34 @@
 
 
 
+
+height:50vh;
 ">
     
     <!-- 主页  -->
+    
+    
+    <!-- 文章页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/2.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
             
+            HackPluto's Blog
+            <!-- 文章页  -->
+            
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
+            
+            
+                it's better to burn out than to fade away
+            
+            <!-- 文章页  -->
             
         </p>
         <!-- 文章页meta -->
@@ -346,43 +359,143 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href="/2019/09/25/与权权的秦皇岛之行/">
+        <a class="abstract-title" href="/2019/04/25/信息收集之DNS域名解析/">
             
-                <span>与权权的秦皇岛之行</span>
+                <span>信息收集之DNS域名解析</span>
         </a>
         <div class="abstract-content">
-            
-
-2019年20日 我和小权权一起来到了秦皇岛，我来参加CCPC，她来陪我,太开心啦
-
-
-
-在火车上的照片，一家三口嘻嘻
-
-
-
-到达秦皇岛已经是晚上啦。我们吃了海鲜烧烤，哈哈哈来了海边就要吃海鲜
-
-
-权权说鲍鱼壳的颜色好酷，我的镭射女孩
-
-
-
-
-去秦皇岛当然要去看海啦
-
-
-
-
-当获得了很好的爱之后我们又需要让自己成为很棒的人从而不辜负爱 ​​​期待和你的下一次看海
-
-
-
+            我们在做信息收集的时候通常只能获得目标的域名，那么如何获取对方真正的IP地址呢，最常用的方法就是DNS解析，获得对方的IP地址（在不考虑对方部署了CDN的情况下）
+DNS域名解析是互联网上非常重要的一项服务，那么是DNS呢：DNS，就是Domain Name System的缩写，翻译过来就是域名系统，是互联网上一个关于IP和域名相互映射的分布式数据库，DNS能够使用户更方便的访问互联网，而不用去记住能够被机器直接读取的IP数串。通过域名，最终得到该域名对应的IP地址的过程叫做域名解析（或主机名解析）。
+上图就是一个DNS解析过程
+下面介绍关于DNS的一些基本概念:
+一.域的划分1.根...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/09/25</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/25</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="信息收集,社会工程学">信息收集,社会工程学</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2019/04/23/自己动手写工具(1)--Netcat/">
+            
+                <span>自己动手写工具（1）--Netcat</span>
+        </a>
+        <div class="abstract-content">
+            一直以来都是在用别人写好的工具，为了锻炼自己的编程能力以及更加深刻的理解网络，所以我准备做一个长期的写工具计划。第一个工具呢就是仿照一个类似于netcat的网络连接工具Pdao，netcat被称为网络界的“瑞士军刀”，功能十分丰富，我的工具参考了NC的功能，主要有如下几种功能：1.服务端的监听2.上传文件3.反弹shell4.下载文件
+12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/23</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="工具,python,Netcat">工具,python,Netcat</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2019/04/19/sqli-labs/">
+            
+                <span>sqli-labs 通关详解</span>
+        </a>
+        <div class="abstract-content">
+             CTF-web学习笔记之 sqli-labs第一关：第一关如图首先可以判断这里接受的是一个GET请求，先在1后面加一个’ 发现报错，说明这里没有过滤掉引号，所以这里是一个注入点SQL注入通常有两种类型，整形注入和字符型注入，那么判断这里是哪种注入就要分析这里的报错语句，报错信息中共有5个单引号，”实际上是两个单引号，最外面的两个是报错信息的提示引号，’1’两边的引号是后台代码的引号，多出来的就是我们加上的，因为这里给输入的1加上了引号所以后台接受的是字符型，那么我们在后续的注入中需要加 ‘ 来闭合后面的引号
+接下来需要判断表中有几列，通常使用order by加数字 1 2 3 4 5一...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/19</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="ctf,web,sql注入">ctf,web,sql注入</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2019/04/19/python下多核/">
+            
+                <span>python下多核，单核CPU对于并行，并发执行效率的对比</span>
+        </a>
+        <div class="abstract-content">
+            这篇博客主要内容为python 中多线程以及多进程的效率对比，以及记录自己在做这个实验中遇到的一些问题以及心得
+背景引入：CPU制造商为了追求CPU效率放弃了在CPU频率上的追求（CPU频率即CPU单位时间内可以完成任务的多少），反而开始把方向转向了多核CPU上。那么如何在多核CPU上充分发挥出多核的优势就成了一个问题。
+首先是简单介绍下多线程与多进程：线程：是程序执行流的最小单元，是系统独立调度和分配CPU（独立运行）的基本单位。线程(有时被称为轻量级进程)跟进程有些相似，不同的是，所有的线程运行在同一个进程中， 共享相同的运行环境。它们可以想像成是在主进程或“主线程”中并行运行的“迷...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/19</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="python,多线程">python,多线程</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2019/04/16/hello-world/">
+            
+                <span>HackPluto&#39;s Blog</span>
+        </a>
+        <div class="abstract-content">
+            Welcome to HackPluto’s Blog! If you get any problems when reading my blogs, you can ask me on GitHub,or send email to me.
+博客介绍现在是2019年4月19日，今天终于有了自己的博客，其实自己写博客时间也不短，但都是在CSDN上或者逼乎专栏里发，现在终于有了自己的博客网站（第一次建站踩了无数的坑）。写博客的初衷呢，是分享和记录自己的知识，我的博客以后主题就是分享黑客技术知识，我主要想以以下几个方面展开：
+1.ACM以及算法2.CTF闯关3.渗透测试（web渗透为主)4....
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/16</span>
             </div>
             <!-- tags  -->
             
@@ -391,8 +504,104 @@
     
     <!-- paginator  -->
     
+    <nav class="page-nav">
+        <a class="extend prev" rel="prev" href="/page/4/">&#60; PREV</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span>
+    </nav>
+    
 </main>
             <!-- profile -->
+            
+            <div class="profile">
+    <img class="profile-avatar" alt="avatar" src="/avatar/1.jpg">
+    <div class="profile-name">HackPluto</div>
+    
+    <div class="profile-signature">
+        witness me
+    </div>
+    
+    
+    <div class="profile-social">
+        
+    
+        
+            
+                <a href="mailto:turing0day@gmail.com" class="iconfont-archer email" title="email"></a>
+            
+        
+    
+        
+            
+                <a href="https://github.com/HackPluto" class="iconfont-archer github" target="_blank" title="github"></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            
+                <a href="/atom.xml" class="iconfont-archer rss" target="_blank" title="rss"></a>
+            
+        
+    
+
+    </div>
+    
+    
+        <div class="friends">
+            <div>FRIENDS</div>
+            
+                
+                    <span>
+                        <a href="//www.baidu.com" target="_black">friendA</a>
+                    </span>
+                
+            
+                
+                    <span>
+                        <a href="//www.google.com" target="_black">friendB</a>
+                    </span>
+                
+            
+                
+            
+        </div>
+    
+    
+        <div class="about-me">
+            <a href="/about">ABOUT ME</a>
+        </div>
+    
+</div>
             
         </div>
         <footer class="footer footer-unloaded">
@@ -1002,9 +1211,161 @@
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 37
+        Total : 45
         </div>
         <!-- search  -->
         
@@ -1014,6 +1375,60 @@
     
     
     
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/15</span><a class="archive-post-title" href="/2020/03/15/BUUCTF_pwn_writeup/">[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/14</span><a class="archive-post-title" href="/2020/03/14/ctfhub_pwn刷题WP/">[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/11</span><a class="archive-post-title" href="/2020/03/11/Pwnable.kr详解/">[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/05</span><a class="archive-post-title" href="/2020/03/05/SQL词义分析(状态自动机)/">[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/04</span><a class="archive-post-title" href="/2020/03/04/Mikrotik Chimay-Red 分析/">[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/02</span><a class="archive-post-title" href="/2020/03/02/how2heap/">[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/09</span><a class="archive-post-title" href="/2020/02/09/HITCON Training Writeup/">[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/07</span><a class="archive-post-title" href="/2020/02/07/pwnxyz/">[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/03</span><a class="archive-post-title" href="/2020/01/03/PowerPC汇编学习/">PowerPC汇编学习</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
@@ -1076,11 +1491,6 @@
     
         <li class="archive-post-item">
             <span class="archive-post-date">09/27</span><a class="archive-post-title" href="/2019/09/27/看雪KCTF2019wp/">看雪KCTF2019wp</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/25</span><a class="archive-post-title" href="/2019/09/25/与权权的秦皇岛之行/">与权权的秦皇岛之行</a>
         </li>
     
     
@@ -1155,22 +1565,22 @@
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2019/05/22/使用动态规划-DP-解决最大公共子串与最大公共子序列问题/">使用动态规划(DP)解决最大公共子串与最大公共子序列问题</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2019/05/22/素数个数求解与素数的判定/">素数个数求解与素数的判定</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/CTF中的编码总结/">CTF中的编码总结</a>
+            <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2019/05/22/使用动态规划-DP-解决最大公共子串与最大公共子序列问题/">使用动态规划(DP)解决最大公共子串与最大公共子序列问题</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/自己动手写工具(2)--TCP代理/">自己动手写工具(2)--TCP代理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/CTF中的编码总结/">CTF中的编码总结</a>
         </li>
     
     
@@ -1208,17 +1618,19 @@
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="逆向,CTF"><span class="iconfont-archer">&#xe606;</span>逆向,CTF</span>
-    
         <span class="sidebar-tag-name" data-tags="ACM,数论"><span class="iconfont-archer">&#xe606;</span>ACM,数论</span>
     
         <span class="sidebar-tag-name" data-tags="ctf,web,编码"><span class="iconfont-archer">&#xe606;</span>ctf,web,编码</span>
     
-        <span class="sidebar-tag-name" data-tags="Heap,overflow,pwn"><span class="iconfont-archer">&#xe606;</span>Heap,overflow,pwn</span>
-    
         <span class="sidebar-tag-name" data-tags="Linux,LAMP"><span class="iconfont-archer">&#xe606;</span>Linux,LAMP</span>
     
         <span class="sidebar-tag-name" data-tags="防火墙,iptables"><span class="iconfont-archer">&#xe606;</span>防火墙,iptables</span>
+    
+        <span class="sidebar-tag-name" data-tags="Heap,overflow,pwn"><span class="iconfont-archer">&#xe606;</span>Heap,overflow,pwn</span>
+    
+        <span class="sidebar-tag-name" data-tags="逆向,CTF"><span class="iconfont-archer">&#xe606;</span>逆向,CTF</span>
+    
+        <span class="sidebar-tag-name" data-tags="powerpc,汇编"><span class="iconfont-archer">&#xe606;</span>powerpc,汇编</span>
     
         <span class="sidebar-tag-name" data-tags="SSH,端口转发"><span class="iconfont-archer">&#xe606;</span>SSH,端口转发</span>
     
@@ -1234,11 +1646,11 @@
     
         <span class="sidebar-tag-name" data-tags="花指令,静态调试,Movfuscator"><span class="iconfont-archer">&#xe606;</span>花指令,静态调试,Movfuscator</span>
     
+        <span class="sidebar-tag-name" data-tags="ACM,树状数组"><span class="iconfont-archer">&#xe606;</span>ACM,树状数组</span>
+    
         <span class="sidebar-tag-name" data-tags="XCTF,逆向"><span class="iconfont-archer">&#xe606;</span>XCTF,逆向</span>
     
         <span class="sidebar-tag-name" data-tags="看雪,KCTF,逆向,PWN"><span class="iconfont-archer">&#xe606;</span>看雪,KCTF,逆向,PWN</span>
-    
-        <span class="sidebar-tag-name" data-tags="ACM,树状数组"><span class="iconfont-archer">&#xe606;</span>ACM,树状数组</span>
     
         <span class="sidebar-tag-name" data-tags="工具,python,Netcat"><span class="iconfont-archer">&#xe606;</span>工具,python,Netcat</span>
     
@@ -1248,9 +1660,9 @@
     
         <span class="sidebar-tag-name" data-tags="CCProxy,栈溢出,pwn"><span class="iconfont-archer">&#xe606;</span>CCProxy,栈溢出,pwn</span>
     
-        <span class="sidebar-tag-name" data-tags="Linux,GOT,PLT"><span class="iconfont-archer">&#xe606;</span>Linux,GOT,PLT</span>
-    
         <span class="sidebar-tag-name" data-tags="unlink,heap,pwn,Android"><span class="iconfont-archer">&#xe606;</span>unlink,heap,pwn,Android</span>
+    
+        <span class="sidebar-tag-name" data-tags="Linux,GOT,PLT"><span class="iconfont-archer">&#xe606;</span>Linux,GOT,PLT</span>
     
         <span class="sidebar-tag-name" data-tags="pwn,Heap"><span class="iconfont-archer">&#xe606;</span>pwn,Heap</span>
     
@@ -1307,19 +1719,17 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="逆向"><span class="iconfont-archer">&#xe60a;</span>逆向</span>
-    
         <span class="sidebar-category-name" data-categories="ACM"><span class="iconfont-archer">&#xe60a;</span>ACM</span>
     
         <span class="sidebar-category-name" data-categories="CTFweb"><span class="iconfont-archer">&#xe60a;</span>CTFweb</span>
     
-        <span class="sidebar-category-name" data-categories="PWN"><span class="iconfont-archer">&#xe60a;</span>PWN</span>
-    
         <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
     
-        <span class="sidebar-category-name" data-categories="内网渗透"><span class="iconfont-archer">&#xe60a;</span>内网渗透</span>
+        <span class="sidebar-category-name" data-categories="PWN"><span class="iconfont-archer">&#xe60a;</span>PWN</span>
     
-        <span class="sidebar-category-name" data-categories="爱的日记"><span class="iconfont-archer">&#xe60a;</span>爱的日记</span>
+        <span class="sidebar-category-name" data-categories="逆向"><span class="iconfont-archer">&#xe60a;</span>逆向</span>
+    
+        <span class="sidebar-category-name" data-categories="内网渗透"><span class="iconfont-archer">&#xe60a;</span>内网渗透</span>
     
         <span class="sidebar-category-name" data-categories="社工"><span class="iconfont-archer">&#xe60a;</span>社工</span>
     

