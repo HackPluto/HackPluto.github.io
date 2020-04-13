@@ -346,69 +346,6 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href="/2019/08/11/Linux动态链接库之GOT-PLT/">
-            
-                <span>Linux动态链接库之GOT,PLT</span>
-        </a>
-        <div class="abstract-content">
-            
-今天做到了一个pwn的题目涉及到了GOT,PLT，是关于GOT表泄漏地址的一个题，所以在这里总结下Linux动态链接库的知识。
-
-静态链接与动态链接
-任何操作系统对于二进制文件的链接方式有两种，静态链接与动态链接。静态链接的二进制文件就包含在程序自身的代码里，并且不依赖外部的库。动态链接的二进制文件通常很多函数是不包含的，需要系统提供依赖，比如程序中使用了printf函数，而这个函数是C库函数，自己写的程序中是没有的，那么printf就需要动态链接库来提供，在Linux上就是libc.so.6这个文件。在二进制文件（比如object file）中会有一段叫relocations的部分，...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/08/11</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="Linux,GOT,PLT">Linux,GOT,PLT</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/08/09/ACM数论/">
-            
-                <span>ACM数论</span>
-        </a>
-        <div class="abstract-content">
-            HDU1164水题 ,两种方法求解1int k=panduan(i);
-是一个优化，避免调用函数过多。12345678910111213141516171819202122232425262728293031//欧拉函数int panduan(int a)&#123;    for (int i=2; i&lt;=sqrt(a); i++) &#123;        if (a%i==0) &#123;            return 0;        &#125;    &#125;    return 1;&#125;int main() &#123;    int a;  ...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/08/09</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="ACM,数论">ACM,数论</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
         <a class="abstract-title" href="/2019/08/06/Traceme动态分析与静态分析/">
             
                 <span>Traceme动态分析与静态分析</span>
@@ -673,6 +610,65 @@ ARP协议就是工作在数据链路层的协议，至于ARP到底属于链路�
             <div class="abstract-tags">
     
         <a class="post-tag" href="javascript:void(0);" data-tags="工具,python,arp_poison">工具,python,arp_poison</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2019/05/22/使用动态规划-DP-解决最大公共子串与最大公共子序列问题/">
+            
+                <span>使用动态规划(DP)解决最大公共子串与最大公共子序列问题</span>
+        </a>
+        <div class="abstract-content">
+            
+我们从一道题目来引入我们今天的内容首先介绍一下子串和子序列的区别对于两个字符串 ABCDEF BCYHEF子序列为字符串中 一定顺序的字符不一定相连子串为字符串中相连的字符所以他们的最大公共子序列为 BCEF最大公共子串为 BC或者EF那么对于求解最大公共子串和最大公共子序列用什么方法呢，可能我们最开始想到的就是不断的枚举两个的子串或者子序列，再比较哪个最长，这个方法也不是不行，但是对于两个长度分别为n,m的字符串，这个算法的时间复杂为n^m 显然时间复杂度太大，在ACM中这种算法一定会超时的。那么我们怎么优化呢？我们发现在枚举的过程中，其实我们其实一直都在重复一个操作，那就是枚举子串...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/05/22</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="动态规划(DP)">动态规划(DP)</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2019/05/22/素数个数求解与素数的判定/">
+            
+                <span>素数个数求解与素数的判定</span>
+        </a>
+        <div class="abstract-content">
+            1.素数质数（Prime number），又称素数，指在大于1的自然数中，除了1和该数自身外，无法被其他自然数整除的数（也可定义为只有1与该数本身两个正因数的数）。对于写代码的人来说，素数比想像中的更重要，Google一下BigPrime或者big_prime你总会发现大堆大堆用到了素数常量的程序代码。平时没事时可以记一些素数下来以 备急用。我会选一些好记的素数，比如4567, 124567, 3214567, 23456789, 55566677, 1234567894987654321, 11111111111111111111111 (23个1)。   　　素数有很多神奇的性质。我...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/05/22</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="概率法求素数,算法">概率法求素数,算法</a>
     
 </div>
             
@@ -1311,9 +1307,23 @@ ARP协议就是工作在数据链路层的协议，至于ARP到底属于链路�
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 40
+        Total : 38
         </div>
         <!-- search  -->
         
@@ -1334,22 +1344,12 @@ ARP协议就是工作在数据链路层的协议，至于ARP到底属于链路�
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/14</span><a class="archive-post-title" href="/2020/04/14/BUUCTF刷题记录/">BUUCTF刷题记录</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">04/14</span><a class="archive-post-title" href="/2020/04/14/HITCON-Training-Writeup/">HITCON-Training-Writeup</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/05</span><a class="archive-post-title" href="/2020/03/05/SQL词义分析(状态自动机)/">[Untitled Post]</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/04</span><a class="archive-post-title" href="/2020/03/04/Mikrotik Chimay-Red 分析/">[Untitled Post]</a>
+            <span class="archive-post-date">04/14</span><a class="archive-post-title" href="/2020/04/14/BUUCTF刷题记录/">BUUCTF刷题记录</a>
         </li>
     
     
@@ -1498,12 +1498,12 @@ ARP协议就是工作在数据链路层的协议，至于ARP到底属于链路�
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/CTF中的编码总结/">CTF中的编码总结</a>
+            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/自己动手写工具(2)--TCP代理/">自己动手写工具(2)--TCP代理</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/自己动手写工具(2)--TCP代理/">自己动手写工具(2)--TCP代理</a>
+            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/CTF中的编码总结/">CTF中的编码总结</a>
         </li>
     
     
@@ -1541,9 +1541,9 @@ ARP协议就是工作在数据链路层的协议，至于ARP到底属于链路�
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="逆向,CTF"><span class="iconfont-archer">&#xe606;</span>逆向,CTF</span>
-    
         <span class="sidebar-tag-name" data-tags="ACM,数论"><span class="iconfont-archer">&#xe606;</span>ACM,数论</span>
+    
+        <span class="sidebar-tag-name" data-tags="逆向,CTF"><span class="iconfont-archer">&#xe606;</span>逆向,CTF</span>
     
         <span class="sidebar-tag-name" data-tags="ctf,web,编码"><span class="iconfont-archer">&#xe606;</span>ctf,web,编码</span>
     
@@ -1563,9 +1563,9 @@ ARP协议就是工作在数据链路层的协议，至于ARP到底属于链路�
     
         <span class="sidebar-tag-name" data-tags="动态规划(DP)"><span class="iconfont-archer">&#xe606;</span>动态规划(DP)</span>
     
-        <span class="sidebar-tag-name" data-tags="花指令,静态调试,Movfuscator"><span class="iconfont-archer">&#xe606;</span>花指令,静态调试,Movfuscator</span>
-    
         <span class="sidebar-tag-name" data-tags="PWN,BROP,栈溢出"><span class="iconfont-archer">&#xe606;</span>PWN,BROP,栈溢出</span>
+    
+        <span class="sidebar-tag-name" data-tags="花指令,静态调试,Movfuscator"><span class="iconfont-archer">&#xe606;</span>花指令,静态调试,Movfuscator</span>
     
         <span class="sidebar-tag-name" data-tags="XCTF,逆向"><span class="iconfont-archer">&#xe606;</span>XCTF,逆向</span>
     
@@ -1581,11 +1581,11 @@ ARP协议就是工作在数据链路层的协议，至于ARP到底属于链路�
     
         <span class="sidebar-tag-name" data-tags="CCProxy,栈溢出,pwn"><span class="iconfont-archer">&#xe606;</span>CCProxy,栈溢出,pwn</span>
     
+        <span class="sidebar-tag-name" data-tags="Linux,GOT,PLT"><span class="iconfont-archer">&#xe606;</span>Linux,GOT,PLT</span>
+    
         <span class="sidebar-tag-name" data-tags="unlink,heap,pwn,Android"><span class="iconfont-archer">&#xe606;</span>unlink,heap,pwn,Android</span>
     
         <span class="sidebar-tag-name" data-tags="Heap,overflow,pwn"><span class="iconfont-archer">&#xe606;</span>Heap,overflow,pwn</span>
-    
-        <span class="sidebar-tag-name" data-tags="Linux,GOT,PLT"><span class="iconfont-archer">&#xe606;</span>Linux,GOT,PLT</span>
     
         <span class="sidebar-tag-name" data-tags="pwn,Heap"><span class="iconfont-archer">&#xe606;</span>pwn,Heap</span>
     
@@ -1642,9 +1642,9 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="逆向"><span class="iconfont-archer">&#xe60a;</span>逆向</span>
-    
         <span class="sidebar-category-name" data-categories="ACM"><span class="iconfont-archer">&#xe60a;</span>ACM</span>
+    
+        <span class="sidebar-category-name" data-categories="逆向"><span class="iconfont-archer">&#xe60a;</span>逆向</span>
     
         <span class="sidebar-category-name" data-categories="CTFweb"><span class="iconfont-archer">&#xe60a;</span>CTFweb</span>
     
