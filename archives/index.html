@@ -346,6 +346,39 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href="/2020/04/22/Linux下动态链接分析/">
+            
+                <span>Linux下动态链接完整流程分析</span>
+        </a>
+        <div class="abstract-content">
+            Linux下动态链接分析在CTF PWN中对于Linux底层的考察是很多的，而应用程序如何进行动态链接对于新手来说算是一个小考验，本篇文章主要记录Linux下动态链接的过程以及CTF中关于动态链接的注意点，还有Glibc版本不兼容的坑
+内核加载ELF我们都知道应用程序要从C语言代码变成机器可以直接执行的代码要经过编译链接的步骤。在链接中有两种方式，一种是静态链接，一种是动态链接。
+
+1.静态链接指的就是程序在链接的过程中，将需要用到的库文件的二进制代码拷贝到程序二进制文件的映像中。
+2.动态链接指的就是程序在链接的时候并不把库函数链接进程序的映像而是将库函数的映像一起交给用户，用户在运行...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/22</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="Linux,动态链接,GOT,PLT">Linux,动态链接,GOT,PLT</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href="/2020/04/14/pwnable-kr-WriteUp/">
             
                 <span>pwnable.kr WriteUp</span>
@@ -642,45 +675,6 @@ DNS：域名解析服务，如果服务器上已经另行配置了DNS服务器�
             <div class="abstract-tags">
     
         <a class="post-tag" href="javascript:void(0);" data-tags="ACM,树状数组">ACM,树状数组</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/10/17/堆的分配原理分析/">
-            
-                <span>堆的分配原理分析</span>
-        </a>
-        <div class="abstract-content">
-            
-这段时间在学习堆溢出，在网上找到了一些好的堆的讲解，在这里做一个总结
-
-
-参考文献：
-
-https://paper.seebug.org/papers/Archive/refs/heap/glibc%e5%86%85%e5%ad%98%e7%ae%a1%e7%90%86ptmalloc%e6%ba%90%e4%bb%a3%e7%a0%81%e5%88%86%e6%9e%90.pdf
-
-
-基础知识X86 平台 Linux 进程内存布局
-在Linux上，以32 位机器为例，程序在固定位置开始加载，通常是128M处，首先被载入的是.text 段，然后是.data 段，最后是.bss 段。这可...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/10/17</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="pwn,堆,glibc">pwn,堆,glibc</a>
     
 </div>
             
@@ -1319,16 +1313,6 @@ https://paper.seebug.org/papers/Archive/refs/heap/glibc%e5%86%85%e5%ad%98%e7%ae%
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     <div class="total-and-search">
         <div class="total-archive">
         Total : 38
@@ -1347,7 +1331,12 @@ https://paper.seebug.org/papers/Archive/refs/heap/glibc%e5%86%85%e5%ad%98%e7%ae%
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/14</span><a class="archive-post-title" href="/2020/04/14/HITCON-Training-Writeup/">HITCON-Training-Writeup</a>
+            <span class="archive-post-date">04/22</span><a class="archive-post-title" href="/2020/04/22/Linux下动态链接分析/">Linux下动态链接完整流程分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/14</span><a class="archive-post-title" href="/2020/04/14/pwnable-kr-WriteUp/">pwnable.kr WriteUp</a>
         </li>
     
     
@@ -1357,7 +1346,7 @@ https://paper.seebug.org/papers/Archive/refs/heap/glibc%e5%86%85%e5%ad%98%e7%ae%
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/14</span><a class="archive-post-title" href="/2020/04/14/pwnable-kr-WriteUp/">pwnable.kr WriteUp</a>
+            <span class="archive-post-date">04/14</span><a class="archive-post-title" href="/2020/04/14/HITCON-Training-Writeup/">HITCON-Training-Writeup</a>
         </li>
     
     
@@ -1442,11 +1431,6 @@ https://paper.seebug.org/papers/Archive/refs/heap/glibc%e5%86%85%e5%ad%98%e7%ae%
     
         <li class="archive-post-item">
             <span class="archive-post-date">08/14</span><a class="archive-post-title" href="/2019/08/14/基于BROP的栈溢出漏洞利用/">基于BROP的栈溢出漏洞利用</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/11</span><a class="archive-post-title" href="/2019/08/11/Linux动态链接库之GOT-PLT/">Linux动态链接库之GOT,PLT</a>
         </li>
     
     
@@ -1549,19 +1533,19 @@ https://paper.seebug.org/papers/Archive/refs/heap/glibc%e5%86%85%e5%ad%98%e7%ae%
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="逆向,CTF"><span class="iconfont-archer">&#xe606;</span>逆向,CTF</span>
-    
         <span class="sidebar-tag-name" data-tags="ACM,数论"><span class="iconfont-archer">&#xe606;</span>ACM,数论</span>
+    
+        <span class="sidebar-tag-name" data-tags="逆向,CTF"><span class="iconfont-archer">&#xe606;</span>逆向,CTF</span>
     
         <span class="sidebar-tag-name" data-tags="ctf,web,编码"><span class="iconfont-archer">&#xe606;</span>ctf,web,编码</span>
     
-        <span class="sidebar-tag-name" data-tags="防火墙,iptables"><span class="iconfont-archer">&#xe606;</span>防火墙,iptables</span>
-    
         <span class="sidebar-tag-name" data-tags="Linux,LAMP"><span class="iconfont-archer">&#xe606;</span>Linux,LAMP</span>
     
-        <span class="sidebar-tag-name" data-tags="powerpc,汇编"><span class="iconfont-archer">&#xe606;</span>powerpc,汇编</span>
+        <span class="sidebar-tag-name" data-tags="防火墙,iptables"><span class="iconfont-archer">&#xe606;</span>防火墙,iptables</span>
     
         <span class="sidebar-tag-name" data-tags="SSH,端口转发"><span class="iconfont-archer">&#xe606;</span>SSH,端口转发</span>
+    
+        <span class="sidebar-tag-name" data-tags="powerpc,汇编"><span class="iconfont-archer">&#xe606;</span>powerpc,汇编</span>
     
         <span class="sidebar-tag-name" data-tags="IDA,OllyDB"><span class="iconfont-archer">&#xe606;</span>IDA,OllyDB</span>
     
@@ -1575,21 +1559,19 @@ https://paper.seebug.org/papers/Archive/refs/heap/glibc%e5%86%85%e5%ad%98%e7%ae%
     
         <span class="sidebar-tag-name" data-tags="PWN,BROP,栈溢出"><span class="iconfont-archer">&#xe606;</span>PWN,BROP,栈溢出</span>
     
+        <span class="sidebar-tag-name" data-tags="看雪,KCTF,逆向,PWN"><span class="iconfont-archer">&#xe606;</span>看雪,KCTF,逆向,PWN</span>
+    
         <span class="sidebar-tag-name" data-tags="XCTF,逆向"><span class="iconfont-archer">&#xe606;</span>XCTF,逆向</span>
     
         <span class="sidebar-tag-name" data-tags="ACM,树状数组"><span class="iconfont-archer">&#xe606;</span>ACM,树状数组</span>
     
-        <span class="sidebar-tag-name" data-tags="看雪,KCTF,逆向,PWN"><span class="iconfont-archer">&#xe606;</span>看雪,KCTF,逆向,PWN</span>
-    
         <span class="sidebar-tag-name" data-tags="工具,python,Netcat"><span class="iconfont-archer">&#xe606;</span>工具,python,Netcat</span>
-    
-        <span class="sidebar-tag-name" data-tags="工具,python,proxy"><span class="iconfont-archer">&#xe606;</span>工具,python,proxy</span>
     
         <span class="sidebar-tag-name" data-tags="栈溢出,PWN"><span class="iconfont-archer">&#xe606;</span>栈溢出,PWN</span>
     
-        <span class="sidebar-tag-name" data-tags="CCProxy,栈溢出,pwn"><span class="iconfont-archer">&#xe606;</span>CCProxy,栈溢出,pwn</span>
+        <span class="sidebar-tag-name" data-tags="工具,python,proxy"><span class="iconfont-archer">&#xe606;</span>工具,python,proxy</span>
     
-        <span class="sidebar-tag-name" data-tags="Linux,GOT,PLT"><span class="iconfont-archer">&#xe606;</span>Linux,GOT,PLT</span>
+        <span class="sidebar-tag-name" data-tags="CCProxy,栈溢出,pwn"><span class="iconfont-archer">&#xe606;</span>CCProxy,栈溢出,pwn</span>
     
         <span class="sidebar-tag-name" data-tags="unlink,heap,pwn,Android"><span class="iconfont-archer">&#xe606;</span>unlink,heap,pwn,Android</span>
     
@@ -1599,9 +1581,11 @@ https://paper.seebug.org/papers/Archive/refs/heap/glibc%e5%86%85%e5%ad%98%e7%ae%
     
         <span class="sidebar-tag-name" data-tags="python,多线程"><span class="iconfont-archer">&#xe606;</span>python,多线程</span>
     
+        <span class="sidebar-tag-name" data-tags="工具,python,arp_poison"><span class="iconfont-archer">&#xe606;</span>工具,python,arp_poison</span>
+    
         <span class="sidebar-tag-name" data-tags="概率法求素数,算法"><span class="iconfont-archer">&#xe606;</span>概率法求素数,算法</span>
     
-        <span class="sidebar-tag-name" data-tags="工具,python,arp_poison"><span class="iconfont-archer">&#xe606;</span>工具,python,arp_poison</span>
+        <span class="sidebar-tag-name" data-tags="Linux,动态链接,GOT,PLT"><span class="iconfont-archer">&#xe606;</span>Linux,动态链接,GOT,PLT</span>
     
         <span class="sidebar-tag-name" data-tags="unlink,heap,pwn"><span class="iconfont-archer">&#xe606;</span>unlink,heap,pwn</span>
     
@@ -1650,9 +1634,9 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="逆向"><span class="iconfont-archer">&#xe60a;</span>逆向</span>
-    
         <span class="sidebar-category-name" data-categories="ACM"><span class="iconfont-archer">&#xe60a;</span>ACM</span>
+    
+        <span class="sidebar-category-name" data-categories="逆向"><span class="iconfont-archer">&#xe60a;</span>逆向</span>
     
         <span class="sidebar-category-name" data-categories="CTFweb"><span class="iconfont-archer">&#xe60a;</span>CTFweb</span>
     

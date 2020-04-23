@@ -483,39 +483,6 @@ win7下通过修改注册表建立隐藏账户功能实现
     
     
     <article class="index-post">
-        <a class="abstract-title" href="/2019/08/11/Linux动态链接库之GOT-PLT/">
-            
-                <span>Linux动态链接库之GOT,PLT</span>
-        </a>
-        <div class="abstract-content">
-            
-今天做到了一个pwn的题目涉及到了GOT,PLT，是关于GOT表泄漏地址的一个题，所以在这里总结下Linux动态链接库的知识。
-
-静态链接与动态链接
-任何操作系统对于二进制文件的链接方式有两种，静态链接与动态链接。静态链接的二进制文件就包含在程序自身的代码里，并且不依赖外部的库。动态链接的二进制文件通常很多函数是不包含的，需要系统提供依赖，比如程序中使用了printf函数，而这个函数是C库函数，自己写的程序中是没有的，那么printf就需要动态链接库来提供，在Linux上就是libc.so.6这个文件。在二进制文件（比如object file）中会有一段叫relocations的部分，...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/08/11</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="Linux,GOT,PLT">Linux,GOT,PLT</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
         <a class="abstract-title" href="/2019/08/09/ACM数论/">
             
                 <span>ACM数论</span>
@@ -682,6 +649,40 @@ ser...
             <div class="abstract-tags">
     
         <a class="post-tag" href="javascript:void(0);" data-tags="Linux,LAMP">Linux,LAMP</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2019/06/13/攻防世界逆向入门writeup/">
+            
+                <span>攻防世界逆向入门writeup</span>
+        </a>
+        <div class="abstract-content">
+            1.re1这个题方法挺多的，我主要介绍两种1 逆向分析法：拖入IDA后，进入main函数，反汇编看伪C代码简单的分析下整个函数，输入字符串v9，再比较v5,v9,如果不相等就输出 aFlag,相等就输出 unk_413E90。
+
+分别点进这两个内存查看内容
+
+发现这两个地方都不是flag,所以我认为这个题不是输出flag,而是看我们的输入是不是flag,所以跟踪v5字符串对 _mm_storeu_si128() 函数进行进一步分析，这个是intel的一个指令，简而言之就是将参数里后面的直接赋值给前面，所以直接查看 xmmword_413E34 找到了flag
+2 查找字符串：因为我...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/06/13</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="XCTF,逆向">XCTF,逆向</a>
     
 </div>
             
@@ -1320,16 +1321,6 @@ ser...
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     <div class="total-and-search">
         <div class="total-archive">
         Total : 38
@@ -1348,7 +1339,12 @@ ser...
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/14</span><a class="archive-post-title" href="/2020/04/14/HITCON-Training-Writeup/">HITCON-Training-Writeup</a>
+            <span class="archive-post-date">04/22</span><a class="archive-post-title" href="/2020/04/22/Linux下动态链接分析/">Linux下动态链接完整流程分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/14</span><a class="archive-post-title" href="/2020/04/14/pwnable-kr-WriteUp/">pwnable.kr WriteUp</a>
         </li>
     
     
@@ -1358,7 +1354,7 @@ ser...
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/14</span><a class="archive-post-title" href="/2020/04/14/pwnable-kr-WriteUp/">pwnable.kr WriteUp</a>
+            <span class="archive-post-date">04/14</span><a class="archive-post-title" href="/2020/04/14/HITCON-Training-Writeup/">HITCON-Training-Writeup</a>
         </li>
     
     
@@ -1443,11 +1439,6 @@ ser...
     
         <li class="archive-post-item">
             <span class="archive-post-date">08/14</span><a class="archive-post-title" href="/2019/08/14/基于BROP的栈溢出漏洞利用/">基于BROP的栈溢出漏洞利用</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/11</span><a class="archive-post-title" href="/2019/08/11/Linux动态链接库之GOT-PLT/">Linux动态链接库之GOT,PLT</a>
         </li>
     
     
@@ -1550,19 +1541,19 @@ ser...
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="逆向,CTF"><span class="iconfont-archer">&#xe606;</span>逆向,CTF</span>
-    
         <span class="sidebar-tag-name" data-tags="ACM,数论"><span class="iconfont-archer">&#xe606;</span>ACM,数论</span>
+    
+        <span class="sidebar-tag-name" data-tags="逆向,CTF"><span class="iconfont-archer">&#xe606;</span>逆向,CTF</span>
     
         <span class="sidebar-tag-name" data-tags="ctf,web,编码"><span class="iconfont-archer">&#xe606;</span>ctf,web,编码</span>
     
-        <span class="sidebar-tag-name" data-tags="防火墙,iptables"><span class="iconfont-archer">&#xe606;</span>防火墙,iptables</span>
-    
         <span class="sidebar-tag-name" data-tags="Linux,LAMP"><span class="iconfont-archer">&#xe606;</span>Linux,LAMP</span>
     
-        <span class="sidebar-tag-name" data-tags="powerpc,汇编"><span class="iconfont-archer">&#xe606;</span>powerpc,汇编</span>
+        <span class="sidebar-tag-name" data-tags="防火墙,iptables"><span class="iconfont-archer">&#xe606;</span>防火墙,iptables</span>
     
         <span class="sidebar-tag-name" data-tags="SSH,端口转发"><span class="iconfont-archer">&#xe606;</span>SSH,端口转发</span>
+    
+        <span class="sidebar-tag-name" data-tags="powerpc,汇编"><span class="iconfont-archer">&#xe606;</span>powerpc,汇编</span>
     
         <span class="sidebar-tag-name" data-tags="IDA,OllyDB"><span class="iconfont-archer">&#xe606;</span>IDA,OllyDB</span>
     
@@ -1576,21 +1567,19 @@ ser...
     
         <span class="sidebar-tag-name" data-tags="PWN,BROP,栈溢出"><span class="iconfont-archer">&#xe606;</span>PWN,BROP,栈溢出</span>
     
+        <span class="sidebar-tag-name" data-tags="看雪,KCTF,逆向,PWN"><span class="iconfont-archer">&#xe606;</span>看雪,KCTF,逆向,PWN</span>
+    
         <span class="sidebar-tag-name" data-tags="XCTF,逆向"><span class="iconfont-archer">&#xe606;</span>XCTF,逆向</span>
     
         <span class="sidebar-tag-name" data-tags="ACM,树状数组"><span class="iconfont-archer">&#xe606;</span>ACM,树状数组</span>
     
-        <span class="sidebar-tag-name" data-tags="看雪,KCTF,逆向,PWN"><span class="iconfont-archer">&#xe606;</span>看雪,KCTF,逆向,PWN</span>
-    
         <span class="sidebar-tag-name" data-tags="工具,python,Netcat"><span class="iconfont-archer">&#xe606;</span>工具,python,Netcat</span>
-    
-        <span class="sidebar-tag-name" data-tags="工具,python,proxy"><span class="iconfont-archer">&#xe606;</span>工具,python,proxy</span>
     
         <span class="sidebar-tag-name" data-tags="栈溢出,PWN"><span class="iconfont-archer">&#xe606;</span>栈溢出,PWN</span>
     
-        <span class="sidebar-tag-name" data-tags="CCProxy,栈溢出,pwn"><span class="iconfont-archer">&#xe606;</span>CCProxy,栈溢出,pwn</span>
+        <span class="sidebar-tag-name" data-tags="工具,python,proxy"><span class="iconfont-archer">&#xe606;</span>工具,python,proxy</span>
     
-        <span class="sidebar-tag-name" data-tags="Linux,GOT,PLT"><span class="iconfont-archer">&#xe606;</span>Linux,GOT,PLT</span>
+        <span class="sidebar-tag-name" data-tags="CCProxy,栈溢出,pwn"><span class="iconfont-archer">&#xe606;</span>CCProxy,栈溢出,pwn</span>
     
         <span class="sidebar-tag-name" data-tags="unlink,heap,pwn,Android"><span class="iconfont-archer">&#xe606;</span>unlink,heap,pwn,Android</span>
     
@@ -1600,9 +1589,11 @@ ser...
     
         <span class="sidebar-tag-name" data-tags="python,多线程"><span class="iconfont-archer">&#xe606;</span>python,多线程</span>
     
+        <span class="sidebar-tag-name" data-tags="工具,python,arp_poison"><span class="iconfont-archer">&#xe606;</span>工具,python,arp_poison</span>
+    
         <span class="sidebar-tag-name" data-tags="概率法求素数,算法"><span class="iconfont-archer">&#xe606;</span>概率法求素数,算法</span>
     
-        <span class="sidebar-tag-name" data-tags="工具,python,arp_poison"><span class="iconfont-archer">&#xe606;</span>工具,python,arp_poison</span>
+        <span class="sidebar-tag-name" data-tags="Linux,动态链接,GOT,PLT"><span class="iconfont-archer">&#xe606;</span>Linux,动态链接,GOT,PLT</span>
     
         <span class="sidebar-tag-name" data-tags="unlink,heap,pwn"><span class="iconfont-archer">&#xe606;</span>unlink,heap,pwn</span>
     
@@ -1651,9 +1642,9 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="逆向"><span class="iconfont-archer">&#xe60a;</span>逆向</span>
-    
         <span class="sidebar-category-name" data-categories="ACM"><span class="iconfont-archer">&#xe60a;</span>ACM</span>
+    
+        <span class="sidebar-category-name" data-categories="逆向"><span class="iconfont-archer">&#xe60a;</span>逆向</span>
     
         <span class="sidebar-category-name" data-categories="CTFweb"><span class="iconfont-archer">&#xe60a;</span>CTFweb</span>
     
