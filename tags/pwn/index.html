@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>看雪KCTF2019wp · HackPluto&#39;s Blog</title>
+    <title>HackPluto&#39;s Blog</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -203,23 +203,12 @@
 </head>
 
     
-        <body class="post-body">
-    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
-    
-    <div class="banner">
-            <div class="blog-title">
-                <a href="/">HackPluto&#39;s Blog</a>
-            </div>
-            <div class="post-title">
-                <a href="#" class="post-name">看雪KCTF2019wp</a>
-            </div>
-    </div>
     
     <a class="home-link" href="/">HackPluto's Blog</a>
 </header>
@@ -231,74 +220,24 @@
 
 
 
-
-height:50vh;
 ">
     
     <!-- 主页  -->
-    
-    
-    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/intro/2.jpg)"></div>
+    <div class="site-intro-img" style="background-image: url(/)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
-            
-            看雪KCTF2019wp
-            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
-            
-            <!-- 404 -->
-            
         </p>
         <!-- 文章页meta -->
-        
-            <div class="post-intros">
-                <!-- 文章页标签  -->
-                
-                    <div class="post-intro-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="看雪,KCTF,逆向,PWN">看雪,KCTF,逆向,PWN</a>
-    
-</div>
-                
-                
-                    <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">403</span>阅读时长: <span class="post-count reading-time">1 min</span></span>
-                    </div>
-                
-                <div class="post-intro-meta">
-                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2019/09/27</span>
-                    
-                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
-                        <span class="iconfont-archer">&#xe602;</span>
-                        <span id="busuanzi_value_page_pv"></span>
-                    </span>
-                    
-                    <span class="shareWrapper">
-                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
-                        <span class="shareText">Share</span>
-                        <ul class="shareList">
-                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
-                                <div class="share-qrcode"></div>
-                            </li>
-                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
-                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
-                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
-                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
-                        </ul>
-                    </span>
-                </div>
-            </div>
         
     </div>
 </div>
@@ -399,69 +338,40 @@ height:50vh;
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main post-page">
-    <article class="article-entry">
-        <h2 id="1-神秘来信"><a href="#1-神秘来信" class="headerlink" title="1.神秘来信"></a>1.神秘来信</h2><blockquote>
-<p>先将程序放入IDA中</p>
-</blockquote>
-<p><img src="https://i.loli.net/2019/09/27/ZwI3HkylpLRYPWO.jpg" alt></p>
-<blockquote>
-<p>可以看到这个需要输入一个序列号，长度不能超过7，并且后3位为353，前三位和不能超过149。直接看反汇编的代码有些奇怪，因为并没有成功时候的条件，这里需要查看汇编，发现这里有一个除0异常</p>
-</blockquote>
-<p><img src="https://i.loli.net/2019/09/27/EYa1GH8uTzFJIBv.jpg" alt></p>
-<blockquote>
-<p>这里涉及到了Windows的SEH机制<br>SEH 的工作原理：<br>Windows 程序设计中最重要的理念就是消息传递，事件驱动。当GUI应用程序触发一个消息时，系统将把该消息放入消息队列，然后去查找并调用窗体的消息处理函数(CALLBACK)，传递的参数当然就是这个消息。我们同样可以把异常也当作是一种消息，应用程序发生异常时就触发了该消息并告知系统。系统接收后同样会找它的“回调函数”，也就是我们的异常处理例程。当然，如果我们在程序中没有做异常处理的话，系统也不会置之不理，它将弹出我们常见的应用程序错误框，然后结束该程序。<br>SEH 是 Windows 系统提供的功能，跟开发工具无关。值得一提的是，VC 将 SEH 进行了封装 try  catch  finally，c＋＋中也可以用c的封装 <strong>try{}</strong>except(){} 和 <strong>try{}</strong>finally{}. 所以当你建立一个C++ try块时，编译器就生成一个SEH_ _try块。</p>
-</blockquote>
-<blockquote>
-<p>动态调试这个程序，发现最后ESI寄存器里的值为401353，所以序列号为401353</p>
-</blockquote>
-<p><img src="https://i.loli.net/2019/09/27/SFoanpNsChW6Utf.jpg" alt></p>
-<p><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt><br><img src alt></p>
-
-    </article>
-    <!-- license  -->
+            <main class="main index-page">
     
-        <div class="license-wrapper">
-            <p>原文作者：<a href="http://yoursite.com">HackPluto</a>
-            </p><p>原文链接：<a href="http://yoursite.com/2019/09/27/看雪KCTF2019wp/">http://yoursite.com/2019/09/27/看雪KCTF2019wp/</a>
-            </p><p>发表日期：<a href="http://yoursite.com/2019/09/27/看雪KCTF2019wp/">September 27th 2019, 8:25:07 pm</a>
-            </p><p>更新日期：<a href="http://yoursite.com/2019/09/27/看雪KCTF2019wp/">September 27th 2019, 11:56:15 pm</a>
-            </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2020/04/23/2020-i-春秋-虎符杯-pwn-题解writeup/">
+            
+                <span>2020 i-春秋 虎符杯 pwn 题解writeup</span>
+        </a>
+        <div class="abstract-content">
+            上个周末打了两场比赛，记录下虎符杯和西工大校赛的pwn题解，这篇用来记录虎符杯的虎符杯的pwn最后出了两个题
+count这个题是最简单的一个，一个ARM pwn的入门漏洞点在这个函数123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960__int64 sub_400990()&#123;  unsigned int v0; // w0  __int64 v1; // x0  __int64 v2; // x0  __int...
         </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/23</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="pwn">pwn</a>
+    
+</div>
+            
+        </div>
+    </article>
     
     <!-- paginator  -->
-    <ul class="post-paginator">
-        <li class="next">
-            
-                <div class="nextSlogan">Next Post</div>
-                <a href="/2019/09/29/花式栈溢出技巧/" title="花式栈溢出技巧">
-                    <div class="nextTitle">花式栈溢出技巧</div>
-                </a>
-            
-        </li>
-        <li class="previous">
-            
-                <div class="prevSlogan">Previous Post</div>
-                <a href="/2019/09/24/反静态调试总结/" title="反静态调试总结">
-                    <div class="prevTitle">反静态调试总结</div>
-                </a>
-            
-        </li>
-    </ul>
-    <!-- 评论插件 -->
-    <!-- 来必力City版安装代码 -->
-
-<!-- City版安装代码已完成 -->
     
-    
-    <!-- partial('_partial/comment/changyan') -->
-    <!--PC版-->
-
-
-    
-    
-
-    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -541,24 +451,6 @@ height:50vh;
 </footer>
     </div>
     <!-- toc -->
-    
-    <div class="toc-wrapper" style=
-    
-
-
-
-
-
-
-
-top:50vh;
-
-    >
-        <div class="toc-catalog">
-            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
-        </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-神秘来信"><span class="toc-number">1.</span> <span class="toc-text">1.神秘来信</span></a></li></ol>
-    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -1487,8 +1379,6 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
-    
-        <script src="/scripts/share.js" async></script>    
      
     </body>
 </html>
