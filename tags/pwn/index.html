@@ -346,6 +346,65 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href="/2020/05/01/CTFshow-WriteUp/">
+            
+                <span>CTFshow WriteUp</span>
+        </a>
+        <div class="abstract-content">
+            pwn-签到123456789101112131415from pwn import *from LibcSearcher import *context.log_level = "debug"context.arch = "amd64"#p = process("./pwn")p = remote("124.156.121.112",28056)elf = ELF("./pwn")pop = 0x00000000004006d3sh = 0x0000000000601040pay = "a"*0x20 + p64(0) + p64(pop) + p64(sh) + p64(elf.pl...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/05/01</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="pwn">pwn</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2020/04/27/NPUCTF2020-pwn-WriteUp/">
+            
+                <span>NPUCTF2020 pwn WriteUp</span>
+        </a>
+        <div class="abstract-content">
+            内核题是之前从来没有遇到过的。。。一直卡着，最后只出了3个pwn,现在趁着网上的WP好好学学这两个内核题
+format_level21234567$ checksec npuctf_2020_level2 [*] '/home/pluto/\xe6\xa1\x8c\xe9\x9d\xa2/pwn/npuctf_2020_level2'    Arch:     amd64-64-little    RELRO:    Full RELRO    Stack:    No canary found    NX:       NX enabled    PIE:      PIE enabl...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/27</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="pwn">pwn</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href="/2020/04/23/2020-i-春秋-虎符杯-pwn-题解writeup/">
             
                 <span>2020 i-春秋 虎符杯 pwn 题解writeup</span>
@@ -1006,9 +1065,83 @@ count这个题是最简单的一个，一个ARM pwn的入门漏洞点在这个�
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 38
+        Total : 42
         </div>
         <!-- search  -->
         
@@ -1024,6 +1157,26 @@ count这个题是最简单的一个，一个ARM pwn的入门漏洞点在这个�
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">05/07</span><a class="archive-post-title" href="/2020/05/07/Rust学习笔记/">Rust学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/01</span><a class="archive-post-title" href="/2020/05/01/CTFshow-WriteUp/">CTFshow WriteUp</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/27</span><a class="archive-post-title" href="/2020/04/27/NPUCTF2020-pwn-WriteUp/">NPUCTF2020 pwn WriteUp</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/26</span><a class="archive-post-title" href="/2020/04/26/ARM-pwn入门/">ARM pwn入门</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">04/23</span><a class="archive-post-title" href="/2020/04/23/2020-i-春秋-虎符杯-pwn-题解writeup/">2020 i-春秋 虎符杯 pwn 题解writeup</a>
         </li>
     
@@ -1034,12 +1187,12 @@ count这个题是最简单的一个，一个ARM pwn的入门漏洞点在这个�
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/14</span><a class="archive-post-title" href="/2020/04/14/HITCON-Training-Writeup/">HITCON-Training-Writeup</a>
+            <span class="archive-post-date">04/14</span><a class="archive-post-title" href="/2020/04/14/BUUCTF刷题记录/">BUUCTF刷题记录</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/14</span><a class="archive-post-title" href="/2020/04/14/BUUCTF刷题记录/">BUUCTF刷题记录</a>
+            <span class="archive-post-date">04/14</span><a class="archive-post-title" href="/2020/04/14/HITCON-Training-Writeup/">HITCON-Training-Writeup</a>
         </li>
     
     
@@ -1208,12 +1361,12 @@ count这个题是最简单的一个，一个ARM pwn的入门漏洞点在这个�
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/sqli-labs/">sqli-labs 通关详解</a>
+            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/python下多核/">python下多核，单核CPU对于并行，并发执行效率的对比</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/python下多核/">python下多核，单核CPU对于并行，并发执行效率的对比</a>
+            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/sqli-labs/">sqli-labs 通关详解</a>
         </li>
     
     
@@ -1226,19 +1379,21 @@ count这个题是最简单的一个，一个ARM pwn的入门漏洞点在这个�
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
+        <span class="sidebar-tag-name" data-tags="ACM,数论"><span class="iconfont-archer">&#xe606;</span>ACM,数论</span>
+    
         <span class="sidebar-tag-name" data-tags="pwn"><span class="iconfont-archer">&#xe606;</span>pwn</span>
     
         <span class="sidebar-tag-name" data-tags="逆向,CTF"><span class="iconfont-archer">&#xe606;</span>逆向,CTF</span>
     
-        <span class="sidebar-tag-name" data-tags="ACM,数论"><span class="iconfont-archer">&#xe606;</span>ACM,数论</span>
-    
         <span class="sidebar-tag-name" data-tags="ctf,web,编码"><span class="iconfont-archer">&#xe606;</span>ctf,web,编码</span>
-    
-        <span class="sidebar-tag-name" data-tags="Linux,LAMP"><span class="iconfont-archer">&#xe606;</span>Linux,LAMP</span>
     
         <span class="sidebar-tag-name" data-tags="防火墙,iptables"><span class="iconfont-archer">&#xe606;</span>防火墙,iptables</span>
     
+        <span class="sidebar-tag-name" data-tags="Linux,LAMP"><span class="iconfont-archer">&#xe606;</span>Linux,LAMP</span>
+    
         <span class="sidebar-tag-name" data-tags="powerpc,汇编"><span class="iconfont-archer">&#xe606;</span>powerpc,汇编</span>
+    
+        <span class="sidebar-tag-name" data-tags="Rust,vscode,mac"><span class="iconfont-archer">&#xe606;</span>Rust,vscode,mac</span>
     
         <span class="sidebar-tag-name" data-tags="IDA,OllyDB"><span class="iconfont-archer">&#xe606;</span>IDA,OllyDB</span>
     
@@ -1246,21 +1401,21 @@ count这个题是最简单的一个，一个ARM pwn的入门漏洞点在这个�
     
         <span class="sidebar-tag-name" data-tags="MSF,免杀"><span class="iconfont-archer">&#xe606;</span>MSF,免杀</span>
     
-        <span class="sidebar-tag-name" data-tags="动态规划(DP)"><span class="iconfont-archer">&#xe606;</span>动态规划(DP)</span>
-    
         <span class="sidebar-tag-name" data-tags="信息收集,社会工程学"><span class="iconfont-archer">&#xe606;</span>信息收集,社会工程学</span>
     
-        <span class="sidebar-tag-name" data-tags="PWN,BROP,栈溢出"><span class="iconfont-archer">&#xe606;</span>PWN,BROP,栈溢出</span>
+        <span class="sidebar-tag-name" data-tags="动态规划(DP)"><span class="iconfont-archer">&#xe606;</span>动态规划(DP)</span>
     
         <span class="sidebar-tag-name" data-tags="花指令,静态调试,Movfuscator"><span class="iconfont-archer">&#xe606;</span>花指令,静态调试,Movfuscator</span>
     
-        <span class="sidebar-tag-name" data-tags="ACM,树状数组"><span class="iconfont-archer">&#xe606;</span>ACM,树状数组</span>
-    
         <span class="sidebar-tag-name" data-tags="XCTF,逆向"><span class="iconfont-archer">&#xe606;</span>XCTF,逆向</span>
     
-        <span class="sidebar-tag-name" data-tags="工具,python,Netcat"><span class="iconfont-archer">&#xe606;</span>工具,python,Netcat</span>
+        <span class="sidebar-tag-name" data-tags="PWN,BROP,栈溢出"><span class="iconfont-archer">&#xe606;</span>PWN,BROP,栈溢出</span>
+    
+        <span class="sidebar-tag-name" data-tags="ACM,树状数组"><span class="iconfont-archer">&#xe606;</span>ACM,树状数组</span>
     
         <span class="sidebar-tag-name" data-tags="看雪,KCTF,逆向,PWN"><span class="iconfont-archer">&#xe606;</span>看雪,KCTF,逆向,PWN</span>
+    
+        <span class="sidebar-tag-name" data-tags="工具,python,Netcat"><span class="iconfont-archer">&#xe606;</span>工具,python,Netcat</span>
     
         <span class="sidebar-tag-name" data-tags="工具,python,proxy"><span class="iconfont-archer">&#xe606;</span>工具,python,proxy</span>
     
@@ -1268,9 +1423,11 @@ count这个题是最简单的一个，一个ARM pwn的入门漏洞点在这个�
     
         <span class="sidebar-tag-name" data-tags="CCProxy,栈溢出,pwn"><span class="iconfont-archer">&#xe606;</span>CCProxy,栈溢出,pwn</span>
     
-        <span class="sidebar-tag-name" data-tags="unlink,heap,pwn,Android"><span class="iconfont-archer">&#xe606;</span>unlink,heap,pwn,Android</span>
+        <span class="sidebar-tag-name" data-tags="arm,pwn"><span class="iconfont-archer">&#xe606;</span>arm,pwn</span>
     
         <span class="sidebar-tag-name" data-tags="Heap,overflow,pwn"><span class="iconfont-archer">&#xe606;</span>Heap,overflow,pwn</span>
+    
+        <span class="sidebar-tag-name" data-tags="unlink,heap,pwn,Android"><span class="iconfont-archer">&#xe606;</span>unlink,heap,pwn,Android</span>
     
         <span class="sidebar-tag-name" data-tags="python,多线程"><span class="iconfont-archer">&#xe606;</span>python,多线程</span>
     
@@ -1280,9 +1437,9 @@ count这个题是最简单的一个，一个ARM pwn的入门漏洞点在这个�
     
         <span class="sidebar-tag-name" data-tags="工具,python,arp_poison"><span class="iconfont-archer">&#xe606;</span>工具,python,arp_poison</span>
     
-        <span class="sidebar-tag-name" data-tags="ctf,web,sql注入"><span class="iconfont-archer">&#xe606;</span>ctf,web,sql注入</span>
-    
         <span class="sidebar-tag-name" data-tags="unlink,heap,pwn"><span class="iconfont-archer">&#xe606;</span>unlink,heap,pwn</span>
+    
+        <span class="sidebar-tag-name" data-tags="ctf,web,sql注入"><span class="iconfont-archer">&#xe606;</span>ctf,web,sql注入</span>
     
         <span class="sidebar-tag-name" data-tags="pwn,Format String Vulnerability"><span class="iconfont-archer">&#xe606;</span>pwn,Format String Vulnerability</span>
     
@@ -1327,15 +1484,17 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
+        <span class="sidebar-category-name" data-categories="ACM"><span class="iconfont-archer">&#xe60a;</span>ACM</span>
+    
         <span class="sidebar-category-name" data-categories="Pwn"><span class="iconfont-archer">&#xe60a;</span>Pwn</span>
     
         <span class="sidebar-category-name" data-categories="逆向"><span class="iconfont-archer">&#xe60a;</span>逆向</span>
     
-        <span class="sidebar-category-name" data-categories="ACM"><span class="iconfont-archer">&#xe60a;</span>ACM</span>
-    
         <span class="sidebar-category-name" data-categories="CTFweb"><span class="iconfont-archer">&#xe60a;</span>CTFweb</span>
     
         <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
+    
+        <span class="sidebar-category-name" data-categories="Rust"><span class="iconfont-archer">&#xe60a;</span>Rust</span>
     
         <span class="sidebar-category-name" data-categories="内网渗透"><span class="iconfont-archer">&#xe60a;</span>内网渗透</span>
     

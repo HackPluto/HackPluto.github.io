@@ -359,6 +359,133 @@ height:50vh;
     
     
     <article class="index-post">
+        <a class="abstract-title" href="/2020/05/07/Rust学习笔记/">
+            
+                <span>Rust学习笔记</span>
+        </a>
+        <div class="abstract-content">
+            最近了解到一个新的语言，Rust，据说这个语言很安全并且效率很高堪称系统级，所以就学习下这个语言，看看这个语言有哪些安全性问题。
+环境配置我的环境是基于macOS以及vscode，配置可以调试的rust环境我参考的链接是这个 https://blog.cyplo.net/posts/2017/11/rust-vscode-mac/中文的教程真的坑，我真的醉了，一个抄一个，不配置VScode环境变量就开始调试。。。。。配置好后，就可以按F5调试
+https://cr0wn.uk/2019/writeup-gctf19quals-sandstone/https://ctftime.org/w...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/05/07</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="Rust,vscode,mac">Rust,vscode,mac</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2020/05/01/CTFshow-WriteUp/">
+            
+                <span>CTFshow WriteUp</span>
+        </a>
+        <div class="abstract-content">
+            pwn-签到123456789101112131415from pwn import *from LibcSearcher import *context.log_level = "debug"context.arch = "amd64"#p = process("./pwn")p = remote("124.156.121.112",28056)elf = ELF("./pwn")pop = 0x00000000004006d3sh = 0x0000000000601040pay = "a"*0x20 + p64(0) + p64(pop) + p64(sh) + p64(elf.pl...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/05/01</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="pwn">pwn</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2020/04/27/NPUCTF2020-pwn-WriteUp/">
+            
+                <span>NPUCTF2020 pwn WriteUp</span>
+        </a>
+        <div class="abstract-content">
+            内核题是之前从来没有遇到过的。。。一直卡着，最后只出了3个pwn,现在趁着网上的WP好好学学这两个内核题
+format_level21234567$ checksec npuctf_2020_level2 [*] '/home/pluto/\xe6\xa1\x8c\xe9\x9d\xa2/pwn/npuctf_2020_level2'    Arch:     amd64-64-little    RELRO:    Full RELRO    Stack:    No canary found    NX:       NX enabled    PIE:      PIE enabl...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/27</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="pwn">pwn</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2020/04/26/ARM-pwn入门/">
+            
+                <span>ARM pwn入门</span>
+        </a>
+        <div class="abstract-content">
+            ARM PWN环境搭建(基于Ubuntu18.04)
+安装 git，gdb 和 gdb-multiarch
+12$ sudo apt-get update$ sudo apt-get install git gdb gdb-multiarch
+
+安装qemu
+12$ sudo apt-get install qemu-user$ sudo apt-get install qemu-use-binfmt qemu-user-binfmt:i386
+
+安装共享库
+123sudo apt install libc6-arm64-crosssudo apt install libc6-armel...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/26</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="arm,pwn">arm,pwn</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href="/2020/04/23/2020-i-春秋-虎符杯-pwn-题解writeup/">
             
                 <span>2020 i-春秋 虎符杯 pwn 题解writeup</span>
@@ -545,156 +672,10 @@ PowerPC（英语：Performance Optimization With Enhanced RISC – Performance C
         </div>
     </article>
     
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/11/06/Linux堆溢出漏洞--off-by-one/">
-            
-                <span>Linux堆溢出漏洞--off-by-one</span>
-        </a>
-        <div class="abstract-content">
-            how2heap
-how2heap这是由 shellphish 团队创建的一个仓库，是用来学习堆利用技术广为周知的地方。 且主要针对 glibc。我在这里先放几个网上找的学习笔记，日后我再做以进一步总结。https://zoepla.github.io/2018/05/how2heap%E7%B3%BB%E5%88%97(%E5%9F%BA%E7%A1%80%E7%AF%87)/https://xz.aliyun.com/t/2582http://1nv0k3r.me/2019/02/26/how2heap-%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/htt...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/11/06</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="Heap,overflow,pwn">Heap,overflow,pwn</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/11/01/CCProxy栈溢出漏洞分析及利用/">
-            
-                <span>CCProxy栈溢出漏洞分析及利用</span>
-        </a>
-        <div class="abstract-content">
-            实验环境
-分析机：winXP SP3（吾爱破解版）IP：172.20.10.3
-
-漏洞分析介绍CCProxy
-CCProxy因其设 置简单和使用方便 等特点，成为国内 最受欢迎的代理服 务器软件。CCProxy不但支 持常见的HTTP和 SOCKS代理，而且还 支持FTP和Telnet这 类不常用的协议及 其它协议。
-
-
-
-
-邮件：邮件代理服务，如果服务器上已经安装了邮件服务器，那么请取消该选项。
-DNS：域名解析服务，如果服务器上已经另行配置了DNS服务器，那么请取消该选项，如果启用该选项，那么请确保在客户端的网络设置中将DNS地址设置成CCProxy服务器的地址。
-网页缓存：对应上网...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/11/01</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="CCProxy,栈溢出,pwn">CCProxy,栈溢出,pwn</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/10/28/DirtyCow漏洞复现及原理分析/">
-            
-                <span>DirtyCow漏洞复现及原理分析</span>
-        </a>
-        <div class="abstract-content">
-            基本概括
-漏洞编号：CVE-2016-5195漏洞名称：脏牛（Dirty COW）漏洞危害：低权限用户利用该漏洞技术可以在全版本Linux系统上实现本地提权影响范围：Linux内核&gt;=2.6.22（2007年发行）开始就受影响了，直到2016年10月18日才修复
-
-
-脏牛漏洞是竞争危害中的一个案例。自从2007年开始它就已经存在于Linux之中，但直到2016年10月份才被发现和利用。这一个漏洞几乎影响所有的以Linux为基础发展起来的操作系统，包括安卓，因此产生了严重的后果：攻击者可以通过该漏洞获得ROOT权限。该漏洞存在于Linux内核的Copy-On-Write代码中。通过该...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/10/28</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="Linux,DirtyCow">Linux,DirtyCow</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/10/28/树状数组/">
-            
-                <span>树状数组</span>
-        </a>
-        <div class="abstract-content">
-            引入
-这里通过一个简单的题目展开介绍，先输入一个长度为n的数组，然后我们有如下两种操作：
-
-输入一个数m，输出数组中下标1~m的前缀和
-对某个指定下标的数进行值的修改多次执行上述两种操作
-
-
-
-普通方法对于一个的数组，如果需要求1~m的前缀和我们可以将其从下标1开始对m个数进行求和，对于n次操作，时间复杂度是O(n^2)，12for i 1 -&gt; msum += num[i]
-
-
-对于值的修改，我们可以直接通过下标找到要修改的数，n次操作时间复杂度为O(n)，在数组n开得比较大的时候，求前缀和的效率显得低了
-
-
-优化的方式：初始我们用一个数组A的保存每个位置的初始值，然后用一个辅助...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/10/28</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="ACM,树状数组">ACM,树状数组</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
     <!-- paginator  -->
     
     <nav class="page-nav">
-        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">NEXT &#62;</a>
+        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">NEXT &#62;</a>
     </nav>
     
 </main>
@@ -1423,9 +1404,83 @@ DNS：域名解析服务，如果服务器上已经另行配置了DNS服务器�
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 38
+        Total : 42
         </div>
         <!-- search  -->
         
@@ -1441,6 +1496,26 @@ DNS：域名解析服务，如果服务器上已经另行配置了DNS服务器�
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">05/07</span><a class="archive-post-title" href="/2020/05/07/Rust学习笔记/">Rust学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/01</span><a class="archive-post-title" href="/2020/05/01/CTFshow-WriteUp/">CTFshow WriteUp</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/27</span><a class="archive-post-title" href="/2020/04/27/NPUCTF2020-pwn-WriteUp/">NPUCTF2020 pwn WriteUp</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/26</span><a class="archive-post-title" href="/2020/04/26/ARM-pwn入门/">ARM pwn入门</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">04/23</span><a class="archive-post-title" href="/2020/04/23/2020-i-春秋-虎符杯-pwn-题解writeup/">2020 i-春秋 虎符杯 pwn 题解writeup</a>
         </li>
     
@@ -1451,12 +1526,12 @@ DNS：域名解析服务，如果服务器上已经另行配置了DNS服务器�
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/14</span><a class="archive-post-title" href="/2020/04/14/HITCON-Training-Writeup/">HITCON-Training-Writeup</a>
+            <span class="archive-post-date">04/14</span><a class="archive-post-title" href="/2020/04/14/BUUCTF刷题记录/">BUUCTF刷题记录</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/14</span><a class="archive-post-title" href="/2020/04/14/BUUCTF刷题记录/">BUUCTF刷题记录</a>
+            <span class="archive-post-date">04/14</span><a class="archive-post-title" href="/2020/04/14/HITCON-Training-Writeup/">HITCON-Training-Writeup</a>
         </li>
     
     
@@ -1625,12 +1700,12 @@ DNS：域名解析服务，如果服务器上已经另行配置了DNS服务器�
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/sqli-labs/">sqli-labs 通关详解</a>
+            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/python下多核/">python下多核，单核CPU对于并行，并发执行效率的对比</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/python下多核/">python下多核，单核CPU对于并行，并发执行效率的对比</a>
+            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/sqli-labs/">sqli-labs 通关详解</a>
         </li>
     
     
@@ -1643,19 +1718,21 @@ DNS：域名解析服务，如果服务器上已经另行配置了DNS服务器�
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
+        <span class="sidebar-tag-name" data-tags="ACM,数论"><span class="iconfont-archer">&#xe606;</span>ACM,数论</span>
+    
         <span class="sidebar-tag-name" data-tags="pwn"><span class="iconfont-archer">&#xe606;</span>pwn</span>
     
         <span class="sidebar-tag-name" data-tags="逆向,CTF"><span class="iconfont-archer">&#xe606;</span>逆向,CTF</span>
     
-        <span class="sidebar-tag-name" data-tags="ACM,数论"><span class="iconfont-archer">&#xe606;</span>ACM,数论</span>
-    
         <span class="sidebar-tag-name" data-tags="ctf,web,编码"><span class="iconfont-archer">&#xe606;</span>ctf,web,编码</span>
-    
-        <span class="sidebar-tag-name" data-tags="Linux,LAMP"><span class="iconfont-archer">&#xe606;</span>Linux,LAMP</span>
     
         <span class="sidebar-tag-name" data-tags="防火墙,iptables"><span class="iconfont-archer">&#xe606;</span>防火墙,iptables</span>
     
+        <span class="sidebar-tag-name" data-tags="Linux,LAMP"><span class="iconfont-archer">&#xe606;</span>Linux,LAMP</span>
+    
         <span class="sidebar-tag-name" data-tags="powerpc,汇编"><span class="iconfont-archer">&#xe606;</span>powerpc,汇编</span>
+    
+        <span class="sidebar-tag-name" data-tags="Rust,vscode,mac"><span class="iconfont-archer">&#xe606;</span>Rust,vscode,mac</span>
     
         <span class="sidebar-tag-name" data-tags="IDA,OllyDB"><span class="iconfont-archer">&#xe606;</span>IDA,OllyDB</span>
     
@@ -1663,21 +1740,21 @@ DNS：域名解析服务，如果服务器上已经另行配置了DNS服务器�
     
         <span class="sidebar-tag-name" data-tags="MSF,免杀"><span class="iconfont-archer">&#xe606;</span>MSF,免杀</span>
     
-        <span class="sidebar-tag-name" data-tags="动态规划(DP)"><span class="iconfont-archer">&#xe606;</span>动态规划(DP)</span>
-    
         <span class="sidebar-tag-name" data-tags="信息收集,社会工程学"><span class="iconfont-archer">&#xe606;</span>信息收集,社会工程学</span>
     
-        <span class="sidebar-tag-name" data-tags="PWN,BROP,栈溢出"><span class="iconfont-archer">&#xe606;</span>PWN,BROP,栈溢出</span>
+        <span class="sidebar-tag-name" data-tags="动态规划(DP)"><span class="iconfont-archer">&#xe606;</span>动态规划(DP)</span>
     
         <span class="sidebar-tag-name" data-tags="花指令,静态调试,Movfuscator"><span class="iconfont-archer">&#xe606;</span>花指令,静态调试,Movfuscator</span>
     
-        <span class="sidebar-tag-name" data-tags="ACM,树状数组"><span class="iconfont-archer">&#xe606;</span>ACM,树状数组</span>
-    
         <span class="sidebar-tag-name" data-tags="XCTF,逆向"><span class="iconfont-archer">&#xe606;</span>XCTF,逆向</span>
     
-        <span class="sidebar-tag-name" data-tags="工具,python,Netcat"><span class="iconfont-archer">&#xe606;</span>工具,python,Netcat</span>
+        <span class="sidebar-tag-name" data-tags="PWN,BROP,栈溢出"><span class="iconfont-archer">&#xe606;</span>PWN,BROP,栈溢出</span>
+    
+        <span class="sidebar-tag-name" data-tags="ACM,树状数组"><span class="iconfont-archer">&#xe606;</span>ACM,树状数组</span>
     
         <span class="sidebar-tag-name" data-tags="看雪,KCTF,逆向,PWN"><span class="iconfont-archer">&#xe606;</span>看雪,KCTF,逆向,PWN</span>
+    
+        <span class="sidebar-tag-name" data-tags="工具,python,Netcat"><span class="iconfont-archer">&#xe606;</span>工具,python,Netcat</span>
     
         <span class="sidebar-tag-name" data-tags="工具,python,proxy"><span class="iconfont-archer">&#xe606;</span>工具,python,proxy</span>
     
@@ -1685,9 +1762,11 @@ DNS：域名解析服务，如果服务器上已经另行配置了DNS服务器�
     
         <span class="sidebar-tag-name" data-tags="CCProxy,栈溢出,pwn"><span class="iconfont-archer">&#xe606;</span>CCProxy,栈溢出,pwn</span>
     
-        <span class="sidebar-tag-name" data-tags="unlink,heap,pwn,Android"><span class="iconfont-archer">&#xe606;</span>unlink,heap,pwn,Android</span>
+        <span class="sidebar-tag-name" data-tags="arm,pwn"><span class="iconfont-archer">&#xe606;</span>arm,pwn</span>
     
         <span class="sidebar-tag-name" data-tags="Heap,overflow,pwn"><span class="iconfont-archer">&#xe606;</span>Heap,overflow,pwn</span>
+    
+        <span class="sidebar-tag-name" data-tags="unlink,heap,pwn,Android"><span class="iconfont-archer">&#xe606;</span>unlink,heap,pwn,Android</span>
     
         <span class="sidebar-tag-name" data-tags="python,多线程"><span class="iconfont-archer">&#xe606;</span>python,多线程</span>
     
@@ -1697,9 +1776,9 @@ DNS：域名解析服务，如果服务器上已经另行配置了DNS服务器�
     
         <span class="sidebar-tag-name" data-tags="工具,python,arp_poison"><span class="iconfont-archer">&#xe606;</span>工具,python,arp_poison</span>
     
-        <span class="sidebar-tag-name" data-tags="ctf,web,sql注入"><span class="iconfont-archer">&#xe606;</span>ctf,web,sql注入</span>
-    
         <span class="sidebar-tag-name" data-tags="unlink,heap,pwn"><span class="iconfont-archer">&#xe606;</span>unlink,heap,pwn</span>
+    
+        <span class="sidebar-tag-name" data-tags="ctf,web,sql注入"><span class="iconfont-archer">&#xe606;</span>ctf,web,sql注入</span>
     
         <span class="sidebar-tag-name" data-tags="pwn,Format String Vulnerability"><span class="iconfont-archer">&#xe606;</span>pwn,Format String Vulnerability</span>
     
@@ -1744,15 +1823,17 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
+        <span class="sidebar-category-name" data-categories="ACM"><span class="iconfont-archer">&#xe60a;</span>ACM</span>
+    
         <span class="sidebar-category-name" data-categories="Pwn"><span class="iconfont-archer">&#xe60a;</span>Pwn</span>
     
         <span class="sidebar-category-name" data-categories="逆向"><span class="iconfont-archer">&#xe60a;</span>逆向</span>
     
-        <span class="sidebar-category-name" data-categories="ACM"><span class="iconfont-archer">&#xe60a;</span>ACM</span>
-    
         <span class="sidebar-category-name" data-categories="CTFweb"><span class="iconfont-archer">&#xe60a;</span>CTFweb</span>
     
         <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
+    
+        <span class="sidebar-category-name" data-categories="Rust"><span class="iconfont-archer">&#xe60a;</span>Rust</span>
     
         <span class="sidebar-category-name" data-categories="内网渗透"><span class="iconfont-archer">&#xe60a;</span>内网渗透</span>
     

