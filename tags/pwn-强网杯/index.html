@@ -346,26 +346,23 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href="/2020/07/27/基于机器学习的恶意流量监测及特征提取/">
+        <a class="abstract-title" href="/2020/08/23/2020强网杯线上赛pwn题解/">
             
-                <span>基于机器学习的TLS恶意流量监测</span>
+                <span>2020强网杯线上赛pwn题解</span>
         </a>
         <div class="abstract-content">
-            恶意流量监测及特征提取环境配置实验环境：Ubuntu 18.04 64位
-tshark123sudo add-apt-repository ppa:wireshark-dev/stablesudo apt-get updatesudo apt-get install tshark
-bro/zeek网上有的教程说用apt直接装，经过验证这样的方法无法使用bro-cut，所以我使用源码编译的方式参考链接
-Joy12345sudo apt-get install build-essential libssl-dev libpcap-dev libcurl4-openssl-devgit clo...
+            123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960#coding=utf8from pwn import *context.log_level = "debug"p = remote("123.56.170.202",12124)#p = process("Siri")lib = ELF("libc.so.6")def fmtstr(payload):	p.recvuntil("&gt;&gt;&gt; ")	p.se...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/07/27</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/23</span>
             </div>
             <!-- tags  -->
             
             <div class="abstract-tags">
     
-        <a class="post-tag" href="javascript:void(0);" data-tags="机器学习,TLS,流量监测">机器学习,TLS,流量监测</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags="pwn,强网杯">pwn,强网杯</a>
     
 </div>
             
