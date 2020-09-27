@@ -346,31 +346,24 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href="/2019/08/06/Traceme动态分析与静态分析/">
+        <a class="abstract-title" href="/2020/01/03/PowerPC汇编学习/">
             
-                <span>Traceme动态分析与静态分析</span>
+                <span>PowerPC汇编学习</span>
         </a>
         <div class="abstract-content">
-            对Traceme.exe进行分析，我用两种方法分析，动态分析和静态分析
-静态分析首先进入winmain入口函数，然后进入DialogFunc函数，这个函数应该就是这个程序的主体了。
-
-将两个strcpy的内容转成字符串，可以得出要输入的字符要大于长度4。
-
-现在要找出程序对于输入的用户名和序列号是如何处理的，1v5 = GetDlgItemTextA(hWnd, 110, &amp;String, 81);
-找到了这句话，看到GetDlgItemTextA这个函数就知道他是在获得对话框的内容向数组里存东西，所以可以判断这两个函数是在存储用户名和序列号
-
-进入sub_401340这个函数就...
+            什么是 PowerPC
+PowerPC（英语：Performance Optimization With Enhanced RISC – Performance Computing，有时简称PPC）是一种精简指令集（RISC）架构的中央处理器（CPU），其基本的设计源自IBM的POWER（Performance Optimized With Enhanced RISC）架构。POWER是1991年，Apple、IBM、Motorola组成的AIM联盟所发展出的微处理器架构。PowerPC是整个AIM联盟平台的一部分，并且是到目前为止唯一的一部分。但苹果电脑自2005年起，将旗下电脑产品转...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/08/06</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/01/03</span>
             </div>
             <!-- tags  -->
             
             <div class="abstract-tags">
     
-        <a class="post-tag" href="javascript:void(0);" data-tags="IDA,OllyDB">IDA,OllyDB</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags="powerpc,汇编">powerpc,汇编</a>
     
 </div>
             
@@ -378,6 +371,10 @@
     </article>
     
     <!-- paginator  -->
+    
+    <nav class="page-nav">
+        <a class="extend prev" rel="prev" href="/archives/2020/page/2/">&#60; PREV</a><a class="page-number" href="/archives/2020/">1</a><a class="page-number" href="/archives/2020/page/2/">2</a><span class="page-number current">3</span>
+    </nav>
     
 </main>
             <!-- profile -->

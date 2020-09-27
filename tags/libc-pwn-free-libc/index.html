@@ -346,31 +346,25 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href="/2019/08/06/Traceme动态分析与静态分析/">
+        <a class="abstract-title" href="/2020/09/27/使用free-libc-任意切换程序libc版本/">
             
-                <span>Traceme动态分析与静态分析</span>
+                <span>使用free-libc,任意切换程序libc版本</span>
         </a>
         <div class="abstract-content">
-            对Traceme.exe进行分析，我用两种方法分析，动态分析和静态分析
-静态分析首先进入winmain入口函数，然后进入DialogFunc函数，这个函数应该就是这个程序的主体了。
-
-将两个strcpy的内容转成字符串，可以得出要输入的字符要大于长度4。
-
-现在要找出程序对于输入的用户名和序列号是如何处理的，1v5 = GetDlgItemTextA(hWnd, 110, &amp;String, 81);
-找到了这句话，看到GetDlgItemTextA这个函数就知道他是在获得对话框的内容向数组里存东西，所以可以判断这两个函数是在存储用户名和序列号
-
-进入sub_401340这个函数就...
+            free-libcfree-libc是致力于在一个ubuntu环境下实现做各个ubuntu版本环境题目的项目。安装完成后，你可以使用clibc(change libc)指令指定你的程序加载什么样版本的libc，使程序在你的ubuntu环境下以高版本或者低版本的libc库去运行。在做一些ctf pwn的题目时就会很方便，做题的时候就不需要频繁切换虚拟机。
+安装1231，git clone https://github.com/dsyzy/free-libc.git2，cd free-libc3，sudo sh ./install
+gfree-libcgfree-libc是基于free-li...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/08/06</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/09/27</span>
             </div>
             <!-- tags  -->
             
             <div class="abstract-tags">
     
-        <a class="post-tag" href="javascript:void(0);" data-tags="IDA,OllyDB">IDA,OllyDB</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags="libc,pwn,free-libc">libc,pwn,free-libc</a>
     
 </div>
             

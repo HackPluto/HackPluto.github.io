@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>HackPluto&#39;s Blog</title>
+    <title>使用free-libc,任意切换程序libc版本 · HackPluto&#39;s Blog</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -203,12 +203,23 @@
 </head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/">HackPluto&#39;s Blog</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">使用free-libc,任意切换程序libc版本</a>
+            </div>
+    </div>
     
     <a class="home-link" href="/">HackPluto's Blog</a>
 </header>
@@ -220,24 +231,74 @@
 
 
 
+
+height:50vh;
 ">
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/2.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+            使用free-libc,任意切换程序libc版本
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class="post-intro-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="libc,pwn,free-libc">libc,pwn,free-libc</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">410</span>阅读时长: <span class="post-count reading-time">1 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2020/09/27</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -338,47 +399,62 @@
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/08/06/Traceme动态分析与静态分析/">
-            
-                <span>Traceme动态分析与静态分析</span>
-        </a>
-        <div class="abstract-content">
-            对Traceme.exe进行分析，我用两种方法分析，动态分析和静态分析
-静态分析首先进入winmain入口函数，然后进入DialogFunc函数，这个函数应该就是这个程序的主体了。
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="free-libc"><a href="#free-libc" class="headerlink" title="free-libc"></a>free-libc</h1><p>free-libc是致力于在一个ubuntu环境下实现做各个ubuntu版本环境题目的项目。安装完成后，你可以使用clibc(change libc)指令指定你的程序加载什么样版本的libc，使程序在你的ubuntu环境下以高版本或者低版本的libc库去运行。<br>在做一些ctf pwn的题目时就会很方便，做题的时候就不需要频繁切换虚拟机。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1，git <span class="built_in">clone</span> https://github.com/dsyzy/free-libc.git</span><br><span class="line">2，<span class="built_in">cd</span> free-libc</span><br><span class="line">3，sudo sh ./install</span><br></pre></td></tr></table></figure>
+<h1 id="gfree-libc"><a href="#gfree-libc" class="headerlink" title="gfree-libc"></a>gfree-libc</h1><p>gfree-libc是基于free-libc改写的能使你以libc源码级别调试能力的项目。安装完成后，你可以使用gclibc指令指定你的程序加载什么样版本的libc源码，这和clibc命令使用方法是一样的。区别于free-libc的是，free-libc不具备源码级调试能力，所以他很轻量化，而gfree-libc具有源码级调试能力，所以需要你使用build命令在本地添加你想要进行源码级调试的libc版本库。</p>
+<p>​由于是本地编译，所以build命令执行时间可能会很长，大约二十分钟左右。</p>
+<h2 id="安装-1"><a href="#安装-1" class="headerlink" title="安装"></a>安装</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1，git <span class="built_in">clone</span> git@github.com:dsyzy/gfree-libc.git</span><br><span class="line">2，<span class="built_in">cd</span> gfree-libc</span><br><span class="line">3，sudo sh ./install.sh</span><br></pre></td></tr></table></figure>
+<p>添加想要源码级别调试的libc版本</p>
+<p>build libc版本<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">build 2.27</span><br></pre></td></tr></table></figure></p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="加载指定libc"><a href="#加载指定libc" class="headerlink" title="加载指定libc"></a>加载指定libc</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gclibc 程序名 libc版本</span><br></pre></td></tr></table></figure>
+<p>使用前<br><img src="https://ppplutoboke.oss-cn-beijing.aliyuncs.com/uPic/3u9MCG.png" alt="3u9MCG"></p>
+<p>使用后</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ gclibc pwn1 2.26                                                         </span><br><span class="line">debug:<span class="built_in">set</span> debug-file-directory /glibc/<span class="built_in">source</span>/glibc-2.26</span><br><span class="line">success!!!</span><br></pre></td></tr></table></figure>
+<p><img src="https://ppplutoboke.oss-cn-beijing.aliyuncs.com/uPic/ryaNgk.png" alt="ryaNgk"></p>
+<h3 id="加载指定文件"><a href="#加载指定文件" class="headerlink" title="加载指定文件"></a>加载指定文件</h3><p>如果需要指定libc，如libc.so,前提你已经知道libc版本</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ gclibc pwn1 2.26 libc-2.26.so</span><br><span class="line">debug:<span class="built_in">set</span> debug-file-directory /glibc/<span class="built_in">source</span>/glibc-2.26</span><br><span class="line">success!!!</span><br></pre></td></tr></table></figure>
 
-将两个strcpy的内容转成字符串，可以得出要输入的字符要大于长度4。
-
-现在要找出程序对于输入的用户名和序列号是如何处理的，1v5 = GetDlgItemTextA(hWnd, 110, &amp;String, 81);
-找到了这句话，看到GetDlgItemTextA这个函数就知道他是在获得对话框的内容向数组里存东西，所以可以判断这两个函数是在存储用户名和序列号
-
-进入sub_401340这个函数就...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/08/06</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="IDA,OllyDB">IDA,OllyDB</a>
-    
-</div>
-            
-        </div>
     </article>
+    <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>原文作者：<a href="http://yoursite.com">HackPluto</a>
+            </p><p>原文链接：<a href="http://yoursite.com/2020/09/27/使用free-libc-任意切换程序libc版本/">http://yoursite.com/2020/09/27/使用free-libc-任意切换程序libc版本/</a>
+            </p><p>发表日期：<a href="http://yoursite.com/2020/09/27/使用free-libc-任意切换程序libc版本/">September 27th 2020, 11:30:53 pm</a>
+            </p><p>更新日期：<a href="http://yoursite.com/2020/09/27/使用free-libc-任意切换程序libc版本/">September 27th 2020, 11:53:57 pm</a>
+            </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
+        </div>
     
     <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/2020/09/27/使用firmware-mod-kit修改路由器固件/" title="使用firmware-mod-kit修改路由器固件">
+                    <div class="prevTitle">使用firmware-mod-kit修改路由器固件</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
+    
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -458,6 +534,24 @@
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#free-libc"><span class="toc-number">1.</span> <span class="toc-text">free-libc</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-number">1.1.</span> <span class="toc-text">安装</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#gfree-libc"><span class="toc-number">2.</span> <span class="toc-text">gfree-libc</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装-1"><span class="toc-number">2.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用"><span class="toc-number">2.2.</span> <span class="toc-text">使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#加载指定libc"><span class="toc-number">2.2.1.</span> <span class="toc-text">加载指定libc</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#加载指定文件"><span class="toc-number">2.2.2.</span> <span class="toc-text">加载指定文件</span></a></li></ol></li></ol></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -1772,6 +1866,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
      
     </body>
 </html>
