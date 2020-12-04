@@ -346,6 +346,80 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href="/2020/08/14/CVE-2018-16116，CVE-2018-16117漏洞分析复现/">
+            
+                <span>SophosXG 防火墙:CVE-2018-16116，CVE-2018-16117漏洞分析复现</span>
+        </a>
+        <div class="abstract-content">
+            实验环境物理机：MacOS
+工具：VM，Firefox，JD-GUI，Burpsuite
+CVE-2018-16116漏洞介绍Sophos XG firewall是英国Sophos公司的一款下一代端点保护与企业级防火墙产品。Admin Portal是其中的一个管理门户。 Sophos XG firewall 17.0.8 MR-8版本中的Admin Portal的AccountStatus.jsp文件存在SQL注入漏洞。该漏洞源于基于数据库的应用缺少对外部输入SQL语句的验证。攻击者可利用该漏洞执行非法SQL命令。
+详情
+环境配置安装虚拟机首先是在Sophos官网下载虚拟机文件，下载前需...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/14</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="SQL注入,java,CVE-2018-16116,CVE-2018-16117">SQL注入,java,CVE-2018-16116,CVE-2018-16117</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2020/07/27/Wireshark分析TLS1-2通信过程/">
+            
+                <span>Wireshark分析TLS1.2通信过程</span>
+        </a>
+        <div class="abstract-content">
+            Wireshark分析TLS1.2通信过程本文主要记录一次HTTPS通信过程中的数据包，使用wireshark抓包，着重分析TLS协议数据包
+数据包地址
+数据包比较小
+先是TCP三次握手的过程，从目标端口是443可以看出这是一个HTTPS通信
+TLS协议TLS协议栈主要分为两层
+
+
+底层：TLS记录协议
+上层：TLS握手协议、TLS密码变化协议、TLS警告协议
+
+TLS记录协议:建立在可靠的传输协议(如TCP)之上，对上层协议进行封装，提供保密性和完整性。上层协议实现客户和服务器之间会话的建立、认证和密钥协商。
+TLS握手协议位于SSL记录协议之上
+用途：建立SSL会话和连接，协商协议版...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/07/27</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="wireshark,TLS">wireshark,TLS</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href="/2020/07/27/基于机器学习的恶意流量监测及特征提取/">
             
                 <span>基于机器学习的TLS恶意流量监测</span>
@@ -592,74 +666,6 @@ count这个题是最简单的一个，一个ARM pwn的入门漏洞点在这个�
             <div class="abstract-tags">
     
         <a class="post-tag" href="javascript:void(0);" data-tags="pwn">pwn</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2020/04/22/Linux下动态链接分析/">
-            
-                <span>Linux下动态链接完整流程分析</span>
-        </a>
-        <div class="abstract-content">
-            Linux下动态链接分析在CTF PWN中对于Linux底层的考察是很多的，而应用程序如何进行动态链接对于新手来说算是一个小考验，本篇文章主要记录Linux下动态链接的过程以及CTF中关于动态链接的注意点，还有Glibc版本不兼容的坑
-内核加载ELF我们都知道应用程序要从C语言代码变成机器可以直接执行的代码要经过编译链接的步骤。在链接中有两种方式，一种是静态链接，一种是动态链接。
-
-1.静态链接指的就是程序在链接的过程中，将需要用到的库文件的二进制代码拷贝到程序二进制文件的映像中。
-2.动态链接指的就是程序在链接的时候并不把库函数链接进程序的映像而是将库函数的映像一起交给用户，用户在运行...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/22</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="Linux,动态链接,GOT,PLT">Linux,动态链接,GOT,PLT</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2020/04/14/pwnable-kr-WriteUp/">
-            
-                <span>pwnable.kr WriteUp</span>
-        </a>
-        <div class="abstract-content">
-            在网上发现了一个pwn的题库，页面非常的可爱，所以就做了下，在这里记录下做题的过程。题目网址是：http://pwnable.kr/play.php页面是不是非常可爱
-Toddler’s Bottlefd首先是第一题，和文件描述符有关
-文件描述符Linux 系统中，把一切都看做是文件，当进程打开现有文件或创建新文件时，内核向进程返回一个文件描述符，文件描述符就是内核为了高效管理已被打开的文件所创建的索引，用来指向被打开的文件，所有执行I/O操作的系统调用都会通过文件描述符。
-特点
-每个文件描述符会与一个打开的文件相对应
-不同的文件描述符也可能指向同一个文件
-相同的文件可以被不同的进程打开...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/14</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="unlink,heap,pwn">unlink,heap,pwn</a>
     
 </div>
             
@@ -1636,45 +1642,9 @@ Toddler’s Bottlefd首先是第一题，和文件描述符有关
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 56
+        Total : 58
         </div>
         <!-- search  -->
         
@@ -1687,6 +1657,16 @@ Toddler’s Bottlefd首先是第一题，和文件描述符有关
     
     <div class="archive-year"> 2020 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/04</span><a class="archive-post-title" href="/2020/12/04/MBR病毒分析与逆向/">MBR病毒分析与逆向</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/17</span><a class="archive-post-title" href="/2020/10/17/麒麟-qiling-框架使用/">麒麟(qiling)框架使用</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -1785,7 +1765,7 @@ Toddler’s Bottlefd首先是第一题，和文件描述符有关
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/14</span><a class="archive-post-title" href="/2020/04/14/BUUCTF刷题记录/">BUUCTF刷题1-100记录</a>
+            <span class="archive-post-date">04/14</span><a class="archive-post-title" href="/2020/04/14/HITCON-Training-Writeup/">HITCON-Training-Writeup</a>
         </li>
     
     
@@ -1795,7 +1775,7 @@ Toddler’s Bottlefd首先是第一题，和文件描述符有关
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/14</span><a class="archive-post-title" href="/2020/04/14/HITCON-Training-Writeup/">HITCON-Training-Writeup</a>
+            <span class="archive-post-date">04/14</span><a class="archive-post-title" href="/2020/04/14/BUUCTF刷题记录/">BUUCTF刷题1-100记录</a>
         </li>
     
     
@@ -1929,12 +1909,12 @@ Toddler’s Bottlefd首先是第一题，和文件描述符有关
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2019/05/22/使用动态规划-DP-解决最大公共子串与最大公共子序列问题/">使用动态规划(DP)解决最大公共子串与最大公共子序列问题</a>
+            <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2019/05/22/素数个数求解与素数的判定/">素数个数求解与素数的判定</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2019/05/22/素数个数求解与素数的判定/">素数个数求解与素数的判定</a>
+            <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2019/05/22/使用动态规划-DP-解决最大公共子串与最大公共子序列问题/">使用动态规划(DP)解决最大公共子串与最大公共子序列问题</a>
         </li>
     
     
@@ -1984,51 +1964,61 @@ Toddler’s Bottlefd首先是第一题，和文件描述符有关
     
         <span class="sidebar-tag-name" data-tags="逆向,CTF"><span class="iconfont-archer">&#xe606;</span>逆向,CTF</span>
     
-        <span class="sidebar-tag-name" data-tags="pwn,强网杯"><span class="iconfont-archer">&#xe606;</span>pwn,强网杯</span>
+        <span class="sidebar-tag-name" data-tags="pwn"><span class="iconfont-archer">&#xe606;</span>pwn</span>
     
         <span class="sidebar-tag-name" data-tags="ACM,数论"><span class="iconfont-archer">&#xe606;</span>ACM,数论</span>
     
-        <span class="sidebar-tag-name" data-tags="ctf,web,编码"><span class="iconfont-archer">&#xe606;</span>ctf,web,编码</span>
+        <span class="sidebar-tag-name" data-tags="pwn,强网杯"><span class="iconfont-archer">&#xe606;</span>pwn,强网杯</span>
     
-        <span class="sidebar-tag-name" data-tags="pwn"><span class="iconfont-archer">&#xe606;</span>pwn</span>
+        <span class="sidebar-tag-name" data-tags="ctf,web,编码"><span class="iconfont-archer">&#xe606;</span>ctf,web,编码</span>
     
         <span class="sidebar-tag-name" data-tags="Linux,LAMP"><span class="iconfont-archer">&#xe606;</span>Linux,LAMP</span>
     
         <span class="sidebar-tag-name" data-tags="防火墙,iptables"><span class="iconfont-archer">&#xe606;</span>防火墙,iptables</span>
     
-        <span class="sidebar-tag-name" data-tags="路由器,pwn,栈溢出"><span class="iconfont-archer">&#xe606;</span>路由器,pwn,栈溢出</span>
+        <span class="sidebar-tag-name" data-tags="arm,pwn"><span class="iconfont-archer">&#xe606;</span>arm,pwn</span>
     
-        <span class="sidebar-tag-name" data-tags="powerpc,汇编"><span class="iconfont-archer">&#xe606;</span>powerpc,汇编</span>
+        <span class="sidebar-tag-name" data-tags="CCProxy,栈溢出,pwn"><span class="iconfont-archer">&#xe606;</span>CCProxy,栈溢出,pwn</span>
+    
+        <span class="sidebar-tag-name" data-tags="SQL注入,java,CVE-2018-16116,CVE-2018-16117"><span class="iconfont-archer">&#xe606;</span>SQL注入,java,CVE-2018-16116,CVE-2018-16117</span>
+    
+        <span class="sidebar-tag-name" data-tags="unlink,heap,pwn,Android"><span class="iconfont-archer">&#xe606;</span>unlink,heap,pwn,Android</span>
+    
+        <span class="sidebar-tag-name" data-tags="Heap,overflow,pwn"><span class="iconfont-archer">&#xe606;</span>Heap,overflow,pwn</span>
+    
+        <span class="sidebar-tag-name" data-tags="路由器,pwn,栈溢出"><span class="iconfont-archer">&#xe606;</span>路由器,pwn,栈溢出</span>
     
         <span class="sidebar-tag-name" data-tags="Rust,vscode,mac"><span class="iconfont-archer">&#xe606;</span>Rust,vscode,mac</span>
     
         <span class="sidebar-tag-name" data-tags="SSH,端口转发"><span class="iconfont-archer">&#xe606;</span>SSH,端口转发</span>
     
-        <span class="sidebar-tag-name" data-tags="wireshark,TLS"><span class="iconfont-archer">&#xe606;</span>wireshark,TLS</span>
+        <span class="sidebar-tag-name" data-tags="powerpc,汇编"><span class="iconfont-archer">&#xe606;</span>powerpc,汇编</span>
     
         <span class="sidebar-tag-name" data-tags="IDA,OllyDB"><span class="iconfont-archer">&#xe606;</span>IDA,OllyDB</span>
+    
+        <span class="sidebar-tag-name" data-tags="wireshark,TLS"><span class="iconfont-archer">&#xe606;</span>wireshark,TLS</span>
     
         <span class="sidebar-tag-name" data-tags="MSF,免杀"><span class="iconfont-archer">&#xe606;</span>MSF,免杀</span>
     
         <span class="sidebar-tag-name" data-tags="路由器,netgear,打包固件"><span class="iconfont-archer">&#xe606;</span>路由器,netgear,打包固件</span>
     
-        <span class="sidebar-tag-name" data-tags="信息收集,社会工程学"><span class="iconfont-archer">&#xe606;</span>信息收集,社会工程学</span>
-    
         <span class="sidebar-tag-name" data-tags="路由器,firmware-mod-kit,打包固件"><span class="iconfont-archer">&#xe606;</span>路由器,firmware-mod-kit,打包固件</span>
-    
-        <span class="sidebar-tag-name" data-tags="花指令,静态调试,Movfuscator"><span class="iconfont-archer">&#xe606;</span>花指令,静态调试,Movfuscator</span>
     
         <span class="sidebar-tag-name" data-tags="libc,pwn,free-libc"><span class="iconfont-archer">&#xe606;</span>libc,pwn,free-libc</span>
     
-        <span class="sidebar-tag-name" data-tags="动态规划(DP)"><span class="iconfont-archer">&#xe606;</span>动态规划(DP)</span>
+        <span class="sidebar-tag-name" data-tags="信息收集,社会工程学"><span class="iconfont-archer">&#xe606;</span>信息收集,社会工程学</span>
     
-        <span class="sidebar-tag-name" data-tags="PWN,BROP,栈溢出"><span class="iconfont-archer">&#xe606;</span>PWN,BROP,栈溢出</span>
+        <span class="sidebar-tag-name" data-tags="动态规划(DP)"><span class="iconfont-archer">&#xe606;</span>动态规划(DP)</span>
     
         <span class="sidebar-tag-name" data-tags="机器学习,TLS,流量监测"><span class="iconfont-archer">&#xe606;</span>机器学习,TLS,流量监测</span>
     
-        <span class="sidebar-tag-name" data-tags="XCTF,逆向"><span class="iconfont-archer">&#xe606;</span>XCTF,逆向</span>
+        <span class="sidebar-tag-name" data-tags="PWN,BROP,栈溢出"><span class="iconfont-archer">&#xe606;</span>PWN,BROP,栈溢出</span>
+    
+        <span class="sidebar-tag-name" data-tags="花指令,静态调试,Movfuscator"><span class="iconfont-archer">&#xe606;</span>花指令,静态调试,Movfuscator</span>
     
         <span class="sidebar-tag-name" data-tags="ACM,树状数组"><span class="iconfont-archer">&#xe606;</span>ACM,树状数组</span>
+    
+        <span class="sidebar-tag-name" data-tags="XCTF,逆向"><span class="iconfont-archer">&#xe606;</span>XCTF,逆向</span>
     
         <span class="sidebar-tag-name" data-tags="看雪,KCTF,逆向,PWN"><span class="iconfont-archer">&#xe606;</span>看雪,KCTF,逆向,PWN</span>
     
@@ -2038,25 +2028,19 @@ Toddler’s Bottlefd首先是第一题，和文件描述符有关
     
         <span class="sidebar-tag-name" data-tags="C,编译器"><span class="iconfont-archer">&#xe606;</span>C,编译器</span>
     
+        <span class="sidebar-tag-name" data-tags="qiling,逆向"><span class="iconfont-archer">&#xe606;</span>qiling,逆向</span>
+    
         <span class="sidebar-tag-name" data-tags="栈溢出,PWN"><span class="iconfont-archer">&#xe606;</span>栈溢出,PWN</span>
     
-        <span class="sidebar-tag-name" data-tags="arm,pwn"><span class="iconfont-archer">&#xe606;</span>arm,pwn</span>
-    
-        <span class="sidebar-tag-name" data-tags="CCProxy,栈溢出,pwn"><span class="iconfont-archer">&#xe606;</span>CCProxy,栈溢出,pwn</span>
-    
-        <span class="sidebar-tag-name" data-tags="SQL注入,java,CVE-2018-16116,CVE-2018-16117"><span class="iconfont-archer">&#xe606;</span>SQL注入,java,CVE-2018-16116,CVE-2018-16117</span>
-    
-        <span class="sidebar-tag-name" data-tags="Heap,overflow,pwn"><span class="iconfont-archer">&#xe606;</span>Heap,overflow,pwn</span>
-    
-        <span class="sidebar-tag-name" data-tags="unlink,heap,pwn,Android"><span class="iconfont-archer">&#xe606;</span>unlink,heap,pwn,Android</span>
+        <span class="sidebar-tag-name" data-tags="Linux,动态链接,GOT,PLT"><span class="iconfont-archer">&#xe606;</span>Linux,动态链接,GOT,PLT</span>
     
         <span class="sidebar-tag-name" data-tags="stunnel"><span class="iconfont-archer">&#xe606;</span>stunnel</span>
     
         <span class="sidebar-tag-name" data-tags="pwn,Heap"><span class="iconfont-archer">&#xe606;</span>pwn,Heap</span>
     
-        <span class="sidebar-tag-name" data-tags="python,多线程"><span class="iconfont-archer">&#xe606;</span>python,多线程</span>
-    
         <span class="sidebar-tag-name" data-tags="python,nmap,扫描器"><span class="iconfont-archer">&#xe606;</span>python,nmap,扫描器</span>
+    
+        <span class="sidebar-tag-name" data-tags="python,多线程"><span class="iconfont-archer">&#xe606;</span>python,多线程</span>
     
         <span class="sidebar-tag-name" data-tags="概率法求素数,算法"><span class="iconfont-archer">&#xe606;</span>概率法求素数,算法</span>
     
@@ -2064,19 +2048,19 @@ Toddler’s Bottlefd首先是第一题，和文件描述符有关
     
         <span class="sidebar-tag-name" data-tags="ACM,蓝桥杯"><span class="iconfont-archer">&#xe606;</span>ACM,蓝桥杯</span>
     
-        <span class="sidebar-tag-name" data-tags="Linux,动态链接,GOT,PLT"><span class="iconfont-archer">&#xe606;</span>Linux,动态链接,GOT,PLT</span>
-    
         <span class="sidebar-tag-name" data-tags="unlink,heap,pwn"><span class="iconfont-archer">&#xe606;</span>unlink,heap,pwn</span>
+    
+        <span class="sidebar-tag-name" data-tags="MBR,病毒"><span class="iconfont-archer">&#xe606;</span>MBR,病毒</span>
     
         <span class="sidebar-tag-name" data-tags="ctf,web,sql注入"><span class="iconfont-archer">&#xe606;</span>ctf,web,sql注入</span>
     
         <span class="sidebar-tag-name" data-tags="pwn,Format String Vulnerability"><span class="iconfont-archer">&#xe606;</span>pwn,Format String Vulnerability</span>
     
+        <span class="sidebar-tag-name" data-tags="Linux,DirtyCow"><span class="iconfont-archer">&#xe606;</span>Linux,DirtyCow</span>
+    
         <span class="sidebar-tag-name" data-tags="PWN,栈溢出"><span class="iconfont-archer">&#xe606;</span>PWN,栈溢出</span>
     
         <span class="sidebar-tag-name" data-tags="windows,影子账户"><span class="iconfont-archer">&#xe606;</span>windows,影子账户</span>
-    
-        <span class="sidebar-tag-name" data-tags="Linux,DirtyCow"><span class="iconfont-archer">&#xe606;</span>Linux,DirtyCow</span>
     
         <span class="sidebar-tag-name" data-tags="pwn,堆,glibc"><span class="iconfont-archer">&#xe606;</span>pwn,堆,glibc</span>
     
@@ -2123,6 +2107,8 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
     
+        <span class="sidebar-category-name" data-categories="PWN"><span class="iconfont-archer">&#xe60a;</span>PWN</span>
+    
         <span class="sidebar-category-name" data-categories="设备漏洞"><span class="iconfont-archer">&#xe60a;</span>设备漏洞</span>
     
         <span class="sidebar-category-name" data-categories="Rust"><span class="iconfont-archer">&#xe60a;</span>Rust</span>
@@ -2133,13 +2119,13 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="社工"><span class="iconfont-archer">&#xe60a;</span>社工</span>
     
-        <span class="sidebar-category-name" data-categories="PWN"><span class="iconfont-archer">&#xe60a;</span>PWN</span>
-    
         <span class="sidebar-category-name" data-categories="BlackHatTools"><span class="iconfont-archer">&#xe60a;</span>BlackHatTools</span>
     
         <span class="sidebar-category-name" data-categories="编译器开发"><span class="iconfont-archer">&#xe60a;</span>编译器开发</span>
     
         <span class="sidebar-category-name" data-categories="python工具"><span class="iconfont-archer">&#xe60a;</span>python工具</span>
+    
+        <span class="sidebar-category-name" data-categories="恶意代码"><span class="iconfont-archer">&#xe60a;</span>恶意代码</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
