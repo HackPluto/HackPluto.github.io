@@ -346,6 +346,36 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href="/2019/08/14/基于BROP的栈溢出漏洞利用/">
+            
+                <span>基于BROP的栈溢出漏洞利用</span>
+        </a>
+        <div class="abstract-content">
+            BROP
+黑客入侵软件时，有三种漏洞利用方案：1.开源（例如，Apache）2.开放二进制（例如，Internet Explorer）3.封闭二进制和源（例如，某些专有网络服务）BROP针对攻击第三种情况。BROP攻击可以在不拥有目标二进制文件的情况下编写漏洞利用程序。它需要堆栈溢出和崩溃后重新启动的服务。根据服务是否崩溃（即连接关闭或保持打开），BROP攻击能够构建一个导致shell的完整远程攻击。BROP远程构造足够的小工具来执行写系统调用，之后二进制文件从内存传输到攻击者的套接字。之后，可以执行标准的ROP攻击。除了攻击专有服务外，BROP在定位开源软件方面非常有用，开源软件使用不...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/08/14</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="PWN,BROP,栈溢出">PWN,BROP,栈溢出</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href="/2019/08/09/ACM数论/">
             
                 <span>ACM数论</span>
@@ -640,36 +670,6 @@ ARP协议就是工作在数据链路层的协议，至于ARP到底属于链路�
             <div class="abstract-tags">
     
         <a class="post-tag" href="javascript:void(0);" data-tags="工具,python,arp_poison">工具,python,arp_poison</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/05/22/使用动态规划-DP-解决最大公共子串与最大公共子序列问题/">
-            
-                <span>使用动态规划(DP)解决最大公共子串与最大公共子序列问题</span>
-        </a>
-        <div class="abstract-content">
-            
-我们从一道题目来引入我们今天的内容首先介绍一下子串和子序列的区别对于两个字符串 ABCDEF BCYHEF子序列为字符串中 一定顺序的字符不一定相连子串为字符串中相连的字符所以他们的最大公共子序列为 BCEF最大公共子串为 BC或者EF那么对于求解最大公共子串和最大公共子序列用什么方法呢，可能我们最开始想到的就是不断的枚举两个的子串或者子序列，再比较哪个最长，这个方法也不是不行，但是对于两个长度分别为n,m的字符串，这个算法的时间复杂为n^m 显然时间复杂度太大，在ACM中这种算法一定会超时的。那么我们怎么优化呢？我们发现在枚举的过程中，其实我们其实一直都在重复一个操作，那就是枚举子串...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/05/22</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="动态规划(DP)">动态规划(DP)</a>
     
 </div>
             
@@ -1704,48 +1704,9 @@ ARP协议就是工作在数据链路层的协议，至于ARP到底属于链路�
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 59
+        Total : 60
         </div>
         <!-- search  -->
         
@@ -1755,6 +1716,20 @@ ARP协议就是工作在数据链路层的协议，至于ARP到底属于链路�
     
     
     
+    
+    <div class="archive-year"> 2021 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/21</span><a class="archive-post-title" href="/2021/01/21/破解与攻击智能门锁/">破解与攻击智能门锁</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
     
     <div class="archive-year"> 2020 </div>
     <ul class="year-list">
@@ -1796,12 +1771,12 @@ ARP协议就是工作在数据链路层的协议，至于ARP到底属于链路�
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/27</span><a class="archive-post-title" href="/2020/09/27/netgear固件分析与后门植入/">netgear固件分析与后门植入</a>
+            <span class="archive-post-date">09/27</span><a class="archive-post-title" href="/2020/09/27/使用firmware-mod-kit修改路由器固件/">使用firmware-mod-kit修改路由器固件</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/27</span><a class="archive-post-title" href="/2020/09/27/使用firmware-mod-kit修改路由器固件/">使用firmware-mod-kit修改路由器固件</a>
+            <span class="archive-post-date">09/27</span><a class="archive-post-title" href="/2020/09/27/netgear固件分析与后门植入/">netgear固件分析与后门植入</a>
         </li>
     
     
@@ -1876,12 +1851,12 @@ ARP协议就是工作在数据链路层的协议，至于ARP到底属于链路�
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/14</span><a class="archive-post-title" href="/2020/04/14/BUUCTF刷题记录/">BUUCTF刷题1-100记录</a>
+            <span class="archive-post-date">04/14</span><a class="archive-post-title" href="/2020/04/14/pwnable-kr-WriteUp/">pwnable.kr WriteUp</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/14</span><a class="archive-post-title" href="/2020/04/14/pwnable-kr-WriteUp/">pwnable.kr WriteUp</a>
+            <span class="archive-post-date">04/14</span><a class="archive-post-title" href="/2020/04/14/BUUCTF刷题记录/">BUUCTF刷题1-100记录</a>
         </li>
     
     
@@ -2092,9 +2067,9 @@ ARP协议就是工作在数据链路层的协议，至于ARP到底属于链路�
     
         <span class="sidebar-tag-name" data-tags="SSH,端口转发"><span class="iconfont-archer">&#xe606;</span>SSH,端口转发</span>
     
-        <span class="sidebar-tag-name" data-tags="IDA,OllyDB"><span class="iconfont-archer">&#xe606;</span>IDA,OllyDB</span>
-    
         <span class="sidebar-tag-name" data-tags="wireshark,TLS"><span class="iconfont-archer">&#xe606;</span>wireshark,TLS</span>
+    
+        <span class="sidebar-tag-name" data-tags="IDA,OllyDB"><span class="iconfont-archer">&#xe606;</span>IDA,OllyDB</span>
     
         <span class="sidebar-tag-name" data-tags="MSF,免杀"><span class="iconfont-archer">&#xe606;</span>MSF,免杀</span>
     
@@ -2104,9 +2079,9 @@ ARP协议就是工作在数据链路层的协议，至于ARP到底属于链路�
     
         <span class="sidebar-tag-name" data-tags="路由器,firmware-mod-kit,打包固件"><span class="iconfont-archer">&#xe606;</span>路由器,firmware-mod-kit,打包固件</span>
     
-        <span class="sidebar-tag-name" data-tags="libc,pwn,free-libc"><span class="iconfont-archer">&#xe606;</span>libc,pwn,free-libc</span>
-    
         <span class="sidebar-tag-name" data-tags="动态规划(DP)"><span class="iconfont-archer">&#xe606;</span>动态规划(DP)</span>
+    
+        <span class="sidebar-tag-name" data-tags="libc,pwn,free-libc"><span class="iconfont-archer">&#xe606;</span>libc,pwn,free-libc</span>
     
         <span class="sidebar-tag-name" data-tags="PWN,BROP,栈溢出"><span class="iconfont-archer">&#xe606;</span>PWN,BROP,栈溢出</span>
     
@@ -2114,17 +2089,17 @@ ARP协议就是工作在数据链路层的协议，至于ARP到底属于链路�
     
         <span class="sidebar-tag-name" data-tags="机器学习,TLS,流量监测"><span class="iconfont-archer">&#xe606;</span>机器学习,TLS,流量监测</span>
     
-        <span class="sidebar-tag-name" data-tags="XCTF,逆向"><span class="iconfont-archer">&#xe606;</span>XCTF,逆向</span>
-    
         <span class="sidebar-tag-name" data-tags="ACM,树状数组"><span class="iconfont-archer">&#xe606;</span>ACM,树状数组</span>
+    
+        <span class="sidebar-tag-name" data-tags="XCTF,逆向"><span class="iconfont-archer">&#xe606;</span>XCTF,逆向</span>
     
         <span class="sidebar-tag-name" data-tags="看雪,KCTF,逆向,PWN"><span class="iconfont-archer">&#xe606;</span>看雪,KCTF,逆向,PWN</span>
     
         <span class="sidebar-tag-name" data-tags="工具,python,Netcat"><span class="iconfont-archer">&#xe606;</span>工具,python,Netcat</span>
     
-        <span class="sidebar-tag-name" data-tags="工具,python,proxy"><span class="iconfont-archer">&#xe606;</span>工具,python,proxy</span>
-    
         <span class="sidebar-tag-name" data-tags="C,编译器"><span class="iconfont-archer">&#xe606;</span>C,编译器</span>
+    
+        <span class="sidebar-tag-name" data-tags="工具,python,proxy"><span class="iconfont-archer">&#xe606;</span>工具,python,proxy</span>
     
         <span class="sidebar-tag-name" data-tags="栈溢出,PWN"><span class="iconfont-archer">&#xe606;</span>栈溢出,PWN</span>
     
@@ -2144,9 +2119,11 @@ ARP协议就是工作在数据链路层的协议，至于ARP到底属于链路�
     
         <span class="sidebar-tag-name" data-tags="pwn,Heap"><span class="iconfont-archer">&#xe606;</span>pwn,Heap</span>
     
+        <span class="sidebar-tag-name" data-tags="python,nmap,扫描器"><span class="iconfont-archer">&#xe606;</span>python,nmap,扫描器</span>
+    
         <span class="sidebar-tag-name" data-tags="python,多线程"><span class="iconfont-archer">&#xe606;</span>python,多线程</span>
     
-        <span class="sidebar-tag-name" data-tags="python,nmap,扫描器"><span class="iconfont-archer">&#xe606;</span>python,nmap,扫描器</span>
+        <span class="sidebar-tag-name" data-tags="OKLOK,智能门锁,iot"><span class="iconfont-archer">&#xe606;</span>OKLOK,智能门锁,iot</span>
     
         <span class="sidebar-tag-name" data-tags="概率法求素数,算法"><span class="iconfont-archer">&#xe606;</span>概率法求素数,算法</span>
     
@@ -2234,6 +2211,8 @@ jsonContent:
         <span class="sidebar-category-name" data-categories="编译器开发"><span class="iconfont-archer">&#xe60a;</span>编译器开发</span>
     
         <span class="sidebar-category-name" data-categories="python工具"><span class="iconfont-archer">&#xe60a;</span>python工具</span>
+    
+        <span class="sidebar-category-name" data-categories="IOT"><span class="iconfont-archer">&#xe60a;</span>IOT</span>
     
         <span class="sidebar-category-name" data-categories="恶意代码"><span class="iconfont-archer">&#xe60a;</span>恶意代码</span>
     
